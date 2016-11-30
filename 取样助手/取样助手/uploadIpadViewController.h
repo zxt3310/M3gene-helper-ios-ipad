@@ -12,9 +12,17 @@
 #import "NetUtils.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <WebKit/WebKit.h>
+#import "CMCustomViews.h"
 
-@interface uploadIpadViewController : UIViewController
+@interface uploadIpadViewController : UIViewController <WKUIDelegate>
 @property NSArray *productList;
 @property NSString *token;
+@property NSString *userName;
+
+@property NSString *productId; //产品ID
+@property NSString *productName; //产品名字
+@property NSString *number; //条码
+@property NSString *registString;
+@property UIImage *upOrderImg; //压缩后上传的检验单图片
 
 @end

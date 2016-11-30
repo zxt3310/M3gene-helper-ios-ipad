@@ -29,6 +29,8 @@
 		5837EC3E1DE6EF2D009921E8 /* iconBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5837EC3B1DE6EF2D009921E8 /* iconBack@2x.png */; };
 		5837EC3F1DE6EF2D009921E8 /* iconBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 5837EC3C1DE6EF2D009921E8 /* iconBack.png */; };
 		5837EC401DE6EF2D009921E8 /* iconBack@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5837EC3D1DE6EF2D009921E8 /* iconBack@3x.png */; };
+		586DD1901DEEB5BB0026E67E /* myOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 586DD18F1DEEB5BB0026E67E /* myOrderViewController.m */; };
+		586DD1931DEEB6120026E67E /* draftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 586DD1921DEEB6120026E67E /* draftViewController.m */; };
 		5887AD381DE59AB900FA00B1 /* 喇叭@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5887AD351DE59AB800FA00B1 /* 喇叭@2x.png */; };
 		5887AD391DE59AB900FA00B1 /* 喇叭.png in Resources */ = {isa = PBXBuildFile; fileRef = 5887AD361DE59AB900FA00B1 /* 喇叭.png */; };
 		5887AD3A1DE59AB900FA00B1 /* 喇叭@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5887AD371DE59AB900FA00B1 /* 喇叭@3x.png */; };
@@ -49,6 +51,13 @@
 		58B06DCC1DE6D01700F19DA0 /* dingdanluruCopy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B06DC91DE6D01700F19DA0 /* dingdanluruCopy@2x.png */; };
 		58B06DCD1DE6D01800F19DA0 /* dingdanluruCopy.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B06DCA1DE6D01700F19DA0 /* dingdanluruCopy.png */; };
 		58B06DCE1DE6D01800F19DA0 /* dingdanluruCopy@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B06DCB1DE6D01700F19DA0 /* dingdanluruCopy@3x.png */; };
+		58B099151DEE6E5200B87A4E /* registView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58B099141DEE6E5200B87A4E /* registView.m */; };
+		58B0991D1DEE74B600B87A4E /* nv.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B099171DEE74B600B87A4E /* nv.png */; };
+		58B0991E1DEE74B600B87A4E /* nv@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B099181DEE74B600B87A4E /* nv@2x.png */; };
+		58B0991F1DEE74B600B87A4E /* nv@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B099191DEE74B600B87A4E /* nv@3x.png */; };
+		58B099201DEE74B600B87A4E /* oval107.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B0991A1DEE74B600B87A4E /* oval107.png */; };
+		58B099211DEE74B600B87A4E /* oval107@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B0991B1DEE74B600B87A4E /* oval107@2x.png */; };
+		58B099221DEE74B600B87A4E /* oval107@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B0991C1DEE74B600B87A4E /* oval107@3x.png */; };
 		58B4F92A1DE7E95900527BFE /* uploadIpadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58B4F9291DE7E95900527BFE /* uploadIpadViewController.m */; };
 		58C25FE71DE5632500B8D88D /* UFanBasicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58C25FE21DE5632500B8D88D /* UFanBasicViewController.m */; };
 		58C25FE81DE5632500B8D88D /* UFanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58C25FE41DE5632500B8D88D /* UFanViewController.m */; };
@@ -138,6 +147,10 @@
 		5837EC3B1DE6EF2D009921E8 /* iconBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconBack@2x.png"; sourceTree = "<group>"; };
 		5837EC3C1DE6EF2D009921E8 /* iconBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconBack.png; sourceTree = "<group>"; };
 		5837EC3D1DE6EF2D009921E8 /* iconBack@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconBack@3x.png"; sourceTree = "<group>"; };
+		586DD18E1DEEB5BB0026E67E /* myOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myOrderViewController.h; sourceTree = "<group>"; };
+		586DD18F1DEEB5BB0026E67E /* myOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myOrderViewController.m; sourceTree = "<group>"; };
+		586DD1911DEEB6120026E67E /* draftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = draftViewController.h; sourceTree = "<group>"; };
+		586DD1921DEEB6120026E67E /* draftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = draftViewController.m; sourceTree = "<group>"; };
 		5887AD351DE59AB800FA00B1 /* 喇叭@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "喇叭@2x.png"; path = "image/喇叭@2x.png"; sourceTree = "<group>"; };
 		5887AD361DE59AB900FA00B1 /* 喇叭.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "喇叭.png"; path = "image/喇叭.png"; sourceTree = "<group>"; };
 		5887AD371DE59AB900FA00B1 /* 喇叭@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "喇叭@3x.png"; path = "image/喇叭@3x.png"; sourceTree = "<group>"; };
@@ -170,6 +183,14 @@
 		58B06DC91DE6D01700F19DA0 /* dingdanluruCopy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dingdanluruCopy@2x.png"; path = "image/dingdanluruCopy@2x.png"; sourceTree = "<group>"; };
 		58B06DCA1DE6D01700F19DA0 /* dingdanluruCopy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dingdanluruCopy.png; path = image/dingdanluruCopy.png; sourceTree = "<group>"; };
 		58B06DCB1DE6D01700F19DA0 /* dingdanluruCopy@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dingdanluruCopy@3x.png"; path = "image/dingdanluruCopy@3x.png"; sourceTree = "<group>"; };
+		58B099131DEE6E5200B87A4E /* registView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = registView.h; sourceTree = "<group>"; };
+		58B099141DEE6E5200B87A4E /* registView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = registView.m; sourceTree = "<group>"; };
+		58B099171DEE74B600B87A4E /* nv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nv.png; sourceTree = "<group>"; };
+		58B099181DEE74B600B87A4E /* nv@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nv@2x.png"; sourceTree = "<group>"; };
+		58B099191DEE74B600B87A4E /* nv@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nv@3x.png"; sourceTree = "<group>"; };
+		58B0991A1DEE74B600B87A4E /* oval107.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = oval107.png; sourceTree = "<group>"; };
+		58B0991B1DEE74B600B87A4E /* oval107@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oval107@2x.png"; sourceTree = "<group>"; };
+		58B0991C1DEE74B600B87A4E /* oval107@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oval107@3x.png"; sourceTree = "<group>"; };
 		58B4F9281DE7E95900527BFE /* uploadIpadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uploadIpadViewController.h; sourceTree = "<group>"; };
 		58B4F9291DE7E95900527BFE /* uploadIpadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = uploadIpadViewController.m; sourceTree = "<group>"; };
 		58C25FE11DE5632500B8D88D /* UFanBasicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UFanBasicViewController.h; sourceTree = "<group>"; };
@@ -334,6 +355,10 @@
 				5889D8CD1DC091630052C6D7 /* LaunchScreen.storyboard */,
 				5889D8D01DC091630052C6D7 /* Info.plist */,
 				5889D8BF1DC091620052C6D7 /* Supporting Files */,
+				586DD18E1DEEB5BB0026E67E /* myOrderViewController.h */,
+				586DD18F1DEEB5BB0026E67E /* myOrderViewController.m */,
+				586DD1911DEEB6120026E67E /* draftViewController.h */,
+				586DD1921DEEB6120026E67E /* draftViewController.m */,
 			);
 			path = "取样助手";
 			sourceTree = "<group>";
@@ -375,6 +400,8 @@
 				7024D4B71DCDDDAF00671EAD /* orderRegisteViewController.m */,
 				58B4F9281DE7E95900527BFE /* uploadIpadViewController.h */,
 				58B4F9291DE7E95900527BFE /* uploadIpadViewController.m */,
+				58B099131DEE6E5200B87A4E /* registView.h */,
+				58B099141DEE6E5200B87A4E /* registView.m */,
 			);
 			name = "签到";
 			sourceTree = "<group>";
@@ -400,6 +427,7 @@
 		589540681DC1FDF000DDA5F8 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				58B099161DEE74B600B87A4E /* 单选控件 */,
 				5837EC161DE6D81E009921E8 /* 侧栏 */,
 				58B06DC91DE6D01700F19DA0 /* dingdanluruCopy@2x.png */,
 				58B06DCA1DE6D01700F19DA0 /* dingdanluruCopy.png */,
@@ -446,6 +474,20 @@
 				703C290E1DCA286A004FA090 /* jisongyangben@3x.png */,
 			);
 			name = image;
+			sourceTree = "<group>";
+		};
+		58B099161DEE74B600B87A4E /* 单选控件 */ = {
+			isa = PBXGroup;
+			children = (
+				58B099171DEE74B600B87A4E /* nv.png */,
+				58B099181DEE74B600B87A4E /* nv@2x.png */,
+				58B099191DEE74B600B87A4E /* nv@3x.png */,
+				58B0991A1DEE74B600B87A4E /* oval107.png */,
+				58B0991B1DEE74B600B87A4E /* oval107@2x.png */,
+				58B0991C1DEE74B600B87A4E /* oval107@3x.png */,
+			);
+			name = "单选控件";
+			path = "image/单选控件";
 			sourceTree = "<group>";
 		};
 		58C25FE01DE5632400B8D88D /* Drawer */ = {
@@ -568,6 +610,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58B099201DEE74B600B87A4E /* oval107.png in Resources */,
 				706B00D91DCB2DB9003953DD /* 用户名@3x.png in Resources */,
 				706B00D01DCB2D5D003953DD /* 密码@3x.png in Resources */,
 				703C292A1DCA41D2004FA090 /* operate.png in Resources */,
@@ -583,12 +626,15 @@
 				706B00D71DCB2DB9003953DD /* 用户名.png in Resources */,
 				5837EC301DE6D81E009921E8 /* 草稿箱@2x.png in Resources */,
 				5889D8CF1DC091630052C6D7 /* LaunchScreen.storyboard in Resources */,
+				58B0991F1DEE74B600B87A4E /* nv@3x.png in Resources */,
 				58B06DCC1DE6D01700F19DA0 /* dingdanluruCopy@2x.png in Resources */,
+				58B099221DEE74B600B87A4E /* oval107@3x.png in Resources */,
 				5837EC281DE6D81E009921E8 /* 客户@3x.png in Resources */,
 				5837EC401DE6EF2D009921E8 /* iconBack@3x.png in Resources */,
 				700A3E111DD0748000D507F1 /* 莲和logo120.png in Resources */,
 				703C292F1DCA41D2004FA090 /* unoperate@3x.png in Resources */,
 				5837EC261DE6D81E009921E8 /* 客户.png in Resources */,
+				58B0991E1DEE74B600B87A4E /* nv@2x.png in Resources */,
 				703C29241DCA41D2004FA090 /* copy.png in Resources */,
 				707F84E11DD0C7BD0010D10F /* iconBack.png in Resources */,
 				7024D4B51DCDCFDA00671EAD /* line.png in Resources */,
@@ -621,6 +667,7 @@
 				706B00CE1DCB2D5D003953DD /* 密码.png in Resources */,
 				5887AD3F1DE5A2A800FA00B1 /* 2.png in Resources */,
 				5837EC2C1DE6D81E009921E8 /* 消息.png in Resources */,
+				58B0991D1DEE74B600B87A4E /* nv.png in Resources */,
 				706B00DF1DCB34A7003953DD /* jisongbaogao@3x.png in Resources */,
 				5837EC2F1DE6D81E009921E8 /* 草稿箱.png in Resources */,
 				700A3E101DD0748000D507F1 /* 莲和logo 80.png in Resources */,
@@ -633,6 +680,7 @@
 				703C29291DCA41D2004FA090 /* copy2@3x.png in Resources */,
 				5889D8CC1DC091630052C6D7 /* Assets.xcassets in Resources */,
 				703C290F1DCA286A004FA090 /* dingdanluru.png in Resources */,
+				58B099211DEE74B600B87A4E /* oval107@2x.png in Resources */,
 				5837EC291DE6D81E009921E8 /* 投标纪录.png in Resources */,
 				5887AD3E1DE5A2A800FA00B1 /* 2@2x.png in Resources */,
 			);
@@ -663,12 +711,15 @@
 				58C25FE91DE5632500B8D88D /* UIViewController+UFanViewController.m in Sources */,
 				58C25FE81DE5632500B8D88D /* UFanViewController.m in Sources */,
 				703C29171DCA2BDE004FA090 /* publicMethod.m in Sources */,
+				58B099151DEE6E5200B87A4E /* registView.m in Sources */,
 				58C25FEF1DE5635900B8D88D /* firstItemViewController.m in Sources */,
 				589540571DC1F27900DDA5F8 /* loginViewController.m in Sources */,
 				58B4F92A1DE7E95900527BFE /* uploadIpadViewController.m in Sources */,
+				586DD1931DEEB6120026E67E /* draftViewController.m in Sources */,
 				705E33481DC9C17800024A25 /* CMCustomViews.m in Sources */,
 				58C25FEE1DE5635900B8D88D /* leftDrawerViewController.m in Sources */,
 				7024D4B81DCDDDAF00671EAD /* orderRegisteViewController.m in Sources */,
+				586DD1901DEEB5BB0026E67E /* myOrderViewController.m in Sources */,
 				708FDEC91DC875080069E6C2 /* NetUtils.m in Sources */,
 				5889D8C71DC091630052C6D7 /* mainViewController.m in Sources */,
 				5895404F1DC1A6AF00DDA5F8 /* scanViewController.m in Sources */,

@@ -54,7 +54,7 @@
     midColor =  [UIColor colorWithRed:140.0/255 green:121.0/255 blue:214.0/255 alpha:1];
     endColor = [UIColor whiteColor];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedNotif:) name:@"ReloadView" object:nil];
+   // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedNotif:) name:@"ReloadView" object:nil];
     
 }
 
@@ -134,47 +134,50 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if(indexPath.row < self.items.count - 1)
+    if(indexPath.row == 1)
     {
     
         [self.UF_ViewController closeDrawerAnimtaion:YES complete:^(BOOL finished)
         {
             if(finished)
             {
-            
+                firstItemViewController *fivc = [[firstItemViewController alloc]init];
+                fivc.token = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
+                fivc.urlStr = @"http://dev.mapi.lhgene.cn/app";
+                [self.UF_ViewController.navigationController pushViewController:fivc animated:YES];
             }
             else
                 return ;
         }];
     }
-    else
-    {       
-        if(!hasLogin)
-        {
-            
-        }
-        else
-        {
-            @try {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userPhoneNo"];
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"token"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-            }
-            @catch (NSException *exception)
-            {
-                [self alertMsgView:exception.reason];
-            }
-            @finally
-            {
-                [self alertMsgView:@"您已成功注销"];
-                
-              //  NSIndexPath *indexPath=[NSIndexPath indexPathForRow:indexPath.row inSection:0];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadView" object:nil];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"updateToken" object:nil];
-
-            }
-        }
-    }
+//    else
+//    {       
+//        if(!hasLogin)
+//        {
+//            
+//        }
+//        else
+//        {
+//            @try {
+//                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userPhoneNo"];
+//                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"token"];
+//                [[NSUserDefaults standardUserDefaults] synchronize];
+//            }
+//            @catch (NSException *exception)
+//            {
+//                [self alertMsgView:exception.reason];
+//            }
+//            @finally
+//            {
+//                [self alertMsgView:@"您已成功注销"];
+//                
+//              //  NSIndexPath *indexPath=[NSIndexPath indexPathForRow:indexPath.row inSection:0];
+//                [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadView" object:nil];
+//                [[NSNotificationCenter defaultCenter] postNotificationName:@"updateToken" object:nil];
+//
+//            }
+//        }
+//    }
 }
 
 - (void)alertMsgView:(NSString *)alertMsg

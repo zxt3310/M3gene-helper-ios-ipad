@@ -35,6 +35,7 @@
 
 @interface uploadIpadViewController () <UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource,refreshCellNuber,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
+    LoadingView *loadingView;
     UIImagePickerController *_imagePickController;
     NSArray *listItem;  //列表标题
     UIButton *sendBt;   //上传按钮
@@ -49,13 +50,12 @@
     NSArray *listView;
     UITextField *productTF; //产品信息
     
-    NSString *productId; //产品ID
-    NSString *productName; //产品名字
+
+
     UILabel *numberLable;
     UIImageView *orderPic;
     UIView *background; //放大图片view
     UIImage *upimage; //处理后的上传图片 病例图
-    UIImage *upOrderImg; //压缩后上传的检验单图片
     BOOL isTakeMedicalPhoto;
     UIImage *_medicalImage; //病例图片
     int imageViewCount;//病例图片控件计数器
@@ -72,6 +72,11 @@
 
 @implementation uploadIpadViewController
 
+@synthesize productName = productName;
+@synthesize productId = productId;
+@synthesize number = number;
+@synthesize registString = registString;
+@synthesize upOrderImg = upOrderImg;
 
 - (instancetype)init
 {
@@ -132,6 +137,14 @@
     [self tableView:leftView didSelectRowAtIndexPath:firstpath];
     [self setNewBar];
     
+    //loading 动画
+    float topY = SCREEN_HEIGHT/3;
+//    if ([UIScreen mainScreen].bounds.size.height > 480.0) {
+//        topY += 100;
+//    }
+    loadingView = [[LoadingView alloc] initWithFrame:CGRectMake((SCREEN_WEIGHT- 80)/2, topY, 80, 70)];
+    loadingView.hidden = YES;
+    [[UIApplication sharedApplication].keyWindow addSubview:loadingView];
 
 }
 
@@ -207,54 +220,54 @@
 }
 - (void)sendBtClick
 {
-//       // _loadingView.dscpLabel.text = @"正在上传";
-//       // _loadingView.hidden = NO;
-//        
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^{
-//            NSString *uploadUrl = [NSString stringWithFormat:orderUpload_URL];
-//            
-//            NSMutableString *upImageId = [[NSMutableString alloc] init];
-//            for (int i = 10; i<imageIdArray.count; i++) {
-//                [upImageId appendFormat:@"%@,",imageIdArray[i]];
-//            }
-//            
-//            NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",_productId,@"product",_number,@"order_code",upOrderImg,@"pic",upImageId,@"medical_pics", nil];
-//            
-//            NSData *responsData = [self loadRequestWithImg:dic urlstring:uploadUrl];
-//            
-//            dispatch_async(dispatch_get_main_queue(),^{
-//                
-//                _loadingView.hidden = YES;
-//                
-//                if(!responsData)
-//                {
-//                    NSLog(@"return nil");
-//                    return;
-//                }
-//                
-//                NSDictionary *jsonData = parseJsonResponse(responsData);
-//                
-//                NSString *resault =[NSString stringWithFormat:@"%@",[jsonData objectForKey:@"err"]];
-//                
-//                NSInteger err = [resault integerValue];
-//                if (err > 0) {
-//                    NSString *errormsg = replaceUnicode(JsonValue([jsonData objectForKey:@"errmsg"],@"NSString"));
-//                    alertMsgView(errormsg, self);
-//                    return;
-//                }
-//                else
-//                {
-//                    [self.switchDelegate tabBarSwitch];
-//                    [self.navigationController popToRootViewControllerAnimated:YES];
-//                    
-//                }
-//            });
-//        });
+       // _loadingView.dscpLabel.text = @"正在上传";
+       // _loadingView.hidden = NO;
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^{
+            NSString *uploadUrl = [NSString stringWithFormat:orderUpload_URL];
+            
+            NSMutableString *upImageId = [[NSMutableString alloc] init];
+            for (int i = 10; i<imageIdArray.count; i++) {
+                [upImageId appendFormat:@"%@,",imageIdArray[i]];
+            }
+            
+            NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:self.token,@"token",productId,@"product",numberLable.text,@"order_code",upOrderImg,@"pic",upImageId,@"medical_pics", nil];
+            
+            NSData *responsData = [self loadRequestWithImg:dic urlstring:uploadUrl];
+            
+            dispatch_async(dispatch_get_main_queue(),^{
+                
+                loadingView.hidden = YES;
+                
+                if(!responsData)
+                {
+                    NSLog(@"return nil");
+                    return;
+                }
+                
+                NSDictionary *jsonData = parseJsonResponse(responsData);
+                
+                NSString *resault =[NSString stringWithFormat:@"%@",[jsonData objectForKey:@"err"]];
+                
+                NSInteger err = [resault integerValue];
+                if (err > 0) {
+                    NSString *errormsg = replaceUnicode(JsonValue([jsonData objectForKey:@"errmsg"],@"NSString"));
+                    alertMsgView(errormsg, self);
+                    return;
+                }
+                else
+                {
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                    
+                }
+            });
+        });
 
 }
 
 - (void)cacheBtClick
 {
+    NSDictionary *cacheDic;
     
 }
 #pragma mark 左侧列表
@@ -368,6 +381,7 @@
     productTF.textAlignment = NSTextAlignmentCenter;
     productTF.layer.borderWidth = 1;
     productTF.inputView = productView.productPicker;
+    productTF.text = productName;
     
     UIToolbar *toolBar = [[UIToolbar alloc]init];
     toolBar.barTintColor = [UIColor whiteColor];
@@ -405,6 +419,7 @@
     
     numberLable = [[UILabel alloc]initWithFrame:CGRectMake(scanCodeView.titleLable.frame.origin.x, scanCodeView.titleLable.frame.origin.y + 40, 400*SCREEN_WEIGHT/1024, 40)];
     numberLable.font = [UIFont fontWithName:@"Arial-BoldMT" size:22];
+    numberLable.text = number;
     [scanCodeView addSubview:numberLable];
   
     [self.view addSubview:scanCodeView];
@@ -446,6 +461,7 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imgTapAction:)];
     [orderPic addGestureRecognizer:tap];
     orderPic.userInteractionEnabled = YES;
+    orderPic.image = upOrderImg;
     [orderPicView addSubview:orderPic];
     
     [self.view addSubview:orderPicView];
@@ -460,6 +476,7 @@
     temp.origin.x = temp.origin.y = 0;
     html5Web.frame = temp;
     [registView addSubview:html5Web];
+    html5Web.UIDelegate = self;
     [self.view addSubview:registView];
 }
 
@@ -938,6 +955,17 @@
             
         });
     });
+}
+
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"消息" message:message?:@"" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"OK"
+                                                        style:UIAlertActionStyleCancel
+                                                      handler:^(UIAlertAction *action) {
+                                                          completionHandler();
+                                                      }]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 

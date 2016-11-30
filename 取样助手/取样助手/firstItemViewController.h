@@ -10,15 +10,14 @@
 #import <UIKit/UIKit.h>
 #import "WebViewJavascriptBridge.h"
 #import "CMCustomViews.h"
-@interface firstItemViewController : UIViewController<UIWebViewDelegate>
+#import <WebKit/WebKit.h>
+@interface firstItemViewController : UIViewController<WKUIDelegate,WKNavigationDelegate>
 {
-    UIWebView *webViewHtml5;
-    BOOL hasLogin;
-    NSString *lastToken;
-    NSString *lastUserPhone;
-    WebViewJavascriptBridge *jsBridge;
+    WKWebView *webViewHtml5;
+
     LoadingView *loadingView;
 }
-@property (strong, nonatomic) IBOutlet UIWebView *html5WebView;
-@property (nonatomic, strong) NSURL *strURL;
+@property NSString *token;
+@property NSString *urlStr;
+
 @end

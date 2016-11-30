@@ -296,6 +296,7 @@
                 uploadIpadViewController *uivc = [[uploadIpadViewController alloc]init];
                 uivc.productList = productList;
                 uivc.token = token;
+                uivc.userName = userName;
                 [self.UF_ViewController.navigationController pushViewController:uivc animated:YES]; 
 
             }
