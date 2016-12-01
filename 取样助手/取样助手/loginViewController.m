@@ -24,6 +24,7 @@
         _password_TF = [[UITextField alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/4.93, SCREEN_HEIGHT/2.24,SCREEN_WEIGHT/1.67, SCREEN_HEIGHT/13.89)];
         _loginBt = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/4.93, SCREEN_HEIGHT/1.38,SCREEN_WEIGHT/1.67, SCREEN_HEIGHT/13.89)];
         _titleLable = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WEIGHT/3.07, SCREEN_HEIGHT/4.19,SCREEN_WEIGHT/2.84, SCREEN_HEIGHT/30.32)];
+        
     }
     return self;
 }
@@ -68,6 +69,10 @@
     [_loginBt setTitle:@"登录" forState:UIControlStateNormal];
     [_loginBt addTarget:self action:@selector(loginBtClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_loginBt];
+    
+    
+    _username_TF.text = @"现场1";
+    _password_TF.text = @"123456";
     
     }
 

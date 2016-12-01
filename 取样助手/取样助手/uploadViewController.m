@@ -412,11 +412,11 @@
         alertMsgView(@"该订单已存在，请勿反复提交", self);
     }
     
-    orderRegisteViewController *orvc = [[orderRegisteViewController alloc] init];
-    
-    //orvc.orderUrl = @"http://www.baidu.com";
-    orvc.orderUrl = [NSString stringWithFormat:@"%@/%@/%@?token=%@",orderComplate_URL,_number,_productId,token];
-    [self.navigationController pushViewController:orvc animated:YES];
+//    orderRegisteViewController *orvc = [[orderRegisteViewController alloc] init];
+//    
+//    //orvc.orderUrl = @"http://www.baidu.com";
+//    orvc.orderUrl = [NSString stringWithFormat:@"%@/%@/%@?token=%@",orderComplate_URL,_number,_productId,token];
+//    [self.navigationController pushViewController:orvc animated:YES];
 }
 
 //清除按钮点击事件

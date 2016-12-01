@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "publicMethod.h"
+#import "NetUtils.h"
 @interface draftViewController : UIViewController
 
 @end

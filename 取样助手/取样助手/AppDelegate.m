@@ -26,6 +26,7 @@
     
     mainViewController *mvc = [[mainViewController alloc] init];
     leftDrawerViewController *lvc = [[leftDrawerViewController alloc]init];
+    lvc.mainVc = mvc;
     
     UFanViewController *UF_view = [[UFanViewController alloc]initWithCenterViewController:mvc leftDrawerViewController:lvc];
     

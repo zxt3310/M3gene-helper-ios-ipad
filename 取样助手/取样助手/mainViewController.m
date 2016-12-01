@@ -45,6 +45,7 @@
     BOOL allowRegist;
     BOOL allowSendEx;
     BOOL allowSendReport;
+    //NSString *cookie;
 }
 
 @end
@@ -119,6 +120,7 @@
 {
     userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
     token = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
+    
 
     if(!userName || !token)
     {
@@ -289,10 +291,6 @@
     {
         if(allowRegist)
             {
-//                uploadViewController *uvc = [[uploadViewController alloc] init];
-//                uvc.switchDelegate = self;
-//                uvc.productList = productList;
-//                [self.UF_ViewController.navigationController pushViewController:uvc animated:YES];
                 uploadIpadViewController *uivc = [[uploadIpadViewController alloc]init];
                 uivc.productList = productList;
                 uivc.token = token;

@@ -11,6 +11,7 @@
 #import "WebViewJavascriptBridge.h"
 #import "CMCustomViews.h"
 #import <WebKit/WebKit.h>
+#import "POPViewController.h"
 @interface firstItemViewController : UIViewController<WKUIDelegate,WKNavigationDelegate>
 {
     WKWebView *webViewHtml5;
@@ -19,5 +20,6 @@
 }
 @property NSString *token;
 @property NSString *urlStr;
+@property NSString *cookie;
 
 @end

@@ -50,6 +50,8 @@ NSString* getStringForKey(NSString* key);
 
 NSString* deviceImageSelect (NSString *imageName);
 
+NSDate* getCurrentDate();
+
 void alertMsgView(NSString *alertMsg ,UIViewController *uvc);
 
 @interface UIFont (custom)

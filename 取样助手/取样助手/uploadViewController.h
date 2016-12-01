@@ -12,7 +12,6 @@
 #import "NetUtils.h"
 #import "CMCustomViews.h"
 #import "publicMethod.h"
-#import "orderRegisteViewController.h"
 
 @interface uploadViewController : UIViewController <refreshCellNuber>
 

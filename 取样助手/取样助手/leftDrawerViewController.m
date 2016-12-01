@@ -37,15 +37,15 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.items = @[@"",@"",@"",@"",@"",@""];
-    self.itemsMenu = @[@"",@"我的订单",@"草稿箱",@"操作记录",@"我的消息",@"我的客户"];
+    self.itemsMenu = @[@"",@"我的订单",@"草稿箱",@"操作记录",@"我的消息",@"注销"];
     self.itemsImageName =@[@"",WDDD_IMG,CGX_IMG,CZJL_IMG,WDXX_IMG,WDKH_IMG];
     // Do any additional setup after loading the view.
     
     
     hasLogin = NO;
-    lastUserPhone =  [[NSUserDefaults standardUserDefaults] objectForKey:@"userPhoneNo"];
+    lastUser =  [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
     lastToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
-    if (lastToken !=nil & lastUserPhone !=nil)
+    if (lastToken !=nil)
     {
         hasLogin = YES;
     }
@@ -134,22 +134,64 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if(indexPath.row == 1)
+    [self.UF_ViewController closeDrawerAnimtaion:YES complete:^(BOOL finished)
     {
-    
-        [self.UF_ViewController closeDrawerAnimtaion:YES complete:^(BOOL finished)
+        if(finished)
         {
-            if(finished)
+            if(indexPath.row == 1)
             {
+                NSString *cookie = [[NSUserDefaults standardUserDefaults] objectForKey:@"Set-Cookie"];
+                NSArray *cookieArray = [cookie componentsSeparatedByString:@";"];
                 firstItemViewController *fivc = [[firstItemViewController alloc]init];
                 fivc.token = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
-                fivc.urlStr = @"http://dev.mapi.lhgene.cn/app";
+                fivc.urlStr = @"http://dev.mapi.lhgene.cn/app/index.html#/salefinance";
+                if(cookieArray.count>0)
+                {
+                   fivc.cookie = cookieArray[0];
+                }
                 [self.UF_ViewController.navigationController pushViewController:fivc animated:YES];
             }
+            else if(indexPath.row == 2)
+            {
+                draftViewController *dvc = [[draftViewController alloc]init];
+                [self.UF_ViewController.navigationController pushViewController:dvc animated:YES];
+            }
+            else if(indexPath.row == 5)
+            {
+                @try {
+//                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userPhoneNo"];
+                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"token"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }
+                @catch (NSException *exception)
+                {
+                    [self alertMsgView:exception.reason];
+                }
+                @finally
+                {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadView" object:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"updateToken" object:nil];
+                    [self.mainVc updateToken:nil name:lastUser role:nil];
+    
+                }
+            
+                loginViewController *lvc = [[loginViewController alloc] init];
+                UINavigationController *unv1 = [[UINavigationController alloc] initWithRootViewController:lvc];
+                [unv1.navigationBar setTitleTextAttributes:
+                 @{NSFontAttributeName:[UIFont fontWithName:@"STHeitiSC-Light" size:18],
+                   NSForegroundColorAttributeName:[UIColor blackColor]}];
+                lvc.delegate = self.mainVc;
+                lvc.placeUserName = lastUser;
+                [self presentViewController:unv1 animated:YES completion:nil];
+                
+            }
             else
-                return ;
-        }];
-    }
+                alertMsgView(@"该功能尚未开放，敬请期待", self);
+        }
+        else
+            return ;
+    }];
+    
 //    else
 //    {       
 //        if(!hasLogin)

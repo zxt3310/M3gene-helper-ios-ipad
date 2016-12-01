@@ -62,7 +62,14 @@
     //添加扫描画面
     _preview =[AVCaptureVideoPreviewLayer layerWithSession:_session];
     
-    _preview.connection.videoOrientation = AVCaptureVideoOrientationLandscapeRight|AVCaptureVideoOrientationLandscapeLeft;
+    if([[UIApplication sharedApplication]statusBarOrientation] == UIInterfaceOrientationLandscapeLeft)
+    {
+        _preview.connection.videoOrientation = AVCaptureVideoOrientationLandscapeLeft;
+        
+    }
+    else
+        _preview.connection.videoOrientation = AVCaptureVideoOrientationLandscapeRight;
+    
     _preview.videoGravity =AVLayerVideoGravityResizeAspectFill;
     _preview.frame =self.view.layer.bounds;
     
@@ -233,10 +240,12 @@
     UIDevice *device = [UIDevice currentDevice];
     if (device.orientation == UIInterfaceOrientationLandscapeLeft) {
         _preview.connection.videoOrientation = UIInterfaceOrientationLandscapeLeft;
+        [_output setRectOfInterest:CGRectMake(0.21, 0.81, 0.59, 0.33)];
     }
     else
     {
         _preview.connection.videoOrientation = UIInterfaceOrientationLandscapeRight;
+        [_output setRectOfInterest:CGRectMake(0.21, 0.19, 0.59, 0.33)];
     }
 }
 

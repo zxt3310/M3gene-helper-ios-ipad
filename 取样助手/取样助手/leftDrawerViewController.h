@@ -10,13 +10,15 @@
 #import "firstItemViewController.h"
 #import "UIViewController+UFanViewController.h"
 #import "loginViewController.h"
+#import "mainViewController.h"
+#import "draftViewController.h"
 //#import "Address.h"
 
 @interface leftDrawerViewController : UFanBasicViewController
 
 
 {
-    NSString* lastUserPhone;
+    NSString* lastUser;
     NSString* lastToken;
     UIImageView *cellImageView;
     BOOL hasLogin;
@@ -28,4 +30,5 @@
 @property (nonatomic, strong) NSArray *itemsMenu;
 @property (nonatomic, strong) NSArray *itemsImageName;
 @property (nonatomic, strong) UITableView *tableView;
+@property id <loginUpdateToken> mainVc;
 @end

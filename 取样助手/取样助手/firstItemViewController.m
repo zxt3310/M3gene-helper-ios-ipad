@@ -10,6 +10,7 @@
 #import "UIViewController+UFanViewController.h"
 #import "CMCustomViews.h"
 
+
 #define UFSCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
 #define UFSCREEN_WIDTH  [[UIScreen mainScreen] bounds].size.width
 @implementation firstItemViewController
@@ -21,10 +22,15 @@
     webViewHtml5 = [[WKWebView alloc]init];
     webViewHtml5.navigationDelegate = self;
     self.view = webViewHtml5;
-    
+    webViewHtml5.UIDelegate = self;
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:_urlStr]];
-    [request setValue:_token forHTTPHeaderField:@"token"];
     
+    [request addValue:_cookie forHTTPHeaderField:@"Set-Cookie"];
+    [request addValue:_token forHTTPHeaderField:@"token"];
+    
+    
+    NSLog(@"%@",request.allHTTPHeaderFields);
+
 
     [webViewHtml5 loadRequest:[request copy]];
     
@@ -35,6 +41,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.navigationController.navigationBar.hidden = NO;
 
 }
 
@@ -48,8 +55,6 @@
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
-      //  NSURLRequest *right = [request copy];
-    
     
     decisionHandler(WKNavigationActionPolicyAllow);
     
@@ -73,6 +78,17 @@
                                                           completionHandler();
                                                       }]];
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+
+- (BOOL)navigationShouldPopOnBackButton
+{
+    if ([webViewHtml5 canGoBack]) {
+        [webViewHtml5 goBack];
+        return NO;
+    }
+    else
+        return YES;
 }
 
 @end

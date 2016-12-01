@@ -31,7 +31,7 @@ NSData *sendRequestWithFullURL(NSString *fullURL, NSString *post)
     NSString *finalPost = [post stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet characterSetWithCharactersInString:@"`#%^{}\"[]|\\<> "].invertedSet];
     NSLog(@"sendRequestWithFullURL:%@ post:%@", fullURL, finalPost);
     
-    return sendFullRequest(fullURL, finalPost, nil, true, false);
+    return sendFullRequest(fullURL, finalPost, nil, true, true);
 }
 
 NSData *sendRequestWithFullURLandHeaders(NSString *fullURL, NSString *post ,NSDictionary *additionalHeaders)
@@ -127,6 +127,8 @@ NSData *sendFullRequest(NSString *fullURL, NSString *post, NSDictionary *additio
             NSString *setCookie = [headers objectForKey:@"Set-Cookie"];
             if (setCookie && [setCookie length] > 0) {
                 //                [CureMeUtils defaultCureMeUtil].loginCookie = setCookie;
+                [[NSUserDefaults standardUserDefaults] setObject:setCookie forKey:@"Set-Cookie"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
             }
         }
         

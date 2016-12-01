@@ -121,3 +121,12 @@ void alertMsgView(NSString *alertMsg ,UIViewController *uvc)
     return [UIColor colorWithRed:red/255 green:green/255 blue:blue/255 alpha:alpha];
 }
 @end
+
+NSDate* getCurrentDate()
+{
+    NSDate *loginDate = [NSDate date];
+    NSTimeZone *zone = [NSTimeZone localTimeZone];
+    NSTimeInterval time = [zone secondsFromGMTForDate:loginDate];
+    NSDate *currentDate = [loginDate dateByAddingTimeInterval:time];
+    return currentDate;
+}

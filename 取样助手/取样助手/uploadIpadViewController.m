@@ -92,6 +92,13 @@
         registView = [[detailView alloc]initWithFrame:frame];
         medicalPicView = [[detailView alloc]initWithFrame:frame];
         
+        //暂存数据初始化
+        productId =@"";
+        productName=@"";
+        number = @"";
+        registString = @"";
+        upOrderImg = [[UIImage alloc]init];
+        
         imageIdArray = [[NSMutableArray alloc]init];
         html5Web = [[WKWebView alloc]init];
         
@@ -267,7 +274,31 @@
 
 - (void)cacheBtClick
 {
-    NSDictionary *cacheDic;
+    [html5Web evaluateJavaScript:@"app_fetch_form();" completionHandler:^(NSString *str,NSError *error){
+    
+        if(!str)
+        {
+            return;
+        }
+        registString = str;
+        
+    }];
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    dateFormat.locale = [[NSLocale alloc]initWithLocaleIdentifier:@"zh_CN"];
+    [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *timeStr = [dateFormat stringFromDate:[NSDate date]];
+    
+    NSArray *cacheArray = @[@"cacheType",@"operateTime",@"productName",@"productId",@"code_number",@"orderPic",@"registStr"];
+    NSArray *cacheData = @[@"CACHE_ORDER",timeStr,productTF.text,productId,numberLable.text,upOrderImg,self.registString];
+    NSDictionary *cacheDic = [NSDictionary dictionaryWithObjects:cacheData forKeys:cacheArray];
+    
+    //存入数组
+    NSMutableArray *operateArray = [[NSMutableArray alloc]init];
+    operateArray = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
+    [operateArray addObject:cacheDic];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:operateArray forKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
     
 }
 #pragma mark 左侧列表
@@ -702,8 +733,8 @@
     else
     {
         //暂时禁止发送按钮
-//        _loadingView.dscpLabel.text = @"上传图片";
-//        _loadingView.hidden = NO;
+        loadingView.dscpLabel.text = @"上传图片";
+        loadingView.hidden = NO;
 //        _sendBt.enabled = NO;
 //        _sendBt.backgroundColor = [UIColor colorWithRed:205.0/255 green:205.0/255 blue:205.0/255 alpha:205.0/255];
         
@@ -719,7 +750,7 @@
                 if(!responsData)
                 {
                     NSLog(@"return nil");
-                    //_loadingView.hidden = YES;
+                    loadingView.hidden = YES;
                     return;
                 }
                 
@@ -731,7 +762,7 @@
                 if (err > 0) {
                     NSString *errormsg = replaceUnicode(JsonValue([jsonData objectForKey:@"errmsg"],@"NSString"));
                     alertMsgView(errormsg, self);
-                   // _loadingView.hidden = YES;
+                    loadingView.hidden = YES;
                     return;
                 }
                 
@@ -740,7 +771,7 @@
                 if(!imageId)
                 {
                     alertMsgView(@"照片上传失败,图片过大", self);
-                    //_loadingView.hidden = YES;
+                    loadingView.hidden = YES;
                     return;
                 }
                 [imageIdArray addObject:imageId];
@@ -751,7 +782,7 @@
 //                    _sendBt.enabled = YES;
 //                    _sendBt.backgroundColor = [UIColor colorWithRed:74.0/255 green:144.0/255 blue:226.0/255 alpha:1];
 //                }
-//                _loadingView.hidden = YES;
+                loadingView.hidden = YES;
             });
 #pragma mark  照相获取图片ID
         });
@@ -787,12 +818,8 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [self->_imagePickController dismissViewControllerAnimated:YES completion:nil];
-    
-    
 }
 
-
-#pragma mark 图库回调
 
 
 #pragma mark 图片压缩
@@ -913,8 +940,8 @@
 //清除图片
 - (void)deletePic
 {
-//    _loadingView.dscpLabel.text = @"正在删除";
-//    _loadingView.hidden = NO;
+    loadingView.dscpLabel.text = @"正在删除";
+    loadingView.hidden = NO;
     NSMutableString *deleteId = [[NSMutableString alloc] init];
     for(int i=0; i<imageIdArray.count;i++)
     {
@@ -925,7 +952,7 @@
         [deleteId deleteCharactersInRange:NSMakeRange(0, 1)]; //删除首个逗号
     }
     else
-    {   //_loadingView.hidden = YES;
+    {   loadingView.hidden = YES;
         return;
     }
     
@@ -948,10 +975,10 @@
             if(err > 0)
             {
                 alertMsgView(@"图片清除失败", self);
-  //              _loadingView.hidden = YES;
+                loadingView.hidden = YES;
                 return;
             }
-     //       _loadingView.hidden = YES;
+            loadingView.hidden = YES;
             
         });
     });

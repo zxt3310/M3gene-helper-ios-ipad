@@ -16,12 +16,13 @@
 #import "publicMethod.h"
 #import "uploadIpadViewController.h"
 
-@interface mainViewController :UFanBasicViewController  <tabBarSwitchDelegate,loginUpdateToken>
+@interface mainViewController :UFanBasicViewController  <loginUpdateToken>
 
 @property (nonatomic) UITableView *tableView;
 
 @property sendViewController *svc;
 
+- (void)updateToken:(NSString *)currentToken name:(NSString *)name role:(NSArray *)roleArray;
 @end
 
 @interface newTabBarController : UITabBarController

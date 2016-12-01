@@ -64,11 +64,11 @@
 		58C25FE91DE5632500B8D88D /* UIViewController+UFanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58C25FE61DE5632500B8D88D /* UIViewController+UFanViewController.m */; };
 		58C25FEE1DE5635900B8D88D /* leftDrawerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58C25FEA1DE5635900B8D88D /* leftDrawerViewController.m */; };
 		58C25FEF1DE5635900B8D88D /* firstItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58C25FEC1DE5635900B8D88D /* firstItemViewController.m */; };
+		58E741001DEFC8DE00D2927B /* POPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E740FF1DEFC8DE00D2927B /* POPViewController.m */; };
 		700A3E0F1DD0748000D507F1 /* 莲和logo 58.png in Resources */ = {isa = PBXBuildFile; fileRef = 700A3E0C1DD0748000D507F1 /* 莲和logo 58.png */; };
 		700A3E101DD0748000D507F1 /* 莲和logo 80.png in Resources */ = {isa = PBXBuildFile; fileRef = 700A3E0D1DD0748000D507F1 /* 莲和logo 80.png */; };
 		700A3E111DD0748000D507F1 /* 莲和logo120.png in Resources */ = {isa = PBXBuildFile; fileRef = 700A3E0E1DD0748000D507F1 /* 莲和logo120.png */; };
 		7024D4B51DCDCFDA00671EAD /* line.png in Resources */ = {isa = PBXBuildFile; fileRef = 7024D4B41DCDCFDA00671EAD /* line.png */; };
-		7024D4B81DCDDDAF00671EAD /* orderRegisteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7024D4B71DCDDDAF00671EAD /* orderRegisteViewController.m */; };
 		703C290F1DCA286A004FA090 /* dingdanluru.png in Resources */ = {isa = PBXBuildFile; fileRef = 703C29091DCA286A004FA090 /* dingdanluru.png */; };
 		703C29101DCA286A004FA090 /* dingdanluru@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 703C290A1DCA286A004FA090 /* dingdanluru@2x.png */; };
 		703C29111DCA286A004FA090 /* dingdanluru@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 703C290B1DCA286A004FA090 /* dingdanluru@3x.png */; };
@@ -203,12 +203,12 @@
 		58C25FEB1DE5635900B8D88D /* firstItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = firstItemViewController.h; sourceTree = "<group>"; };
 		58C25FEC1DE5635900B8D88D /* firstItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = firstItemViewController.m; sourceTree = "<group>"; };
 		58C25FED1DE5635900B8D88D /* leftDrawerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = leftDrawerViewController.h; sourceTree = "<group>"; };
+		58E740FE1DEFC8DE00D2927B /* POPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POPViewController.h; sourceTree = "<group>"; };
+		58E740FF1DEFC8DE00D2927B /* POPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POPViewController.m; sourceTree = "<group>"; };
 		700A3E0C1DD0748000D507F1 /* 莲和logo 58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "莲和logo 58.png"; path = "image/莲和logo 58.png"; sourceTree = "<group>"; };
 		700A3E0D1DD0748000D507F1 /* 莲和logo 80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "莲和logo 80.png"; path = "image/莲和logo 80.png"; sourceTree = "<group>"; };
 		700A3E0E1DD0748000D507F1 /* 莲和logo120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "莲和logo120.png"; path = "image/莲和logo120.png"; sourceTree = "<group>"; };
 		7024D4B41DCDCFDA00671EAD /* line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = line.png; path = image/line.png; sourceTree = "<group>"; };
-		7024D4B61DCDDDAF00671EAD /* orderRegisteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = orderRegisteViewController.h; sourceTree = "<group>"; };
-		7024D4B71DCDDDAF00671EAD /* orderRegisteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = orderRegisteViewController.m; sourceTree = "<group>"; };
 		703C29091DCA286A004FA090 /* dingdanluru.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dingdanluru.png; path = image/dingdanluru.png; sourceTree = "<group>"; };
 		703C290A1DCA286A004FA090 /* dingdanluru@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dingdanluru@2x.png"; path = "image/dingdanluru@2x.png"; sourceTree = "<group>"; };
 		703C290B1DCA286A004FA090 /* dingdanluru@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dingdanluru@3x.png"; path = "image/dingdanluru@3x.png"; sourceTree = "<group>"; };
@@ -396,8 +396,6 @@
 				5895404E1DC1A6AF00DDA5F8 /* scanViewController.m */,
 				589540581DC1F28A00DDA5F8 /* uploadViewController.h */,
 				589540591DC1F28A00DDA5F8 /* uploadViewController.m */,
-				7024D4B61DCDDDAF00671EAD /* orderRegisteViewController.h */,
-				7024D4B71DCDDDAF00671EAD /* orderRegisteViewController.m */,
 				58B4F9281DE7E95900527BFE /* uploadIpadViewController.h */,
 				58B4F9291DE7E95900527BFE /* uploadIpadViewController.m */,
 				58B099131DEE6E5200B87A4E /* registView.h */,
@@ -499,6 +497,8 @@
 				58C25FE41DE5632500B8D88D /* UFanViewController.m */,
 				58C25FE51DE5632500B8D88D /* UIViewController+UFanViewController.h */,
 				58C25FE61DE5632500B8D88D /* UIViewController+UFanViewController.m */,
+				58E740FE1DEFC8DE00D2927B /* POPViewController.h */,
+				58E740FF1DEFC8DE00D2927B /* POPViewController.m */,
 			);
 			path = Drawer;
 			sourceTree = "<group>";
@@ -718,7 +718,7 @@
 				586DD1931DEEB6120026E67E /* draftViewController.m in Sources */,
 				705E33481DC9C17800024A25 /* CMCustomViews.m in Sources */,
 				58C25FEE1DE5635900B8D88D /* leftDrawerViewController.m in Sources */,
-				7024D4B81DCDDDAF00671EAD /* orderRegisteViewController.m in Sources */,
+				58E741001DEFC8DE00D2927B /* POPViewController.m in Sources */,
 				586DD1901DEEB5BB0026E67E /* myOrderViewController.m in Sources */,
 				708FDEC91DC875080069E6C2 /* NetUtils.m in Sources */,
 				5889D8C71DC091630052C6D7 /* mainViewController.m in Sources */,
