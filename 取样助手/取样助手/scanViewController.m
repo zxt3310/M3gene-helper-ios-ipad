@@ -19,7 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.navigationController.navigationBar.hidden = NO;
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -65,10 +65,13 @@
     if([[UIApplication sharedApplication]statusBarOrientation] == UIInterfaceOrientationLandscapeLeft)
     {
         _preview.connection.videoOrientation = AVCaptureVideoOrientationLandscapeLeft;
-        
+        [_output setRectOfInterest:CGRectMake(0.21, 0.48, 0.59, 0.33)];
     }
     else
+    {
         _preview.connection.videoOrientation = AVCaptureVideoOrientationLandscapeRight;
+        [_output setRectOfInterest:CGRectMake(0.21, 0.19, 0.59, 0.33)];
+    }
     
     _preview.videoGravity =AVLayerVideoGravityResizeAspectFill;
     _preview.frame =self.view.layer.bounds;
@@ -240,9 +243,9 @@
     UIDevice *device = [UIDevice currentDevice];
     if (device.orientation == UIInterfaceOrientationLandscapeLeft) {
         _preview.connection.videoOrientation = UIInterfaceOrientationLandscapeLeft;
-        [_output setRectOfInterest:CGRectMake(0.21, 0.81, 0.59, 0.33)];
+        [_output setRectOfInterest:CGRectMake(0.21, 0.48, 0.59, 0.33)];
     }
-    else
+    else if(device.orientation == UIInterfaceOrientationLandscapeRight)
     {
         _preview.connection.videoOrientation = UIInterfaceOrientationLandscapeRight;
         [_output setRectOfInterest:CGRectMake(0.21, 0.19, 0.59, 0.33)];

@@ -35,6 +35,7 @@
 
 @interface uploadIpadViewController () <UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource,refreshCellNuber,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
+    UITableView *leftView;
     LoadingView *loadingView;
     UIImagePickerController *_imagePickController;
     NSArray *listItem;  //列表标题
@@ -52,7 +53,7 @@
     
 
 
-    UILabel *numberLable;
+    UITextField *numberLable;
     UIImageView *orderPic;
     UIView *background; //放大图片view
     UIImage *upimage; //处理后的上传图片 病例图
@@ -78,6 +79,9 @@
 @synthesize registString = registString;
 @synthesize upOrderImg = upOrderImg;
 
+@synthesize isReEditOperate = isReEditOperate;
+@synthesize deleteIndex = deleteIndex;
+
 - (instancetype)init
 {
     self = [super init];
@@ -91,6 +95,8 @@
         orderPicView = [[detailView alloc]initWithFrame:frame];
         registView = [[detailView alloc]initWithFrame:frame];
         medicalPicView = [[detailView alloc]initWithFrame:frame];
+        
+        isReEditOperate = NO;
         
         //暂存数据初始化
         productId =@"";
@@ -118,6 +124,11 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBar.hidden = YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -125,7 +136,7 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    UITableView *leftView = [[UITableView alloc] initWithFrame:CGRectMake(0, 101, 280*SCREEN_WEIGHT/1024, SCREEN_HEIGHT - 101) style:UITableViewStylePlain];
+    leftView = [[UITableView alloc] initWithFrame:CGRectMake(0, 101, 280*SCREEN_WEIGHT/1024, SCREEN_HEIGHT - 101) style:UITableViewStylePlain];
     
     leftView.delegate =self;
     leftView.dataSource = self;
@@ -152,6 +163,7 @@
     loadingView = [[LoadingView alloc] initWithFrame:CGRectMake((SCREEN_WEIGHT- 80)/2, topY, 80, 70)];
     loadingView.hidden = YES;
     [[UIApplication sharedApplication].keyWindow addSubview:loadingView];
+    [self checkUpLoad];
 
 }
 
@@ -227,8 +239,8 @@
 }
 - (void)sendBtClick
 {
-       // _loadingView.dscpLabel.text = @"正在上传";
-       // _loadingView.hidden = NO;
+        loadingView.dscpLabel.text = @"正在上传";
+        loadingView.hidden = NO;
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^{
             NSString *uploadUrl = [NSString stringWithFormat:orderUpload_URL];
@@ -264,7 +276,24 @@
                 }
                 else
                 {
-                    [self.navigationController popToRootViewControllerAnimated:YES];
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"消息" message:@"上传成功" preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *ula = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+                    
+                    [alert addAction:ula];
+                    [self presentViewController:alert animated:YES completion:^{
+                        
+                        if(isReEditOperate)
+                        {
+                            NSArray *arry = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
+                            NSMutableArray *operateArray = [[NSMutableArray alloc]initWithArray:arry];
+                            [operateArray removeObjectAtIndex:deleteIndex];
+                            arry = [operateArray copy];
+                            [self.refreshDelegate refresh:arry];
+                        }
+
+                        [self clearUItext];
+                        
+                    }];
                     
                 }
             });
@@ -274,32 +303,55 @@
 
 - (void)cacheBtClick
 {
+
     [html5Web evaluateJavaScript:@"app_fetch_form();" completionHandler:^(NSString *str,NSError *error){
-    
-        if(!str)
-        {
-            return;
-        }
+        
         registString = str;
         
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        dateFormat.locale = [[NSLocale alloc]initWithLocaleIdentifier:@"zh_CN"];
+        [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSString *timeStr = [dateFormat stringFromDate:[NSDate date]];
+        
+        //处理图片数据
+        NSData *imgData = UIImagePNGRepresentation(upOrderImg);
+        if(!imgData)
+        {
+            imgData = [[NSData alloc]init];
+        }
+        NSArray *cacheArray = @[@"cacheType",@"operateTime",@"productName",@"productId",@"code_number",@"orderPic",@"registStr"];
+        NSArray *cacheData = @[@"CACHE_ORDER",timeStr,productTF.text,productId,numberLable.text,imgData,registString];
+        NSDictionary *cacheDic = [NSDictionary dictionaryWithObjects:cacheData forKeys:cacheArray];
+        
+        //存入数组
+        
+        NSArray *arry = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
+        NSMutableArray *operateArray = [[NSMutableArray alloc]initWithArray:arry];
+        [operateArray addObject:cacheDic];
+        arry = [operateArray copy];
+        
+        
+        @try {
+            
+            [[NSUserDefaults standardUserDefaults] setObject:arry forKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+        } @catch (NSException *exception) {
+            NSLog(@"%@",exception);
+        } @finally {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"消息" message:@"保存成功" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *ula = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+            
+            [alert addAction:ula];
+            [self presentViewController:alert animated:YES completion:^{
+                
+                [self clearUItext];
+                [self.refreshDelegate refresh:arry];
+                
+            }];
+        }
+
+        
     }];
-    
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    dateFormat.locale = [[NSLocale alloc]initWithLocaleIdentifier:@"zh_CN"];
-    [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSString *timeStr = [dateFormat stringFromDate:[NSDate date]];
-    
-    NSArray *cacheArray = @[@"cacheType",@"operateTime",@"productName",@"productId",@"code_number",@"orderPic",@"registStr"];
-    NSArray *cacheData = @[@"CACHE_ORDER",timeStr,productTF.text,productId,numberLable.text,upOrderImg,self.registString];
-    NSDictionary *cacheDic = [NSDictionary dictionaryWithObjects:cacheData forKeys:cacheArray];
-    
-    //存入数组
-    NSMutableArray *operateArray = [[NSMutableArray alloc]init];
-    operateArray = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
-    [operateArray addObject:cacheDic];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:operateArray forKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
-    
 }
 #pragma mark 左侧列表
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -339,26 +391,28 @@
         detailView *view = (detailView *)listView[i];
         if(indexPath.row == i)
         {
+            if(i == 3)
+            {
+                if(!productName || numberLable.text.length == 0)
+                {
+                    alertMsgView(@"请扫码或选择产品名称", self);
+                    return;
+                }
+                else{
+                        NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@?token=%@",orderComplate_URL,numberLable.text,productId,_token];
+                        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+                        [html5Web loadRequest:request];
+                    
+                    }
+
+            }
             view.hidden = NO;
         }
         else
             view.hidden = YES;
     }
     
-    if(indexPath.row == 3)
-    {
-        if(!productName || numberLable.text.length == 0)
-        {
-            alertMsgView(@"请扫码或选择产品名称", self);
-            return;
-        }
-        else{
-            NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@?token=%@",orderComplate_URL,numberLable.text,productId,_token];
-            NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-            [html5Web loadRequest:request];
-        }
-
-    }
+  
 }
 #pragma mark 右侧pickerView
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -428,6 +482,9 @@
 - (void)okClick
 {
     productTF.text = productName;
+    
+    [self checkUpLoad];
+    
     [productTF resignFirstResponder];
 }
 
@@ -448,9 +505,10 @@
     [scanBt addTarget:self action:@selector(scanBtClick) forControlEvents:UIControlEventTouchUpInside];
     [scanCodeView addSubview:scanBt];
     
-    numberLable = [[UILabel alloc]initWithFrame:CGRectMake(scanCodeView.titleLable.frame.origin.x, scanCodeView.titleLable.frame.origin.y + 40, 400*SCREEN_WEIGHT/1024, 40)];
+    numberLable = [[UITextField alloc]initWithFrame:CGRectMake(scanCodeView.titleLable.frame.origin.x, scanCodeView.titleLable.frame.origin.y + 40, 400*SCREEN_WEIGHT/1024, 40)];
     numberLable.font = [UIFont fontWithName:@"Arial-BoldMT" size:22];
     numberLable.text = number;
+    numberLable.enabled = NO;
     [scanCodeView addSubview:numberLable];
   
     [self.view addSubview:scanCodeView];
@@ -469,6 +527,7 @@
 {
     numberLable.text = code;
     
+    [self checkUpLoad];
     //[self checkOrderRequest];
 }
 
@@ -488,7 +547,7 @@
     [photoBtn addTarget:self action:@selector(photoBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [orderPicView addSubview:photoBtn];
     
-    orderPic = [[UIImageView alloc]initWithFrame:CGRectMake(orderPicView.titleLable.frame.origin.x, orderPicView.titleLable.frame.origin.y + 50, 400*SCREEN_WEIGHT/1024, 480*SCREEN_WEIGHT/768)];
+    orderPic = [[UIImageView alloc]initWithFrame:CGRectMake(orderPicView.titleLable.frame.origin.x, orderPicView.titleLable.frame.origin.y + 50, 600*SCREEN_WEIGHT/1024, 350*SCREEN_WEIGHT/768)];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imgTapAction:)];
     [orderPic addGestureRecognizer:tap];
     orderPic.userInteractionEnabled = YES;
@@ -508,6 +567,7 @@
     html5Web.frame = temp;
     [registView addSubview:html5Web];
     html5Web.UIDelegate = self;
+    html5Web.navigationDelegate = self;
     [self.view addSubview:registView];
 }
 
@@ -664,7 +724,8 @@
 - (void)imgTapAction:(UITapGestureRecognizer *)sender
 {
     UIImageView *imageView = (UIImageView *)[sender view];
-    if (!imageView.image) {
+    CFDataRef bitmapData = CGDataProviderCopyData(CGImageGetDataProvider(imageView.image.CGImage));
+    if (bitmapData==0) {
         return;
     }
     
@@ -722,12 +783,8 @@
         orderPic.image = image;
         upOrderImg = upimage;
         
-//        NSString *alert = [self isAllowSend];
-//        if(!alert)
-//        {
-//            _sendBt.enabled = YES;
-//            _sendBt.backgroundColor = [UIColor colorWithRed:74.0/255 green:144.0/255 blue:226.0/255 alpha:1];
-//        }
+        [self checkUpLoad];
+        
     }
     
     else
@@ -984,6 +1041,7 @@
     });
 }
 
+//处理页面消息弹窗
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler
 {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"消息" message:message?:@"" preferredStyle:UIAlertControllerStyleAlert];
@@ -996,4 +1054,53 @@
 }
 
 
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
+{
+    [html5Web evaluateJavaScript:[NSString stringWithFormat:@"app_fill_form('%@');",registString] completionHandler:nil];
+
+}
+
+- (void)clearUItext
+{
+    for (id object in [self.view subviews]) {
+        if([object isKindOfClass:[detailView class]])
+        {
+            detailView *dv = (detailView *)object;
+            for(id subobject in [dv subviews])
+            {
+                if([subobject isKindOfClass:[UITextField class]])
+                {
+                    UITextField *textFiled = (UITextField *)subobject;
+                    textFiled.text = @"";
+                }
+                if([subobject isKindOfClass:[UIImageView class]])
+                {
+                    UIImageView *imageview = (UIImageView *)subobject;
+                    imageview.image = nil;
+                }
+                
+            }
+        }
+    }
+    [self clearBtnClick];
+    //默认选中第一行并实现第一行点击效果
+    NSIndexPath *firstpath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [leftView selectRowAtIndexPath:firstpath animated:YES scrollPosition:UITableViewScrollPositionTop];
+    [self tableView:leftView didSelectRowAtIndexPath:firstpath];
+}
+
+- (void)checkUpLoad
+{
+    CFDataRef bitmapData = CGDataProviderCopyData(CGImageGetDataProvider(upOrderImg.CGImage));
+    if(productTF.text.length>0 && productId !=nil && numberLable.text.length > 0 && bitmapData>0)
+    {
+        sendBt.enabled = YES;
+        sendBt.backgroundColor = [UIColor colorWithMyNeed:74 green:144 blue:226 alpha:1];
+    }
+    else
+    {
+        sendBt.enabled = NO;
+        sendBt.backgroundColor = [UIColor colorWithMyNeed:171 green:171 blue:171 alpha:1];
+    }
+}
 @end

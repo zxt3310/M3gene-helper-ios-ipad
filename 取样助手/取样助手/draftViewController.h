@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "publicMethod.h"
 #import "NetUtils.h"
-@interface draftViewController : UIViewController
+#import "uploadIpadViewController.h"
 
+
+
+@interface draftViewController : UIViewController <cacheListRefresh>
+
+@property NSArray *productList;
 @end

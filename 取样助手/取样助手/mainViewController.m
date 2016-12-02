@@ -36,7 +36,7 @@
 
 @interface mainViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
-    NSArray *productList;
+    
     NSString *userName;
     NSString *token;
     NSArray *role;
@@ -51,7 +51,7 @@
 @end
 
 @implementation mainViewController
-
+@synthesize productList = productList;
 - (void)loadView
 {
     [super loadView];
@@ -310,7 +310,6 @@
             {
                 _svc = [[sendViewController alloc] init];
                 _svc.title = @"报告寄送";
-                _svc.switchDelegate = self;
                 _svc.isSendExpress = NO;
                 [self.UF_ViewController.navigationController pushViewController:_svc animated:YES];
             }
@@ -327,7 +326,6 @@
             {
                 _svc = [[sendViewController alloc] init];
                 _svc.title = @"样本寄送";
-                _svc.switchDelegate = self;
                 _svc.isSendExpress = YES;
 
                 [self.UF_ViewController.navigationController pushViewController:_svc animated:YES];
@@ -390,6 +388,9 @@
         NSData *response = sendGETRequest(strUrl, nil);
         if (!response) {
             NSLog(@"response is null check");
+            dispatch_async(dispatch_get_main_queue(), ^{
+            alertMsgView(@"网络异常，无法获取产品列表", self);});
+            
             return ;
         }
         NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];

@@ -36,9 +36,9 @@
     [super viewDidLoad];  
     
     self.view.backgroundColor = [UIColor whiteColor];
-    self.items = @[@"",@"",@"",@"",@"",@""];
-    self.itemsMenu = @[@"",@"我的订单",@"草稿箱",@"操作记录",@"我的消息",@"注销"];
-    self.itemsImageName =@[@"",WDDD_IMG,CGX_IMG,CZJL_IMG,WDXX_IMG,WDKH_IMG];
+    self.items = @[@"",@"",@"",@"",@"",@"",@""];
+    self.itemsMenu = @[@"",@"我的订单",@"草稿箱",@"操作记录",@"我的消息",@"我的客户",@"注销"];
+    self.itemsImageName =@[@"",WDDD_IMG,CGX_IMG,CZJL_IMG,WDXX_IMG,WDKH_IMG,WDKH_IMG];
     // Do any additional setup after loading the view.
     
     
@@ -153,13 +153,19 @@
             }
             else if(indexPath.row == 2)
             {
+                mainViewController *mv = (mainViewController *)self.mainVc;
+                
                 draftViewController *dvc = [[draftViewController alloc]init];
+                
+                dvc.productList = mv.productList;
+                
                 [self.UF_ViewController.navigationController pushViewController:dvc animated:YES];
             }
-            else if(indexPath.row == 5)
+            else if(indexPath.row == 6)
             {
                 @try {
 //                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userPhoneNo"];
+                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"CACHE_%@",lastUser]];
                     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"token"];
                     [[NSUserDefaults standardUserDefaults] synchronize];
                 }
@@ -170,7 +176,6 @@
                 @finally
                 {
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadView" object:nil];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"updateToken" object:nil];
                     [self.mainVc updateToken:nil name:lastUser role:nil];
     
                 }

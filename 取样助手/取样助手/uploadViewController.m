@@ -60,13 +60,10 @@
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBar.hidden = NO;
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.navigationBar.hidden = YES;
+    
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WEIGHT,SCREEN_HEIGHT - SCREEN_HEIGHT/12.35) style:UITableViewStylePlain];

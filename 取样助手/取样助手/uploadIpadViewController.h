@@ -14,7 +14,13 @@
 #import <WebKit/WebKit.h>
 #import "CMCustomViews.h"
 
-@interface uploadIpadViewController : UIViewController <WKUIDelegate>
+@protocol cacheListRefresh <NSObject>
+
+- (void)refresh:(NSArray *)array;
+
+@end
+
+@interface uploadIpadViewController : UIViewController <WKUIDelegate,WKNavigationDelegate>
 @property NSArray *productList;
 @property NSString *token;
 @property NSString *userName;
@@ -24,5 +30,10 @@
 @property NSString *number; //条码
 @property NSString *registString; //录入信息字符串
 @property UIImage *upOrderImg; //压缩后上传的检验单图片
+
+@property id <cacheListRefresh> refreshDelegate;
+
+@property BOOL isReEditOperate;
+@property NSInteger deleteIndex;
 
 @end

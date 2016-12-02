@@ -12,6 +12,8 @@
 {
     UITableView *tableview;
     NSArray *cacheList;
+    NSString *user;
+    NSString *token;
 }
 @end
 
@@ -19,7 +21,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    user = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
+    token = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
     cacheList = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"CACHE_%@",user]];
     
     tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 101, SCREEN_WEIGHT, SCREEN_HEIGHT-101) style:UITableViewStylePlain];
@@ -88,11 +92,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(cacheList.count == 0)
-    {
-        return 2;
-    }
-    else
+//    if(cacheList.count == 0)
+//    {
+//        return 2;
+//    }
+//    else
         return cacheList.count;
 }
 
@@ -109,30 +113,43 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         
         CGFloat y = 30 * SCREEN_HEIGHT/768;
-        UIFont *font = [UIFont fontWithName:@"STHeitiSC-Light" size:18];
+        UIFont *font = [UIFont fontWithName:@"STHeitiSC-Light" size:22];
         //操作类型  tag 1
-        UILabel *typeLable = [[UILabel alloc] initWithFrame:CGRectMake(65*SCREEN_WEIGHT/1024, y, 130*SCREEN_WEIGHT/1024, 20)];
+        UILabel *typeLable = [[UILabel alloc] initWithFrame:CGRectMake(65*SCREEN_WEIGHT/1024, y, 150*SCREEN_WEIGHT/1024, 20)];
         typeLable.font = font;
         typeLable.tag = 1;
         [cell.contentView addSubview:typeLable];
         //客户名 tag 2
-        UILabel *nameLable = [[UILabel alloc]initWithFrame:CGRectMake(227*SCREEN_WEIGHT/1024, y, 132*SCREEN_WEIGHT/1024, 20)];
+        UILabel *nameLable = [[UILabel alloc]initWithFrame:CGRectMake(272*SCREEN_WEIGHT/1024, y, 180*SCREEN_WEIGHT/1024, 20)];
         nameLable.font = font;
         nameLable.tag = 2;
         [cell.contentView addSubview:nameLable];
         //订单号  tag 3
-        UILabel *numberLable = [[UILabel alloc]initWithFrame:CGRectMake(484*SCREEN_WEIGHT/1024, y, 184*SCREEN_WEIGHT/1024, 20)];
+        UILabel *numberLable = [[UILabel alloc]initWithFrame:CGRectMake(484*SCREEN_WEIGHT/1024, y, 220*SCREEN_WEIGHT/1024, 20)];
         numberLable.font = font;
         numberLable.tag = 3;
         [cell.contentView addSubview:numberLable];
         //操作时间 tag 4
         UILabel *operateTimeLb = [[UILabel alloc]initWithFrame:CGRectMake(811, y + 3, 220*SCREEN_WEIGHT/1024, 20)];
-        operateTimeLb.font = font;
+        operateTimeLb.font = [UIFont fontWithName:@"STHeitiSC-Light" size:18];
         operateTimeLb.tag = 4;
+        [cell.contentView addSubview:operateTimeLb];
+        
+        //按钮
+        UIButton *reSendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        reSendBtn.frame = CGRectMake(277*SCREEN_WEIGHT/1024, 95*SCREEN_HEIGHT/768, 120*SCREEN_WEIGHT/1024, 40*SCREEN_HEIGHT/768);
+        [reSendBtn setTitle:@"编辑上传" forState:UIControlStateNormal];
+        reSendBtn.backgroundColor = [UIColor colorWithMyNeed:74 green:144 blue:226 alpha:1];
+        reSendBtn.titleLabel.textColor = [UIColor whiteColor];
+        [reSendBtn addTarget:self action:@selector(resendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.contentView addSubview:reSendBtn];
+        
+        UILabel *lineLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 160*SCREEN_HEIGHT/768, SCREEN_WEIGHT, 10*SCREEN_HEIGHT/768)];
+        lineLabel.backgroundColor = [UIColor colorWithMyNeed:216 green:216 blue:216 alpha:1];
+        [cell.contentView addSubview:lineLabel];
 
         
     }
-    NSArray *cacheArray = @[@"cacheType",@"operateTime",@"productName",@"productId",@"code_number",@"orderPic",@"registStr"];
     
     NSDictionary *cacheDic = cacheList[indexPath.row];
     
@@ -155,17 +172,76 @@
     UILabel *name = (UILabel *)[cell.contentView viewWithTag:2];
     NSString *str = [cacheDic objectForKey:@"registStr"];
     NSDictionary *dic = parseJsonString(str);
-    name.text = [dic objectForKey:@"name"];
+    name.text = [NSString stringWithFormat:@"客户：%@",[dic objectForKey:@"name"]];
     
     UILabel *number = (UILabel*)[cell.contentView viewWithTag:3];
-    number.text = [cacheDic objectForKey:@"code_number"];
+    number.text = [NSString stringWithFormat:@"订单:%@",[cacheDic objectForKey:@"code_number"]];
     
     UILabel *time = (UILabel *)[cell.contentView viewWithTag:4];
     time.text = [cacheDic objectForKey:@"operateTime"];
     
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return  cell;
 
 }
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"      删   除         ";
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    UIAlertController *uac = [UIAlertController alertControllerWithTitle:nil message:@"确定删除？" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *_Nullable action){return;}];
+    UIAlertAction *cameraAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        NSMutableArray *arry = [[NSMutableArray alloc]initWithArray:cacheList];
+        [arry removeObjectAtIndex:indexPath.row];
+        cacheList = [arry copy];
+        [[NSUserDefaults standardUserDefaults] setObject:cacheList forKey:[NSString stringWithFormat:@"CACHE_%@",user]];
+        [tableview deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    
+    }];
+    [uac addAction:cancelAction];
+    [uac addAction:cameraAction];
+    [self presentViewController:uac animated:YES completion:nil];
+}
+
+//NSArray *cacheArray = @[@"cacheType",@"operateTime",@"productName",@"productId",@"code_number",@"orderPic",@"registStr"];
+
+- (void)resendBtnClick:(UIButton *)sender;
+{
+    NSIndexPath *index = [tableview indexPathForCell:(UITableViewCell *)sender.superview.superview];
+    NSDictionary *dic = cacheList[index.row];
+    uploadIpadViewController *upLoadView = [[uploadIpadViewController alloc]init];
+    upLoadView.userName = user;
+    upLoadView.productName = [dic objectForKey:@"productName"];
+    upLoadView.productId = [dic objectForKey:@"productId"];
+    upLoadView.number = [dic objectForKey:@"code_number"];
+    upLoadView.registString = [dic objectForKey:@"registStr"];
+    upLoadView.token = token;
+    NSData *imgData = [dic objectForKey:@"orderPic"];
+    upLoadView.upOrderImg = [UIImage imageWithData:imgData];
+    upLoadView.refreshDelegate = self;
+    upLoadView.productList = self.productList;
+    upLoadView.deleteIndex = index.row;
+    upLoadView.isReEditOperate = YES;
+    [self.navigationController pushViewController:upLoadView animated:YES];
+    
+}
+
+- (void)refresh:(NSArray *)array
+{
+    cacheList = array;
+    [tableview reloadData];
+}
+
 @end
 
 

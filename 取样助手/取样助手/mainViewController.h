@@ -21,6 +21,7 @@
 @property (nonatomic) UITableView *tableView;
 
 @property sendViewController *svc;
+@property NSArray *productList;
 
 - (void)updateToken:(NSString *)currentToken name:(NSString *)name role:(NSArray *)roleArray;
 @end
@@ -28,5 +29,7 @@
 @interface newTabBarController : UITabBarController
 
 @property NSString *mytitle;
+
+
 
 @end
