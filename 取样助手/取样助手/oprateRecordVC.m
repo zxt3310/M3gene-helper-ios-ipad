@@ -29,26 +29,30 @@
 //1
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"操作记录";
     [self.view setBackgroundColor:[UIColor whiteColor]];
 
     
    
     
-    float topY = SCREEN_HEIGHT/2;
+    float topY = SCREEN_HEIGHT/3;
 //    if (SCREEN_HEIGHT > 480.0) {
 //        topY += 40;
 //    }
-    loadingView = [[LoadingView alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/2.5, topY, 80, 70)];
+    loadingView = [[LoadingView alloc] initWithFrame:CGRectMake((SCREEN_WEIGHT-80)/2, topY, 80, 70)];
     loadingView.hidden = YES;
     [self.view addSubview:loadingView];
     self.tableView = [[UITableView alloc] init];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-
+    self.tableView.separatorInset = UIEdgeInsetsZero;
+    self.tableView.layoutMargins = UIEdgeInsetsZero;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
     
 }
 //2
 - (void)viewWillAppear:(BOOL)animated
 {
+    self.navigationController.navigationBar.hidden = NO;
     
 }
 
@@ -115,6 +119,13 @@
         UILabel *statusLable = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT - 90, 100, 90, 30)];
         statusLable.tag = 4;
         [cell.contentView addSubview:statusLable];
+        
+        //分割线
+        UILabel *lineLable = [[UILabel alloc]initWithFrame:CGRectMake(0 ,(SCREEN_HEIGHT - TABBAR_HEIGHT - STATUSBAR_HEIGHT - NAVIGATIONBAR_HEIGHT)/4-10,SCREEN_WEIGHT, 1)];
+        lineLable.layer.borderWidth = 1;
+        lineLable.layer.borderColor = [UIColor colorWithMyNeed:171 green:171 blue:171 alpha:1].CGColor;
+        lineLable.tag = 5;
+        [cell.contentView addSubview:lineLable];
     }
    
     NSDictionary *dic = _tableArry[indexPath.row];
@@ -146,10 +157,24 @@
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *dic = _tableArry[indexPath.row];
+    
+    NSString *operateId = [dic objectForKey:@"id"];
+    
+    NSString *urlStr = [NSString stringWithFormat:@"http://dev.mapi.lhgene.cn/mobi-cms/h5-opmore/%@?token=%@",operateId,_token];
+    
+    firstItemViewController *fivc = [[firstItemViewController alloc]init];
+    fivc.urlStr = urlStr;
+    
+    [self.navigationController pushViewController:fivc animated:YES];
 
+}
 
 - (void)operationsRequest
 {

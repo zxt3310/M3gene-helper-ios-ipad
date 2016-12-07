@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "NetUtils.h"
 #import "publicMethod.h"
+#import "firstItemViewController.h"
 @interface oprateRecordVC : UIViewController
 
 @property NSInteger tableCount;
@@ -19,5 +20,6 @@
 @property NSString *operateTime;
 @property NSString *operateName;
 @property NSString *status;
+@property NSString *token;
 
 @end

@@ -71,8 +71,8 @@
     [self.view addSubview:_loginBt];
     
     
-    _username_TF.text = @"现场1";
-    _password_TF.text = @"123456";
+//    _username_TF.text = @"现场1";
+//    _password_TF.text = @"123456";
     
     }
 
@@ -135,6 +135,7 @@
                 if(self.delegate)
                 {
                     [self.delegate updateToken:currentToken name:_username_TF.text role:operations];
+                    [self.leftdelegate updateToken:currentToken name:_username_TF.text role:operations];
                 }
             }];
             

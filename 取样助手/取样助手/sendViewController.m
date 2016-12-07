@@ -98,27 +98,27 @@
     
     
     //选择快递
-    UILabel *expressNamelable = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_HEIGHT/37,SCREEN_HEIGHT/37 ,SCREEN_WEIGHT/6.69,SCREEN_HEIGHT/26.76)];
+    UILabel *expressNamelable = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_HEIGHT/37 + 50,SCREEN_HEIGHT/37 ,SCREEN_WEIGHT/6.69,SCREEN_HEIGHT/26.76)];
     expressNamelable.text = @"快递公司";
     expressNamelable.font = MYUIFONT;
     [expressView addSubview:expressNamelable];
     
     //标签
-    UILabel *nameLable = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_HEIGHT/37,SCREEN_HEIGHT/37 + expressNamelable.frame.size.height + 18, SCREEN_WEIGHT/6.69, SCREEN_WEIGHT/26.79)];
+    UILabel *nameLable = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_HEIGHT/37 + 50,SCREEN_HEIGHT/37 + expressNamelable.frame.size.height + 13, SCREEN_WEIGHT/6.69, SCREEN_WEIGHT/26.79)];
     nameLable.text = @"快递单号";
     nameLable.font = MYUIFONT;
     [expressView addSubview:nameLable];
 
     
     //选择快递 内容lable
-    expressSelectLb = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/3.947,SCREEN_HEIGHT/44.47 +3 ,SCREEN_WEIGHT/1.99,SCREEN_HEIGHT/31.76)];
+    expressSelectLb = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/3.947,SCREEN_HEIGHT/44.47 +3 ,SCREEN_WEIGHT/1.99,SCREEN_HEIGHT/26.68)];
     expressSelectLb.layer.borderWidth = 1;
     expressSelectLb.font = MYUIFONT;
     [expressView addSubview:expressSelectLb];
     
     
     //快递单号 输入框
-    expressNumberTF = [[UITextField alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/3.947,SCREEN_HEIGHT/44.47 +5 + expressSelectLb.frame.size.height + 13,SCREEN_WEIGHT/1.99,SCREEN_HEIGHT/26.68)];
+    expressNumberTF = [[UITextField alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/3.947,SCREEN_HEIGHT/44.47 +5 + expressSelectLb.frame.size.height + 18,SCREEN_WEIGHT/1.99,SCREEN_HEIGHT/26.68)];
     expressNumberTF.layer.borderColor = [UIColor blackColor].CGColor;
     expressNumberTF.layer.borderWidth = 1;
     expressNumberTF.delegate = self;
@@ -127,7 +127,7 @@
 
     
     //选择快递按钮
-    UIButton *choseExpressBt = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/1.26,SCREEN_HEIGHT/47.64 , SCREEN_WEIGHT/5.36,SCREEN_HEIGHT/26.68)];
+    UIButton *choseExpressBt = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/1.26,SCREEN_HEIGHT/47.64 + 2, SCREEN_WEIGHT/5.36,SCREEN_HEIGHT/26.68)];
     [choseExpressBt setTitle:@"选择快递" forState:UIControlStateNormal];
     choseExpressBt.titleLabel.font = MYBUTTONFONT;
     [choseExpressBt setBackgroundColor:MYBUTTONCOLOR];
@@ -140,7 +140,7 @@
     [_scanBt setTitle:@"扫码" forState:UIControlStateNormal];
     _scanBt.tintColor = [UIColor whiteColor];
     _scanBt.titleLabel.font = MYBUTTONFONT;
-    _scanBt.frame = CGRectMake(SCREEN_WEIGHT/1.26,SCREEN_HEIGHT/47.64 + choseExpressBt.frame.size.height + 13, SCREEN_WEIGHT/5.36,SCREEN_HEIGHT/26.68);
+    _scanBt.frame = CGRectMake(SCREEN_WEIGHT/1.26,SCREEN_HEIGHT/47.64 + choseExpressBt.frame.size.height + 22, SCREEN_WEIGHT/5.36,SCREEN_HEIGHT/26.68);
     [_scanBt setBackgroundColor:MYBUTTONCOLOR];
     _scanBt.tag = 5;
     [_scanBt addTarget:self action:@selector(scanBtClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -148,13 +148,13 @@
 
     
     //快递价格
-    UILabel *priceLable = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_HEIGHT/37,nameLable.frame.origin.y + nameLable.frame.size.height + 13 + 2,SCREEN_WEIGHT/6.69,SCREEN_HEIGHT/26.76)];
+    UILabel *priceLable = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_HEIGHT/37 + 50,nameLable.frame.origin.y + nameLable.frame.size.height + 6 + 7,SCREEN_WEIGHT/6.69,SCREEN_HEIGHT/26.76)];
     priceLable.text = @"快递价格";
     priceLable.font = MYUIFONT;
     [expressView addSubview:priceLable];
     
     //价格lable
-    priceTF = [[UITextField alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/3.947,expressNumberTF.frame.origin.y + expressNumberTF.frame.size.height + 13,SCREEN_WEIGHT/1.99,SCREEN_HEIGHT/26.68)];
+    priceTF = [[UITextField alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/3.947,expressNumberTF.frame.origin.y + expressNumberTF.frame.size.height + 18,SCREEN_WEIGHT/1.99,SCREEN_HEIGHT/26.68)];
     priceTF.placeholder = @"请输入价格";
     priceTF.delegate = self;
     priceTF.layer.borderWidth = 1;

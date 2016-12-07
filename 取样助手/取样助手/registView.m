@@ -54,16 +54,17 @@
 
 @end
 
-//单选控件
-@interface comboBox : UIView
-@property (nonatomic) NSArray *itemList; //选项文字
-@property (nonatomic) NSArray *itemId;   //选项对应输出
-@property (nonatomic) NSString *switchId; //选中标识
-@end
+
 
 @implementation comboBox
+@synthesize itemList = _itemList;
+@synthesize itemId = _itemId;
+@synthesize switchId = _switchId;
+
 - (void)setItemList:(NSArray *)itemList
 {
+    _itemList = itemList;
+    
     CGFloat x = 0;
     for(int i = 0;i<itemList.count;i++ )
     {
@@ -77,52 +78,56 @@
         
         UILabel *itemLable = [[UILabel alloc]init];
         itemLable.text = itemList[i];
-        itemLable.frame = CGRectMake(imageView.frame.origin.x + imageView.frame.size.width * 2, 0,itemLable.text.length * 20,20);
+        itemLable.frame = CGRectMake(imageView.frame.origin.x + imageView.frame.size.width * 2, 0,itemLable.text.length * 18,20);
         itemLable.font = [UIFont fontWithName:@"STHeitiSC-Light" size:18];
+        [self addSubview:itemLable];
         
-        x = x + itemLable.frame.origin.x + itemLable.frame.size.width + 20;
-                                                                      
+        x = itemLable.frame.origin.x + itemLable.frame.size.width + 20;
     }
+    CGRect temp = self.frame;
+    temp.size.width = x;
+    self.frame = temp;
+}
+
+- (NSArray *)itemList
+{
+    return _itemList;
 }
 
 - (void)setItemId:(NSArray *)itemId
 {
-    
+    _itemId = itemId;
+}
+
+- (NSArray *)itemId
+{
+    return _itemId;
 }
 
 - (void)setSwitchId:(NSString *)switchId
 {
-    for(int n =0;n<_itemId.count;n++)
-    {
-        if([_itemId[n]isEqualToString:switchId])
+    _switchId = switchId;
+    
+    for (int i = 10; i<10 + _itemList.count; i++) {
+        UIImageView *imageView = (UIImageView *)[self viewWithTag:i];
+        imageView.image = [UIImage imageNamed:@"oval107"];
+        if([_itemId[i - 10]isEqualToString:switchId])
         {
-            for (int i = 10; i<10 + self.itemList.count; i++) {
-                UIImageView *imageView = (UIImageView *)[self viewWithTag:i];
-                imageView.image = [UIImage imageNamed:@"oval107"];
-                if(i-10 == n)
-                {
-                    imageView.image = [UIImage imageNamed:@"nv"];
-                }
-
+            imageView.image = [UIImage imageNamed:@"nv"];
         }
     }
-
-}
 }
 
+- (NSString *)switchId
+{
+    return _switchId;
+}
 
 
 - (void)tapAction:(UITapGestureRecognizer *)sender
 {
-    for (int i = 10; i<10 + self.itemList.count; i++) {
-        UIImageView *imageView = (UIImageView *)[self viewWithTag:i];
-        imageView.image = [UIImage imageNamed:@"oval107"];
-        if(i == sender.view.tag)
-        {
-            imageView.image = [UIImage imageNamed:@"nv"];
-            self.switchId = self.itemId[i - 10];
-        }
-    }
+    NSString *selectid = _itemId[sender.view.tag - 10];
+    [self setSwitchId:selectid];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -135,12 +140,29 @@
     return self;
 }
 
+- (NSString *)stringOfSelectedString
+{
+    NSString *string;
+    if (!_switchId || !_itemList) {
+        string = @"";
+    }
+    else
+    {
+        for (int i = 0; i<_itemList.count; i++) {
+            if ([_switchId isEqualToString:_itemList[i]]) {
+                string = _itemList[i];
+            }
+        }
+    }
+    return string;
+}
+
 @end
 
+//--------------------------------------------------------------------------------------------------------------------------------------------
 
 
-
-@implementation registView
+@implementation registViewNew
 
 - (instancetype)initWithFrame:(CGRect)frame
 {

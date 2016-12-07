@@ -13,6 +13,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <WebKit/WebKit.h>
 #import "CMCustomViews.h"
+#import "registView.h"
 
 @protocol cacheListRefresh <NSObject>
 
@@ -30,6 +31,7 @@
 @property NSString *number; //条码
 @property NSString *registString; //录入信息字符串
 @property UIImage *upOrderImg; //压缩后上传的检验单图片
+@property NSString *diseseName;
 
 @property id <cacheListRefresh> refreshDelegate;
 

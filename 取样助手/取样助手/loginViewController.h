@@ -24,4 +24,5 @@
 @property NSString *placeUserName;
 
 @property id <loginUpdateToken> delegate;
+@property id <loginUpdateToken> leftdelegate;
 @end

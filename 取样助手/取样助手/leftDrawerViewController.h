@@ -12,18 +12,16 @@
 #import "loginViewController.h"
 #import "mainViewController.h"
 #import "draftViewController.h"
+#import "oprateRecordVC.h"
 //#import "Address.h"
 
-@interface leftDrawerViewController : UFanBasicViewController
+@interface leftDrawerViewController : UFanBasicViewController <loginUpdateToken>
 
 
 {
     NSString* lastUser;
     NSString* lastToken;
     UIImageView *cellImageView;
-    BOOL hasLogin;
-    
-    
     UINavigationController *unv;
 }
 @property (nonatomic, strong) NSArray *items;

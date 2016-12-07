@@ -8,7 +8,6 @@
 #import "UFanBasicViewController.h"
 #import "UFanViewController.h"
 #import <UIKit/UIKit.h>
-#import "WebViewJavascriptBridge.h"
 #import "CMCustomViews.h"
 #import <WebKit/WebKit.h>
 #import "POPViewController.h"
@@ -21,5 +20,7 @@
 @property NSString *token;
 @property NSString *urlStr;
 @property NSString *cookie;
+
+@property BOOL isOperatePage;
 
 @end

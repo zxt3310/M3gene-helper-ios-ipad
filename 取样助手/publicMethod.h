@@ -37,7 +37,7 @@
 
 
 #define TEXTFONT @"STHeitiSC-Light"
-#define MYUIFONT [UIFont fontWithName:TEXTFONT size:14]
+#define MYUIFONT [UIFont fontWithName:TEXTFONT size:22]
 #define MYBUTTONFONT [UIFont fontWithName:TEXTFONT size:16]
 
 void setIntObjectForKey(NSInteger value,NSString *key);

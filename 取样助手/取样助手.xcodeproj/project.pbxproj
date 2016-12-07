@@ -40,12 +40,10 @@
 		5889D8C41DC091620052C6D7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5889D8C31DC091620052C6D7 /* AppDelegate.m */; };
 		5889D8C71DC091630052C6D7 /* mainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5889D8C61DC091630052C6D7 /* mainViewController.m */; };
 		5889D8CC1DC091630052C6D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5889D8CB1DC091630052C6D7 /* Assets.xcassets */; };
-		5889D8CF1DC091630052C6D7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5889D8CD1DC091630052C6D7 /* LaunchScreen.storyboard */; };
 		5889D8DA1DC091630052C6D7 /* ____Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5889D8D91DC091630052C6D7 /* ____Tests.m */; };
 		5889D8E51DC091630052C6D7 /* ____UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5889D8E41DC091630052C6D7 /* ____UITests.m */; };
 		5895404F1DC1A6AF00DDA5F8 /* scanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5895404E1DC1A6AF00DDA5F8 /* scanViewController.m */; };
 		589540571DC1F27900DDA5F8 /* loginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 589540561DC1F27900DDA5F8 /* loginViewController.m */; };
-		5895405A1DC1F28A00DDA5F8 /* uploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 589540591DC1F28A00DDA5F8 /* uploadViewController.m */; };
 		589540671DC1F80900DDA5F8 /* sendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 589540661DC1F80900DDA5F8 /* sendViewController.m */; };
 		58B06DCC1DE6D01700F19DA0 /* dingdanluruCopy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B06DC91DE6D01700F19DA0 /* dingdanluruCopy@2x.png */; };
 		58B06DCD1DE6D01800F19DA0 /* dingdanluruCopy.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B06DCA1DE6D01700F19DA0 /* dingdanluruCopy.png */; };
@@ -100,8 +98,6 @@
 		707F84E11DD0C7BD0010D10F /* iconBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 707F84DE1DD0C7BD0010D10F /* iconBack.png */; };
 		707F84E21DD0C7BD0010D10F /* iconBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 707F84DF1DD0C7BD0010D10F /* iconBack@2x.png */; };
 		707F84E31DD0C7BD0010D10F /* iconBack@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 707F84E01DD0C7BD0010D10F /* iconBack@3x.png */; };
-		707F84E91DD0CC3E0010D10F /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = 707F84E71DD0CC3E0010D10F /* WebViewJavascriptBridge.js.txt */; };
-		707F84EA1DD0CC3E0010D10F /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 707F84E81DD0CC3E0010D10F /* WebViewJavascriptBridge.m */; };
 		708FDEC91DC875080069E6C2 /* NetUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 708FDEC81DC875080069E6C2 /* NetUtils.m */; };
 /* End PBXBuildFile section */
 
@@ -161,7 +157,6 @@
 		5889D8C51DC091620052C6D7 /* mainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mainViewController.h; sourceTree = "<group>"; };
 		5889D8C61DC091630052C6D7 /* mainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mainViewController.m; sourceTree = "<group>"; };
 		5889D8CB1DC091630052C6D7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		5889D8CE1DC091630052C6D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5889D8D01DC091630052C6D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5889D8D51DC091630052C6D7 /* 取样助手Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "取样助手Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5889D8D91DC091630052C6D7 /* ____Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "____Tests.m"; sourceTree = "<group>"; };
@@ -173,8 +168,6 @@
 		5895404E1DC1A6AF00DDA5F8 /* scanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = scanViewController.m; sourceTree = "<group>"; };
 		589540551DC1F27900DDA5F8 /* loginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = loginViewController.h; path = "取样助手/loginViewController.h"; sourceTree = "<group>"; };
 		589540561DC1F27900DDA5F8 /* loginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = loginViewController.m; path = "取样助手/loginViewController.m"; sourceTree = "<group>"; };
-		589540581DC1F28A00DDA5F8 /* uploadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uploadViewController.h; sourceTree = "<group>"; };
-		589540591DC1F28A00DDA5F8 /* uploadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = uploadViewController.m; sourceTree = "<group>"; };
 		589540651DC1F80900DDA5F8 /* sendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sendViewController.h; sourceTree = "<group>"; };
 		589540661DC1F80900DDA5F8 /* sendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sendViewController.m; sourceTree = "<group>"; };
 		58B06DC91DE6D01700F19DA0 /* dingdanluruCopy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dingdanluruCopy@2x.png"; path = "image/dingdanluruCopy@2x.png"; sourceTree = "<group>"; };
@@ -240,9 +233,6 @@
 		707F84DE1DD0C7BD0010D10F /* iconBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconBack.png; path = image/iconBack.png; sourceTree = "<group>"; };
 		707F84DF1DD0C7BD0010D10F /* iconBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconBack@2x.png"; path = "image/iconBack@2x.png"; sourceTree = "<group>"; };
 		707F84E01DD0C7BD0010D10F /* iconBack@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconBack@3x.png"; path = "image/iconBack@3x.png"; sourceTree = "<group>"; };
-		707F84E61DD0CC3E0010D10F /* WebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewJavascriptBridge.h; path = "取样助手/WebViewJavaScriptBridge/WebViewJavascriptBridge.h"; sourceTree = "<group>"; };
-		707F84E71DD0CC3E0010D10F /* WebViewJavascriptBridge.js.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = WebViewJavascriptBridge.js.txt; path = "取样助手/WebViewJavaScriptBridge/WebViewJavascriptBridge.js.txt"; sourceTree = "<group>"; };
-		707F84E81DD0CC3E0010D10F /* WebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebViewJavascriptBridge.m; path = "取样助手/WebViewJavaScriptBridge/WebViewJavascriptBridge.m"; sourceTree = "<group>"; };
 		708FDEC71DC875080069E6C2 /* NetUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetUtils.h; path = "取样助手/NetUtils.h"; sourceTree = "<group>"; };
 		708FDEC81DC875080069E6C2 /* NetUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetUtils.m; path = "取样助手/NetUtils.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -304,9 +294,6 @@
 		5889D8B31DC091620052C6D7 = {
 			isa = PBXGroup;
 			children = (
-				707F84E61DD0CC3E0010D10F /* WebViewJavascriptBridge.h */,
-				707F84E71DD0CC3E0010D10F /* WebViewJavascriptBridge.js.txt */,
-				707F84E81DD0CC3E0010D10F /* WebViewJavascriptBridge.m */,
 				703C29151DCA2BDE004FA090 /* publicMethod.h */,
 				703C29161DCA2BDE004FA090 /* publicMethod.m */,
 				705E33461DC9C17800024A25 /* CMCustomViews.h */,
@@ -349,7 +336,6 @@
 				5889D8C61DC091630052C6D7 /* mainViewController.m */,
 				589540511DC1F18E00DDA5F8 /* 操作记录 */,
 				5889D8CB1DC091630052C6D7 /* Assets.xcassets */,
-				5889D8CD1DC091630052C6D7 /* LaunchScreen.storyboard */,
 				5889D8D01DC091630052C6D7 /* Info.plist */,
 				5889D8BF1DC091620052C6D7 /* Supporting Files */,
 				586DD1911DEEB6120026E67E /* draftViewController.h */,
@@ -389,8 +375,6 @@
 			children = (
 				5895404D1DC1A6AF00DDA5F8 /* scanViewController.h */,
 				5895404E1DC1A6AF00DDA5F8 /* scanViewController.m */,
-				589540581DC1F28A00DDA5F8 /* uploadViewController.h */,
-				589540591DC1F28A00DDA5F8 /* uploadViewController.m */,
 				58B4F9281DE7E95900527BFE /* uploadIpadViewController.h */,
 				58B4F9291DE7E95900527BFE /* uploadIpadViewController.m */,
 				58B099131DEE6E5200B87A4E /* registView.h */,
@@ -620,7 +604,6 @@
 				703C292D1DCA41D2004FA090 /* unoperate.png in Resources */,
 				706B00D71DCB2DB9003953DD /* 用户名.png in Resources */,
 				5837EC301DE6D81E009921E8 /* 草稿箱@2x.png in Resources */,
-				5889D8CF1DC091630052C6D7 /* LaunchScreen.storyboard in Resources */,
 				58B0991F1DEE74B600B87A4E /* nv@3x.png in Resources */,
 				58B06DCC1DE6D01700F19DA0 /* dingdanluruCopy@2x.png in Resources */,
 				58B099221DEE74B600B87A4E /* oval107@3x.png in Resources */,
@@ -648,7 +631,6 @@
 				5837EC321DE6D81E009921E8 /* 订单查看订单.png in Resources */,
 				707F84E21DD0C7BD0010D10F /* iconBack@2x.png in Resources */,
 				706B00DE1DCB34A7003953DD /* jisongbaogao@2x.png in Resources */,
-				707F84E91DD0CC3E0010D10F /* WebViewJavascriptBridge.js.txt in Resources */,
 				703C29101DCA286A004FA090 /* dingdanluru@2x.png in Resources */,
 				5887AD381DE59AB900FA00B1 /* 喇叭@2x.png in Resources */,
 				5837EC381DE6DFC0009921E8 /* touxiang@2x.png in Resources */,
@@ -719,8 +701,6 @@
 				5895404F1DC1A6AF00DDA5F8 /* scanViewController.m in Sources */,
 				5889D8C41DC091620052C6D7 /* AppDelegate.m in Sources */,
 				58C25FE71DE5632500B8D88D /* UFanBasicViewController.m in Sources */,
-				707F84EA1DD0CC3E0010D10F /* WebViewJavascriptBridge.m in Sources */,
-				5895405A1DC1F28A00DDA5F8 /* uploadViewController.m in Sources */,
 				581D069D1DC0A2330050DFA0 /* oprateRecordVC.m in Sources */,
 				5889D8C11DC091620052C6D7 /* main.m in Sources */,
 			);
@@ -756,17 +736,6 @@
 			targetProxy = 5889D8E11DC091630052C6D7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		5889D8CD1DC091630052C6D7 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5889D8CE1DC091630052C6D7 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		5889D8E71DC091630052C6D7 /* Debug */ = {

@@ -33,11 +33,10 @@
 @end
 
 
-@interface uploadIpadViewController () <UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource,refreshCellNuber,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface uploadIpadViewController () <UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource,refreshCellNuber,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIGestureRecognizerDelegate>
 {
     UITableView *leftView;
     LoadingView *loadingView;
-    UIImagePickerController *_imagePickController;
     NSArray *listItem;  //列表标题
     UIButton *sendBt;   //上传按钮
     BOOL allowRigest;   //是否允许录入
@@ -47,9 +46,11 @@
     detailView *orderPicView;
     detailView *registView;
     detailView *medicalPicView;
+    detailView *diseseSelectView;
     
     NSArray *listView;
     UITextField *productTF; //产品信息
+    UITextField *diseseTF; //疾病信息
     
 
 
@@ -78,16 +79,16 @@
 @synthesize number = number;
 @synthesize registString = registString;
 @synthesize upOrderImg = upOrderImg;
-
 @synthesize isReEditOperate = isReEditOperate;
 @synthesize deleteIndex = deleteIndex;
+@synthesize diseseName = diseseName;
 
 - (instancetype)init
 {
     self = [super init];
     if(self)
     {
-        listItem = @[@"产品选择",@"扫描检验单条形码",@"检验单图片",@"检验单录入",@"客户病例"];
+        listItem = @[@"产品选择",@"扫描检验单条形码",@"检验单图片",@"检验单录入",@"客户病例",@"疾病选择"];
         
         CGRect frame = CGRectMake(280 *SCREEN_WEIGHT/1024,101, 744*SCREEN_WEIGHT /1024,SCREEN_HEIGHT - 101);
         productView = [[detailView alloc]initWithFrame:frame];
@@ -95,6 +96,7 @@
         orderPicView = [[detailView alloc]initWithFrame:frame];
         registView = [[detailView alloc]initWithFrame:frame];
         medicalPicView = [[detailView alloc]initWithFrame:frame];
+        diseseSelectView = [[detailView alloc]initWithFrame:frame];
         
         isReEditOperate = NO;
         
@@ -112,14 +114,8 @@
         y = 0;
         imageViewCount = 10;
         isTakeMedicalPhoto = NO;
-        //照相机
-//        _imagePickController = [[UIImagePickerController alloc] init];
-//        _imagePickController.delegate = self;
-//        _imagePickController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-//        _imagePickController.allowsEditing = NO;
 
-        
-        listView = [NSArray arrayWithObjects:productView,scanCodeView,orderPicView,registView,medicalPicView, nil];
+        listView = [NSArray arrayWithObjects:productView,scanCodeView,orderPicView,registView,medicalPicView,diseseSelectView, nil];
     }
     return self;
 }
@@ -136,6 +132,10 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
+    UITapGestureRecognizer *tapG = [[UITapGestureRecognizer alloc]init];
+    tapG.delegate = self;
+    [self.view addGestureRecognizer:tapG];
+    
     leftView = [[UITableView alloc] initWithFrame:CGRectMake(0, 101, 280*SCREEN_WEIGHT/1024, SCREEN_HEIGHT - 101) style:UITableViewStylePlain];
     
     leftView.delegate =self;
@@ -149,6 +149,7 @@
     [self setOrderPicView];
     [self setRegistView];
     [self setMedicalPicView];
+    [self setDiseseSelectView];
     //默认选中第一行并实现第一行点击效果
     NSIndexPath *firstpath = [NSIndexPath indexPathForRow:0 inSection:0];
     [leftView selectRowAtIndexPath:firstpath animated:YES scrollPosition:UITableViewScrollPositionTop];
@@ -157,9 +158,6 @@
     
     //loading 动画
     float topY = SCREEN_HEIGHT/3;
-//    if ([UIScreen mainScreen].bounds.size.height > 480.0) {
-//        topY += 100;
-//    }
     loadingView = [[LoadingView alloc] initWithFrame:CGRectMake((SCREEN_WEIGHT- 80)/2, topY, 80, 70)];
     loadingView.hidden = YES;
     [[UIApplication sharedApplication].keyWindow addSubview:loadingView];
@@ -277,7 +275,7 @@
                 else
                 {
                     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"消息" message:@"上传成功" preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction *ula = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+                    UIAlertAction *ula = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
                     
                     [alert addAction:ula];
                     [self presentViewController:alert animated:YES completion:^{
@@ -292,9 +290,7 @@
                         }
 
                         [self clearUItext];
-                        
                     }];
-                    
                 }
             });
         });
@@ -305,6 +301,11 @@
 {
 
     [html5Web evaluateJavaScript:@"app_fetch_form();" completionHandler:^(NSString *str,NSError *error){
+        
+        if(!str)
+        {
+            str = registString;
+        }
         
         registString = str;
         
@@ -327,6 +328,10 @@
         
         NSArray *arry = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
         NSMutableArray *operateArray = [[NSMutableArray alloc]initWithArray:arry];
+        if(isReEditOperate)
+        {
+            [operateArray removeObjectAtIndex:deleteIndex];
+        }
         [operateArray addObject:cacheDic];
         arry = [operateArray copy];
         
@@ -346,11 +351,8 @@
                 
                 [self clearUItext];
                 [self.refreshDelegate refresh:arry];
-                
             }];
         }
-
-        
     }];
 }
 #pragma mark 左侧列表
@@ -364,7 +366,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return listView.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -381,30 +383,37 @@
     cell.layer.borderColor = [UIColor colorWithMyNeed:230 green:230 blue:230 alpha:1].CGColor;
     cell.backgroundColor = tableView.backgroundColor;
     return cell;
-
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    for(int i = 0;i < 5; i++)
+    for(int i = 0;i < listView.count; i++)
     {
         detailView *view = (detailView *)listView[i];
         if(indexPath.row == i)
         {
             if(i == 3)
             {
-                if(!productName || numberLable.text.length == 0)
+                if(productTF.text.length == 0 || numberLable.text.length == 0)
                 {
                     alertMsgView(@"请扫码或选择产品名称", self);
                     return;
                 }
                 else{
-                        NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@?token=%@",orderComplate_URL,numberLable.text,productId,_token];
+                    //判断完善页面是否需要从草稿箱中取出上次录入未保存的内容，如果需要research=1页面不从数据库中加载。反之为0；
+                    NSString *isblank;
+                    if(registString.length == 0)
+                    {
+                        isblank = @"1";
+                    }
+                    else
+                    {
+                        isblank = @"0";
+                    }
+                        NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@?token=%@&search=%@",orderComplate_URL,numberLable.text,productId,_token,isblank];
                         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
                         [html5Web loadRequest:request];
-                    
                     }
-
             }
             view.hidden = NO;
         }
@@ -412,7 +421,6 @@
             view.hidden = YES;
     }
     
-  
 }
 #pragma mark 右侧pickerView
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -422,7 +430,15 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return _productList.count+1;
+    NSInteger numberOfRow;
+    if (pickerView.tag == 1) {
+        numberOfRow = _productList.count+1;
+    }
+    else
+    {
+        return 5;
+    }
+    return numberOfRow;
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
@@ -432,22 +448,45 @@
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
+    NSString *currentName;
     if(row == 0)
     {
-        return @"请选择产品";
+        if (pickerView.tag == 1) {
+            return @"请选择产品";
+        }
+        else{
+            return @"请选择疾病";
+        }
     }
-    NSDictionary *productDic = _productList[row - 1];
-    NSString *currentProductName = [productDic objectForKey:@"name"];
-    return currentProductName;
+    
+    if (pickerView.tag == 1) {
+        NSDictionary *productDic = _productList[row - 1];
+        currentName = [productDic objectForKey:@"name"];
+    }
+    else {
+        return @"test";
+    }
+    
+    return currentName;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     if(row >0)
     {
-        NSDictionary *productDic = _productList[row - 1];
-        productName = [productDic objectForKey:@"name"];
-        productId = [productDic objectForKey:@"id"];
+        if(pickerView.tag == 1)
+        {
+            NSDictionary *productDic = _productList[row - 1];
+            productName = [productDic objectForKey:@"name"];
+            productId = [productDic objectForKey:@"id"];
+            productTF.text = productName;
+            [self checkUpLoad];
+            [productTF resignFirstResponder];
+        }
+        else {
+            
+        }
+
         
     }
 }
@@ -458,6 +497,11 @@
 {
     productView.titleLable.text = @"产品选择";
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(egg:)];
+    tap.numberOfTapsRequired = 3;
+    [productView.titleLable addGestureRecognizer:tap];
+    productView.titleLable.userInteractionEnabled = YES;
+    
     productView.productPicker = [[UIPickerView alloc]init];
     productView.productPicker.delegate = self;
     productTF = [[UITextField alloc]initWithFrame:CGRectMake(180, 55, 400, 30)];
@@ -466,17 +510,29 @@
     productTF.textAlignment = NSTextAlignmentCenter;
     productTF.layer.borderWidth = 1;
     productTF.inputView = productView.productPicker;
+    productView.productPicker.tag = 1;
+
     productTF.text = productName;
     
-    UIToolbar *toolBar = [[UIToolbar alloc]init];
-    toolBar.barTintColor = [UIColor whiteColor];
-    toolBar.frame = CGRectMake(0, 19, SCREEN_WEIGHT, 35);
-    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(okClick)];
-    toolBar.items = @[item];
-    productTF.inputAccessoryView = toolBar;
+//    UIToolbar *toolBar = [[UIToolbar alloc]init];
+//    toolBar.barTintColor = [UIColor whiteColor];
+//    toolBar.frame = CGRectMake(0, 19, SCREEN_WEIGHT, 35);
+//    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(okClick)];
+//    toolBar.items = @[item];
+//    productTF.inputAccessoryView = toolBar;
     
     [productView addSubview:productTF];
     [self.view addSubview:productView];
+}
+
+- (void)egg:(UITapGestureRecognizer *)sender{
+    
+    comboBox *rv = [[comboBox alloc] initWithFrame:CGRectMake(100, 400, 0, 20)];
+    rv.itemList = @[@"上面",@"下面哈哈哈哈哈哈哈哈哈哈哈哈哈",@"左面",@"右"];
+    rv.itemId = @[@"2",@"4",@"6",@"8"];
+
+    [productView addSubview:rv];
+    
 }
 
 - (void)okClick
@@ -497,7 +553,7 @@
     scanCodeView.titleLable.text = @"扫描检验单条形码";
     
     UIButton *scanBt = [UIButton buttonWithType:UIButtonTypeCustom];
-    scanBt.frame = CGRectMake(630*SCREEN_WEIGHT/1024,scanCodeView.titleLable.frame.origin.y,80*SCREEN_WEIGHT/1024,40*SCREEN_HEIGHT/768);
+    scanBt.frame = CGRectMake(630*SCREEN_WEIGHT/1024,scanCodeView.titleLable.frame.origin.y + 40,80*SCREEN_WEIGHT/1024,40*SCREEN_HEIGHT/768);
     [scanBt setTitle:@"扫码" forState:UIControlStateNormal];
     scanBt.titleLabel.textColor = [UIColor whiteColor];
     scanBt.backgroundColor = [UIColor colorWithMyNeed:88 green:207 blue:225 alpha:1];
@@ -508,7 +564,7 @@
     numberLable = [[UITextField alloc]initWithFrame:CGRectMake(scanCodeView.titleLable.frame.origin.x, scanCodeView.titleLable.frame.origin.y + 40, 400*SCREEN_WEIGHT/1024, 40)];
     numberLable.font = [UIFont fontWithName:@"Arial-BoldMT" size:22];
     numberLable.text = number;
-    numberLable.enabled = NO;
+    numberLable.layer.borderWidth = 1;
     [scanCodeView addSubview:numberLable];
   
     [self.view addSubview:scanCodeView];
@@ -517,7 +573,6 @@
 - (void)scanBtClick
 {
     scanViewController *svc = [[scanViewController alloc] init];
-    
     svc.delegate = self;
     [self.navigationController pushViewController:svc animated:YES];
 
@@ -547,7 +602,7 @@
     [photoBtn addTarget:self action:@selector(photoBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [orderPicView addSubview:photoBtn];
     
-    orderPic = [[UIImageView alloc]initWithFrame:CGRectMake(orderPicView.titleLable.frame.origin.x, orderPicView.titleLable.frame.origin.y + 50, 600*SCREEN_WEIGHT/1024, 350*SCREEN_WEIGHT/768)];
+    orderPic = [[UIImageView alloc]initWithFrame:CGRectMake(orderPicView.titleLable.frame.origin.x+80, orderPicView.titleLable.frame.origin.y + 100, 480*SCREEN_WEIGHT/1024, 280*SCREEN_WEIGHT/768)];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imgTapAction:)];
     [orderPic addGestureRecognizer:tap];
     orderPic.userInteractionEnabled = YES;
@@ -600,7 +655,7 @@
 
 - (void)medicalBtnClick
 {
-    if(medicalPicView.subviews.count>7)
+    if(medicalPicView.subviews.count>8)
     {
         alertMsgView(@"最多拍摄6张图片", self);
         return;
@@ -626,6 +681,35 @@
     x = 0;
     y = 0;
     [imageIdArray removeAllObjects];
+}
+
+#pragma mark 疾病选择页面
+
+- (void)setDiseseSelectView
+{
+    diseseSelectView.titleLable.text = @"疾病选择";
+    diseseSelectView.productPicker = [[UIPickerView alloc]init];
+    diseseSelectView.productPicker.delegate = self;
+    diseseTF = [[UITextField alloc]initWithFrame:CGRectMake(180, 55, 400, 30)];
+    diseseTF.font = [UIFont fontWithName:@"STHeitiSC-Light" size:22];
+    diseseTF.placeholder = @"点击选择";
+    diseseTF.textAlignment = NSTextAlignmentCenter;
+    diseseTF.layer.borderWidth = 1;
+    diseseTF.inputView = diseseSelectView.productPicker;
+    diseseSelectView.productPicker.tag = 2;
+    
+    diseseTF.text = diseseName;
+    
+    //    UIToolbar *toolBar = [[UIToolbar alloc]init];
+    //    toolBar.barTintColor = [UIColor whiteColor];
+    //    toolBar.frame = CGRectMake(0, 19, SCREEN_WEIGHT, 35);
+    //    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(okClick)];
+    //    toolBar.items = @[item];
+    //    productTF.inputAccessoryView = toolBar;
+    
+    [diseseSelectView addSubview:diseseTF];
+    [self.view addSubview:diseseSelectView];
+
 }
 //检查订单是否重复
 - (void)checkOrderRequest
@@ -685,7 +769,7 @@
 #pragma mark 调用相机或图库
 - (void)selectImageFromCamera
 {
-    _imagePickController = [[UIImagePickerController alloc] init];
+    UIImagePickerController *_imagePickController = [[UIImagePickerController alloc] init];
     _imagePickController.delegate = self;
     _imagePickController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     _imagePickController.allowsEditing = NO;
@@ -698,7 +782,6 @@
     //_imagePickController.sourceType = UIImagePickerControllerSourceTypeCamera;
     
     //_imagePickController.mediaTypes = @[(NSString *)kUTTypeImage];
-    
     _imagePickController.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
     
     [self presentViewController:_imagePickController animated:YES completion:nil];
@@ -706,7 +789,7 @@
 
 - (void)selectImageFromMedia
 {
-    _imagePickController = [[UIImagePickerController alloc] init];
+    UIImagePickerController *_imagePickController = [[UIImagePickerController alloc] init];
     _imagePickController.delegate = self;
     _imagePickController.allowsEditing = NO;
     
@@ -767,14 +850,28 @@
     [aView.layer addAnimation:animation forKey:nil];
 }
 
+//保存图片到相册后的反馈 必须调用
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
+    if (error) {
+        NSLog(@"%@",error);
+    }
+}
 #pragma mark 相机回掉
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary<NSString *,id> *)editingInfo
 {
-    
+    if(picker.sourceType == UIImagePickerControllerSourceTypeCamera)
+    {
+        UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+
+    }
     CFDataRef bitmapData = CGDataProviderCopyData(CGImageGetDataProvider(image.CGImage));
     NSData *mydata = (__bridge_transfer NSData*)bitmapData;
-    
-    upimage = [self imageWithImageSimple:image scaledToSize:CGSizeMake(800, 1200)];
+    if(image.size.height>image.size.width){
+        upimage = [self imageWithImageSimple:image scaledToSize:CGSizeMake(800, 1200)];
+    }
+    else{
+        upimage = [self imageWithImageSimple:image scaledToSize:CGSizeMake(1200, 800)];
+    }
     
     CFDataRef bitmapDataUP = CGDataProviderCopyData(CGImageGetDataProvider(upimage.CGImage));
     
@@ -784,7 +881,6 @@
         upOrderImg = upimage;
         
         [self checkUpLoad];
-        
     }
     
     else
@@ -869,12 +965,12 @@
     
     isTakeMedicalPhoto = NO;
     
-    [self->_imagePickController dismissViewControllerAnimated:YES completion:nil];
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    [self->_imagePickController dismissViewControllerAnimated:YES completion:nil];
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -1009,7 +1105,8 @@
         [deleteId deleteCharactersInRange:NSMakeRange(0, 1)]; //删除首个逗号
     }
     else
-    {   loadingView.hidden = YES;
+    {
+        loadingView.hidden = YES;
         return;
     }
     
@@ -1056,7 +1153,14 @@
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
-    [html5Web evaluateJavaScript:[NSString stringWithFormat:@"app_fill_form('%@');",registString] completionHandler:nil];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        if(isReEditOperate)
+        {
+            //sleep(2);
+    
+            [html5Web evaluateJavaScript:[NSString stringWithFormat:@"app_fill_form('%@');",registString] completionHandler:nil];
+        }
+    });
 
 }
 
@@ -1076,7 +1180,7 @@
                 if([subobject isKindOfClass:[UIImageView class]])
                 {
                     UIImageView *imageview = (UIImageView *)subobject;
-                    imageview.image = nil;
+                    imageview.image = [[UIImage alloc]init];
                 }
                 
             }
@@ -1103,4 +1207,21 @@
         sendBt.backgroundColor = [UIColor colorWithMyNeed:171 green:171 blue:171 alpha:1];
     }
 }
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if (![gestureRecognizer.view isKindOfClass:[UITextField class]]) {
+        [productTF resignFirstResponder];
+        [numberLable resignFirstResponder];
+        [diseseTF resignFirstResponder];
+    }
+
+    if([NSStringFromClass([touch.view class])isEqualToString:@"UITableViewCellContentView"])
+    {
+        return NO;
+    }
+    
+    return  YES;
+}
+
 @end

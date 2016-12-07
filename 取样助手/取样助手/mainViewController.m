@@ -8,38 +8,9 @@
 
 #import "mainViewController.h"
 
-@implementation newTabBarController
-
-- (void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
-    CGRect tabFrame = self.tabBar.frame;
-    tabFrame.size.height = 60;
-    tabFrame.origin.y = [UIScreen mainScreen].bounds.size.height - 60;
-    self.tabBar.frame = tabFrame;
-    self.tabBar.backgroundColor = [UIColor whiteColor];
-    self.tabBar.tintColor = [UIColor colorWithRed:114.0/255 green:176.0/255 blue:248.0/255 alpha:1.];
-}
-
-- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
-{
-    //if([item isEqual:tabBar.items[1]])
-    if ([item.title isEqualToString:@"操作记录"])
-    {
-       [self.navigationController.navigationBar setHidden:YES];
-    }
-    else
-        [self.navigationController.navigationBar setHidden:NO];
-}
-
-@end
 
 @interface mainViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
-    
-    NSString *userName;
-    NSString *token;
-    NSArray *role;
     UIButton *backBtn;
     
     BOOL allowRegist;
@@ -51,6 +22,9 @@
 @end
 
 @implementation mainViewController
+@synthesize userName = userName;
+@synthesize token = token;
+@synthesize role = role;
 @synthesize productList = productList;
 - (void)loadView
 {
@@ -412,7 +386,7 @@
     allowRegist = NO;
     allowSendEx = NO;
     allowSendReport = NO;
-    self->token = currentToken;
+    token = currentToken;
     userName = name;
     for(int i = 0; i<roleArray.count; i++)
     {

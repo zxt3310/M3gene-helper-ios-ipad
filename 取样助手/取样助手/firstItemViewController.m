@@ -17,6 +17,16 @@
 {
 
 }
+
+- (instancetype)init
+{
+    self= [super init];
+    if (self) {
+        _isOperatePage = NO;
+    }
+    return  self;
+}
+
 -(void)viewDidLoad{
     [super viewDidLoad];
     webViewHtml5 = [[WKWebView alloc]init];
@@ -25,11 +35,12 @@
     webViewHtml5.UIDelegate = self;
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:_urlStr]];
     
-    [request addValue:_cookie forHTTPHeaderField:@"Set-Cookie"];
-    [request addValue:_token forHTTPHeaderField:@"token"];
-    
-    
-    NSLog(@"%@",request.allHTTPHeaderFields);
+    if(!_isOperatePage)
+    {
+        [request addValue:_cookie forHTTPHeaderField:@"Set-Cookie"];
+        [request addValue:_token forHTTPHeaderField:@"token"];
+        NSLog(@"%@",request.allHTTPHeaderFields);
+    }
 
 
     [webViewHtml5 loadRequest:[request copy]];

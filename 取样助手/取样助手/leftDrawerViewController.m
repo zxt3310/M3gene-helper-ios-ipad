@@ -10,9 +10,7 @@
 
 @interface leftDrawerViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
-    UIColor *starColor;
-    UIColor *midColor;
-    UIColor *endColor;
+    mainViewController *MainVc;
 }
 //@property (nonatomic, strong) UITableView *tableView;
 
@@ -36,25 +34,15 @@
     [super viewDidLoad];  
     
     self.view.backgroundColor = [UIColor whiteColor];
-    self.items = @[@"",@"",@"",@"",@"",@"",@""];
-    self.itemsMenu = @[@"",@"我的订单",@"草稿箱",@"操作记录",@"我的消息",@"我的客户",@"注销"];
-    self.itemsImageName =@[@"",WDDD_IMG,CGX_IMG,CZJL_IMG,WDXX_IMG,WDKH_IMG,WDKH_IMG];
+    self.items = @[@"",@"",@"",@"",@""];
+    self.itemsMenu = @[@"",@"我的订单",@"草稿箱",@"操作记录",@"注销"];
+    self.itemsImageName =@[@"",WDDD_IMG,CGX_IMG,CZJL_IMG/*,WDXX_IMG,WDKH_IMG*/,WDKH_IMG];
     // Do any additional setup after loading the view.
     
+    MainVc = (mainViewController *)_mainVc;
     
-    hasLogin = NO;
-    lastUser =  [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
+    lastUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
     lastToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
-    if (lastToken !=nil)
-    {
-        hasLogin = YES;
-    }
-
-    starColor = [UIColor colorWithRed:114.0/255 green:97.0/255 blue:179.0/255 alpha:1];
-    midColor =  [UIColor colorWithRed:140.0/255 green:121.0/255 blue:214.0/255 alpha:1];
-    endColor = [UIColor whiteColor];
-    
-   // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedNotif:) name:@"ReloadView" object:nil];
     
 }
 
@@ -77,6 +65,13 @@
         titleLable.tag = 1;
         [cell.contentView addSubview:titleLable];
         
+        UILabel *userNameLb = [[UILabel alloc]initWithFrame:CGRectMake(200, 60, 88, 30)];
+        userNameLb.font = titleLable.font;
+        userNameLb.textColor = titleLable.textColor;
+        userNameLb.hidden = YES;
+        userNameLb.tag = 3;
+        [cell.contentView addSubview:userNameLb];
+        
         cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(60*SCREEN_WEIGHT/1024, 39*SCREEN_HEIGHT/768 - 15, 27*SCREEN_WEIGHT/1024, 27*SCREEN_HEIGHT/768)];   //侧边栏图标
         cellImageView.tag = 2;
         [cell.contentView addSubview:cellImageView];
@@ -87,6 +82,7 @@
         [cell.contentView addSubview:lineLable];
         if (indexPath.row == 0) {
             lineLable.hidden = YES;
+            userNameLb.hidden = NO;
         }
     }
     
@@ -100,20 +96,18 @@
     
     leftImg.image =[UIImage imageNamed:self.itemsImageName[indexPath.row]];
     
-    
-    
     if(indexPath.row == 0)
       {
+          UILabel *nameLb = [(UILabel *)cell.contentView viewWithTag:3];
+          nameLb.text = lastUser;
+          
           leftImg.frame = CGRectMake(55*SCREEN_WEIGHT/1024, 33*SCREEN_HEIGHT/768, 82*SCREEN_WEIGHT/1024, 82*SCREEN_HEIGHT/768);
           leftImg.image = [UIImage imageNamed:@"touxiang"];
           cell.backgroundColor = [UIColor colorWithMyNeed:236 green:236 blue:236 alpha:1];
-          
           cell.userInteractionEnabled = NO;
       }
 
-    
     return cell;
-    
 }
 //设置cell高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -138,12 +132,12 @@
     {
         if(finished)
         {
-            if(indexPath.row == 1)
+            if([self.itemsMenu[indexPath.row] isEqualToString:@"我的订单"])
             {
                 NSString *cookie = [[NSUserDefaults standardUserDefaults] objectForKey:@"Set-Cookie"];
                 NSArray *cookieArray = [cookie componentsSeparatedByString:@";"];
                 firstItemViewController *fivc = [[firstItemViewController alloc]init];
-                fivc.token = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
+                fivc.token = lastToken;
                 fivc.urlStr = @"http://dev.mapi.lhgene.cn/app/index.html#/salefinance";
                 if(cookieArray.count>0)
                 {
@@ -151,7 +145,7 @@
                 }
                 [self.UF_ViewController.navigationController pushViewController:fivc animated:YES];
             }
-            else if(indexPath.row == 2)
+            else if([self.itemsMenu[indexPath.row] isEqualToString:@"草稿箱"])
             {
                 mainViewController *mv = (mainViewController *)self.mainVc;
                 
@@ -161,11 +155,15 @@
                 
                 [self.UF_ViewController.navigationController pushViewController:dvc animated:YES];
             }
-            else if(indexPath.row == 6)
+            else if ([self.itemsMenu[indexPath.row] isEqualToString:@"操作记录"])
+            {
+                oprateRecordVC *orvc = [[oprateRecordVC alloc]init];
+                orvc.token = lastToken;
+                [self.navigationController pushViewController:orvc animated:YES];
+            }
+            else if([self.itemsMenu[indexPath.row] isEqualToString:@"注销"])
             {
                 @try {
-//                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userPhoneNo"];
-                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"CACHE_%@",lastUser]];
                     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"token"];
                     [[NSUserDefaults standardUserDefaults] synchronize];
                 }
@@ -186,6 +184,7 @@
                  @{NSFontAttributeName:[UIFont fontWithName:@"STHeitiSC-Light" size:18],
                    NSForegroundColorAttributeName:[UIColor blackColor]}];
                 lvc.delegate = self.mainVc;
+                lvc.leftdelegate = self;
                 lvc.placeUserName = lastUser;
                 [self presentViewController:unv1 animated:YES completion:nil];
                 
@@ -197,34 +196,6 @@
             return ;
     }];
     
-//    else
-//    {       
-//        if(!hasLogin)
-//        {
-//            
-//        }
-//        else
-//        {
-//            @try {
-//                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userPhoneNo"];
-//                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"token"];
-//                [[NSUserDefaults standardUserDefaults] synchronize];
-//            }
-//            @catch (NSException *exception)
-//            {
-//                [self alertMsgView:exception.reason];
-//            }
-//            @finally
-//            {
-//                [self alertMsgView:@"您已成功注销"];
-//                
-//              //  NSIndexPath *indexPath=[NSIndexPath indexPathForRow:indexPath.row inSection:0];
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadView" object:nil];
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"updateToken" object:nil];
-//
-//            }
-//        }
-//    }
 }
 
 - (void)alertMsgView:(NSString *)alertMsg
@@ -240,15 +211,11 @@
     
 }
 
--(void)receivedNotif:(NSNotification *)notification {
-    hasLogin = !hasLogin;
-    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:5 inSection:0];
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
-}
-
--(void)loginPushReport:(NSString *)token
+-(void)updateToken:(NSString *)token name:(NSString *)name role:(NSArray *)roleArray
 {
-    
+    lastUser = name;
+    lastToken = token;
+    [self.tableView reloadData];
 }
 
 @end

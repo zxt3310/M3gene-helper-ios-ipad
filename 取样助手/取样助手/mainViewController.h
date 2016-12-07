@@ -23,13 +23,15 @@
 @property sendViewController *svc;
 @property NSArray *productList;
 
+@property NSString *userName;
+@property NSString *token;
+@property NSArray *role;
+
 - (void)updateToken:(NSString *)currentToken name:(NSString *)name role:(NSArray *)roleArray;
 @end
 
-@interface newTabBarController : UITabBarController
-
-@property NSString *mytitle;
 
 
 
-@end
+
+
