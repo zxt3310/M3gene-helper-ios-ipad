@@ -12,7 +12,7 @@
 #import "NetUtils.h"
 #import "publicMethod.h"
 
-@interface sendViewController : UIViewController
+@interface sendViewController : UIViewController <refreshCellNuber>
 
 @property id <tabBarSwitchDelegate> switchDelegate;
 

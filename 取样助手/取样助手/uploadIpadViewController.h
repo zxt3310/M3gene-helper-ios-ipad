@@ -13,7 +13,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <WebKit/WebKit.h>
 #import "CMCustomViews.h"
-#import "registView.h"
+#import "UIComboBox.h"
 
 @protocol cacheListRefresh <NSObject>
 

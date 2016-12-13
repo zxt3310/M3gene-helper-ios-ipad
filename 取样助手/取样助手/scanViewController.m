@@ -103,7 +103,7 @@
         NSLog(@"qRcode = %@",stringValue);
 
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-        [_delegate refreshCellNumber:stringValue];
+        [self.delegate refreshCellNumber:stringValue];
         
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -134,7 +134,7 @@
     fillLayer.path = path.CGPath;
     fillLayer.fillRule = kCAFillRuleEvenOdd;//中间镂空的关键点 填充规则
     fillLayer.fillColor = [UIColor grayColor].CGColor;
-    fillLayer.opacity = 0.7;
+    fillLayer.opacity = 0.5;
     fillLayer.strokeColor = [UIColor whiteColor].CGColor;
    
     // 边界校准线
@@ -252,14 +252,5 @@
     }
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -23,7 +23,7 @@
 
 @interface scanViewController : UIViewController <AVCaptureMetadataOutputObjectsDelegate>
 {
-    id <refreshCellNuber> delegate;
+    
 }
 @property (nonatomic,assign) id <refreshCellNuber> delegate;
 @property (strong,nonatomic)AVCaptureDevice * device;

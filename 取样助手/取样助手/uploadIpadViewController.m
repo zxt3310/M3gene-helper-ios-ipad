@@ -68,6 +68,8 @@
     CGFloat y; //
     
     WKWebView *html5Web;
+    //---------------------------------
+    UIComboBox *com;
 }
 @end
 
@@ -527,12 +529,9 @@
 
 - (void)egg:(UITapGestureRecognizer *)sender{
     
-    comboBox *rv = [[comboBox alloc] initWithFrame:CGRectMake(100, 400, 0, 20)];
-    rv.itemList = @[@"上面",@"下面哈哈哈哈哈哈哈哈哈哈哈哈哈",@"左面",@"右"];
-    rv.itemId = @[@"2",@"4",@"6",@"8"];
-
-    [productView addSubview:rv];
-    
+    com = [[UIComboBox alloc] initWithFrame:CGRectMake(180, 300, 200, 20)];
+    //com.comboList = @[@"abc",@"fff",@"asdad",@"12fsd"];
+    [productView addSubview:com];
 }
 
 - (void)okClick
@@ -1210,18 +1209,24 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
-    if (![gestureRecognizer.view isKindOfClass:[UITextField class]]) {
+    if (![gestureRecognizer.view isKindOfClass:[UITextField class]] & ![touch.view isKindOfClass:[UIButton class]]) {
         [productTF resignFirstResponder];
         [numberLable resignFirstResponder];
         [diseseTF resignFirstResponder];
+        
     }
 
     if([NSStringFromClass([touch.view class])isEqualToString:@"UITableViewCellContentView"])
     {
         return NO;
     }
+    else
+    {
+        [com dismissTable];
+    }
     
     return  YES;
 }
+
 
 @end

@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		581BF5C71DF90C6200C24ADD /* UISingleSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 581BF5C61DF90C6200C24ADD /* UISingleSelector.m */; };
 		581D069D1DC0A2330050DFA0 /* oprateRecordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 581D069C1DC0A2330050DFA0 /* oprateRecordVC.m */; };
+		5828E4C81DFFA53E0040E2A2 /* UIComboBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 5828E4C71DFFA53E0040E2A2 /* UIComboBox.m */; };
+		5828E4CA1DFFD2400040E2A2 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5828E4C91DFFD2400040E2A2 /* Launch Screen.storyboard */; };
 		5837EC261DE6D81E009921E8 /* 客户.png in Resources */ = {isa = PBXBuildFile; fileRef = 5837EC171DE6D81E009921E8 /* 客户.png */; };
 		5837EC271DE6D81E009921E8 /* 客户@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5837EC181DE6D81E009921E8 /* 客户@2x.png */; };
 		5837EC281DE6D81E009921E8 /* 客户@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5837EC191DE6D81E009921E8 /* 客户@3x.png */; };
@@ -119,8 +122,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		581BF5C51DF90C6200C24ADD /* UISingleSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISingleSelector.h; path = "取样助手/UISingleSelector.h"; sourceTree = "<group>"; };
+		581BF5C61DF90C6200C24ADD /* UISingleSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISingleSelector.m; path = "取样助手/UISingleSelector.m"; sourceTree = "<group>"; };
 		581D069B1DC0A2330050DFA0 /* oprateRecordVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oprateRecordVC.h; sourceTree = "<group>"; };
 		581D069C1DC0A2330050DFA0 /* oprateRecordVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = oprateRecordVC.m; sourceTree = "<group>"; };
+		5828E4C61DFFA53E0040E2A2 /* UIComboBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIComboBox.h; path = "取样助手/UIComboBox.h"; sourceTree = "<group>"; };
+		5828E4C71DFFA53E0040E2A2 /* UIComboBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIComboBox.m; path = "取样助手/UIComboBox.m"; sourceTree = "<group>"; };
+		5828E4C91DFFD2400040E2A2 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		5837EC171DE6D81E009921E8 /* 客户.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "客户.png"; sourceTree = "<group>"; };
 		5837EC181DE6D81E009921E8 /* 客户@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "客户@2x.png"; sourceTree = "<group>"; };
 		5837EC191DE6D81E009921E8 /* 客户@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "客户@3x.png"; sourceTree = "<group>"; };
@@ -294,6 +302,11 @@
 		5889D8B31DC091620052C6D7 = {
 			isa = PBXGroup;
 			children = (
+				5828E4C91DFFD2400040E2A2 /* Launch Screen.storyboard */,
+				5828E4C61DFFA53E0040E2A2 /* UIComboBox.h */,
+				5828E4C71DFFA53E0040E2A2 /* UIComboBox.m */,
+				581BF5C51DF90C6200C24ADD /* UISingleSelector.h */,
+				581BF5C61DF90C6200C24ADD /* UISingleSelector.m */,
 				703C29151DCA2BDE004FA090 /* publicMethod.h */,
 				703C29161DCA2BDE004FA090 /* publicMethod.m */,
 				705E33461DC9C17800024A25 /* CMCustomViews.h */,
@@ -544,7 +557,7 @@
 		5889D8B41DC091620052C6D7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = xxx;
 				TargetAttributes = {
 					5889D8BB1DC091620052C6D7 = {
@@ -655,6 +668,7 @@
 				703C292B1DCA41D2004FA090 /* operate@2x.png in Resources */,
 				703C29271DCA41D2004FA090 /* copy2.png in Resources */,
 				703C29291DCA41D2004FA090 /* copy2@3x.png in Resources */,
+				5828E4CA1DFFD2400040E2A2 /* Launch Screen.storyboard in Resources */,
 				5889D8CC1DC091630052C6D7 /* Assets.xcassets in Resources */,
 				703C290F1DCA286A004FA090 /* dingdanluru.png in Resources */,
 				58B099211DEE74B600B87A4E /* oval107@2x.png in Resources */,
@@ -696,12 +710,14 @@
 				705E33481DC9C17800024A25 /* CMCustomViews.m in Sources */,
 				58C25FEE1DE5635900B8D88D /* leftDrawerViewController.m in Sources */,
 				58E741001DEFC8DE00D2927B /* POPViewController.m in Sources */,
+				5828E4C81DFFA53E0040E2A2 /* UIComboBox.m in Sources */,
 				708FDEC91DC875080069E6C2 /* NetUtils.m in Sources */,
 				5889D8C71DC091630052C6D7 /* mainViewController.m in Sources */,
 				5895404F1DC1A6AF00DDA5F8 /* scanViewController.m in Sources */,
 				5889D8C41DC091620052C6D7 /* AppDelegate.m in Sources */,
 				58C25FE71DE5632500B8D88D /* UFanBasicViewController.m in Sources */,
 				581D069D1DC0A2330050DFA0 /* oprateRecordVC.m in Sources */,
+				581BF5C71DF90C6200C24ADD /* UISingleSelector.m in Sources */,
 				5889D8C11DC091620052C6D7 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -756,6 +772,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -803,6 +820,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -830,6 +848,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 429WZWZX68;
 				INFOPLIST_FILE = "取样助手/Info.plist";
@@ -845,6 +864,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 429WZWZX68;
 				INFOPLIST_FILE = "取样助手/Info.plist";
