@@ -16,6 +16,8 @@
     BOOL isShow;
     CGRect orignFrame;
     NSIndexPath *currentIndex;
+    
+    CGRect cellLenth;
 }
 @synthesize comboList = _comboList;
 
@@ -42,7 +44,7 @@
         comboLb.titleLabel.font = [UIFont systemFontOfSize:self.frame.size.height * 0.77];
         [self addSubview:comboLb];
         
-        tableview = [[UITableView alloc]initWithFrame:CGRectMake(0,self.frame.size.height + 3,self.frame.size.width,40)];
+        tableview = [[UITableView alloc]initWithFrame:CGRectMake(self.frame.origin.x,self.frame.origin.y + self.frame.size.height + 3,self.frame.size.width,40)];
         tableview.delegate = self;
         tableview.dataSource = self;
         tableview.layer.borderWidth = 1;
@@ -70,8 +72,9 @@
     {
         temp.size.height = (comboList.count + 1) * 40;
     }
-    
+
     tableview.frame = temp;
+    cellLenth = temp;
     
     [tableview reloadData];
 }
@@ -88,6 +91,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    CGRect tableTemp = cellLenth;
+//    CGRect selfTemp = self.frame;
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if(!cell)
     {
@@ -110,16 +116,40 @@
         }
     }
     
+    cellLenth.size.width = cell.textLabel.text.length * cell.textLabel.font.pointSize + 50;
+    if(tableTemp.size.width > tableView.frame.size.width)
+    {
+        if (cellLenth.size.width > tableTemp.size.width) {
+           
+            tableView.frame = cellLenth;
+        }
+        else
+        {
+            tableView.frame = tableTemp;
+        }
+    }
+//    //重新计算控件宽度
+//    selfTemp.size.width = tableView.frame.size.width;
+//    self.frame = selfTemp;
+    
     return cell;
 
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    comboTF.text = _comboList[indexPath.row - 1];
-    currentIndex = indexPath;
+    if(!(indexPath.row == 0))
+    {
+        _selectString = comboTF.text = _comboList[indexPath.row - 1];
+
+        currentIndex = indexPath;
+        
+        if(self.delegate)
+        {
+            [_delegate UIComboBox:self didSelectRow:indexPath];
+        }
+    }
     [self dismissTable];
-    
 }
 
 - (void)showTable
@@ -131,11 +161,12 @@
             tableview.transform = CGAffineTransformMakeScale(1, 1);
         }];
         
-        CGRect temp = orignFrame;
-        temp.size.height += tableview.frame.size.height + 3;
-        self.frame = temp;
+//        //重新计算控件高度
+//        CGRect temp = orignFrame;
+//        temp.size.height += tableview.frame.size.height + 3;
+//        self.frame = temp;
         
-        [self addSubview:tableview];
+        [self.superview addSubview:tableview];
         
         isShow = YES;
     }

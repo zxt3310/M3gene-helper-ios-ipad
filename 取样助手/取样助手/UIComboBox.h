@@ -15,6 +15,21 @@
 @property UIColor *comborColor;
 @property UIFont *textFont;
 @property UIColor *textColor;
+@property NSString *selectString;
 
 - (void)dismissTable;
+@end
+
+@protocol UIComboBoxDelegate <NSObject>
+
+@optional
+
+- (void)UIComboBox:(UIComboBox *)comboBox didSelectRow:(NSIndexPath *) indexPath;
+
+@end
+
+@interface UIComboBox ()
+
+@property id<UIComboBoxDelegate> delegate;
+
 @end

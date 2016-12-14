@@ -530,8 +530,13 @@
 - (void)egg:(UITapGestureRecognizer *)sender{
     
     com = [[UIComboBox alloc] initWithFrame:CGRectMake(180, 300, 200, 20)];
-    //com.comboList = @[@"abc",@"fff",@"asdad",@"12fsd"];
+    com.comboList = @[@"abc",@"放假诶我房间叫我减肥减肥",@"分法哈哈哈哈哈哈哈哈哈哈哈哥哥哥哥哥哥哥哥哥哥",@"12fsd"];
     [productView addSubview:com];
+    
+    UITextField *textLb = [[UITextField alloc] initWithFrame:CGRectMake(180, 380, 200, 20)];
+    textLb.layer.borderWidth  = 1;
+    textLb.backgroundColor = [UIColor redColor];
+    [productView addSubview: textLb];
 }
 
 - (void)okClick

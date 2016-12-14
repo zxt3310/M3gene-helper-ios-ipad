@@ -33,6 +33,7 @@
 @property UIImage *upOrderImg; //压缩后上传的检验单图片
 @property NSString *diseseName;
 
+
 @property id <cacheListRefresh> refreshDelegate;
 
 @property BOOL isReEditOperate;
