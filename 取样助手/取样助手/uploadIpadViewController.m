@@ -44,9 +44,10 @@
     detailView *productView;
     detailView *scanCodeView;
     detailView *orderPicView;
-    detailView *registView;
+    detailView *registPageView;
     detailView *medicalPicView;
     detailView *diseseSelectView;
+
     
     NSArray *listView;
     UITextField *productTF; //产品信息
@@ -96,7 +97,7 @@
         productView = [[detailView alloc]initWithFrame:frame];
         scanCodeView = [[detailView alloc]initWithFrame:frame];
         orderPicView = [[detailView alloc]initWithFrame:frame];
-        registView = [[detailView alloc]initWithFrame:frame];
+        registPageView = [[detailView alloc]initWithFrame:frame];
         medicalPicView = [[detailView alloc]initWithFrame:frame];
         diseseSelectView = [[detailView alloc]initWithFrame:frame];
         
@@ -117,7 +118,7 @@
         imageViewCount = 10;
         isTakeMedicalPhoto = NO;
 
-        listView = [NSArray arrayWithObjects:productView,scanCodeView,orderPicView,registView,medicalPicView,diseseSelectView, nil];
+        listView = [NSArray arrayWithObjects:productView,scanCodeView,orderPicView,registPageView,medicalPicView,nil];//diseseSelectView, nil];
     }
     return self;
 }
@@ -151,7 +152,7 @@
     [self setOrderPicView];
     [self setRegistView];
     [self setMedicalPicView];
-    [self setDiseseSelectView];
+   // [self setDiseseSelectView];
     //默认选中第一行并实现第一行点击效果
     NSIndexPath *firstpath = [NSIndexPath indexPathForRow:0 inSection:0];
     [leftView selectRowAtIndexPath:firstpath animated:YES scrollPosition:UITableViewScrollPositionTop];
@@ -228,7 +229,7 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(rect.size.width + 16, 32, SCREEN_WEIGHT - (rect.size.width+8) * 2, 44)];
     titleLabel.text = @"订单录入";
     titleLabel.textColor = [UIColor blackColor];
-    titleLabel.font = [UIFont boldSystemFontOfSize:36];
+    titleLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:36];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [header addSubview:titleLabel];
 }
@@ -389,6 +390,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self.view endEditing:YES];
+    
     for(int i = 0;i < listView.count; i++)
     {
         detailView *view = (detailView *)listView[i];
@@ -499,10 +502,10 @@
 {
     productView.titleLable.text = @"产品选择";
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(egg:)];
-    tap.numberOfTapsRequired = 3;
-    [productView.titleLable addGestureRecognizer:tap];
-    productView.titleLable.userInteractionEnabled = YES;
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(egg:)];
+//    tap.numberOfTapsRequired = 3;
+//    [productView.titleLable addGestureRecognizer:tap];
+//    productView.titleLable.userInteractionEnabled = YES;
     
     productView.productPicker = [[UIPickerView alloc]init];
     productView.productPicker.delegate = self;
@@ -621,13 +624,13 @@
 #pragma mark 详细信息录入
 - (void)setRegistView
 {
-    CGRect temp = registView.frame;
+    CGRect temp = registPageView.frame;
     temp.origin.x = temp.origin.y = 0;
     html5Web.frame = temp;
-    [registView addSubview:html5Web];
+    [registPageView addSubview:html5Web];
     html5Web.UIDelegate = self;
     html5Web.navigationDelegate = self;
-    [self.view addSubview:registView];
+    [self.view addSubview:registPageView];
 }
 
 #pragma mark 病例拍照
@@ -704,16 +707,23 @@
     
     diseseTF.text = diseseName;
     
-    //    UIToolbar *toolBar = [[UIToolbar alloc]init];
-    //    toolBar.barTintColor = [UIColor whiteColor];
-    //    toolBar.frame = CGRectMake(0, 19, SCREEN_WEIGHT, 35);
-    //    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(okClick)];
-    //    toolBar.items = @[item];
-    //    productTF.inputAccessoryView = toolBar;
-    
     [diseseSelectView addSubview:diseseTF];
+//    [self.view addSubview:diseseSelectView];
+    
+//    registViewNew *registview = [[registViewNew alloc] initWithFrame:CGRectMake(0, 0, diseseSelectView.frame.size.width, diseseSelectView.frame.size.height)];
+//    registview.delegate = self;
+//    [registview show];
+//    [diseseSelectView addSubview:registview];
+    
     [self.view addSubview:diseseSelectView];
+    
+}
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self.view endEditing:YES];
+    registViewNew *regist = (registViewNew *)scrollView;
+    [regist resignFirstResponderNow];
 }
 //检查订单是否重复
 - (void)checkOrderRequest

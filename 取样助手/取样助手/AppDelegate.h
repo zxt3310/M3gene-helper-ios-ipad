@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "UIViewController+UFanViewController.h"
 #import "leftDrawerViewController.h"
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+#import <UserNotifications/UserNotifications.h>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,UNUserNotificationCenterDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property UINavigationController *rootNavigationController;

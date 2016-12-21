@@ -105,6 +105,7 @@
            NSForegroundColorAttributeName:[UIColor blackColor]}];
         lvc.placeUserName = userName;
         lvc.delegate = self;
+        lvc.leftdelegate = self.leftVc;
         [self presentViewController:unv animated:YES completion:nil];
     }
     //[self setRightButton];
@@ -140,7 +141,7 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(rect.size.width + 16, 32, SCREEN_WEIGHT - (rect.size.width+8) * 2, 44)];
     titleLabel.text = @"莲和运营后台";
     titleLabel.textColor = [UIColor blackColor];
-    titleLabel.font = [UIFont boldSystemFontOfSize:36];
+    titleLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:36];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [header addSubview:titleLabel];
 }
@@ -216,7 +217,33 @@
    else if(indexPath.row == 1)
    {
        UILabel *title = (UILabel *)[cell.contentView viewWithTag:1];
-       title.text = @"资料中心";
+       title.text = @"我的订单";
+       
+       UIImageView *orderImg = [[UIImageView alloc] initWithFrame:CGRectMake(66.4*SCREEN_WEIGHT/1024, 85.5*SCREEN_HEIGHT/768, 71.3*SCREEN_WEIGHT/1024, 81*SCREEN_HEIGHT/768)];
+       orderImg.image = [UIImage imageNamed:@"订单"];
+       orderImg.userInteractionEnabled = YES;
+       UITapGestureRecognizer *orderImgTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(myOrderTapAction)];
+       [orderImg addGestureRecognizer:orderImgTap];
+       [cell.contentView addSubview:orderImg];
+       
+       UILabel *ziLiaoLb = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/2 + 34, 15, 300, 36)];
+       ziLiaoLb.font = [UIFont fontWithName:@"STHeitiSC-Medium" size:24];;
+       ziLiaoLb.text = @"资料中心";
+       [cell.contentView addSubview:ziLiaoLb];
+       
+       UIImageView *ziliaoImg = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/2 + 60, 86*SCREEN_HEIGHT/768, 90*SCREEN_WEIGHT/1024, 79*SCREEN_HEIGHT/768)];
+       ziliaoImg.image = [UIImage imageNamed:@"ziliao copy 2"];
+       ziliaoImg.userInteractionEnabled = YES;
+       UITapGestureRecognizer *ziliaoTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ziliaoTapAction)];
+       [ziliaoImg addGestureRecognizer:ziliaoTap];
+       [cell.contentView addSubview:ziliaoImg];
+       
+       UILabel *lineLb = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/2-1, 3, 2, 193*SCREEN_HEIGHT/768-3)];
+       lineLb.layer.borderWidth = 1;
+       lineLb.layer.borderColor = [UIColor colorWithMyNeed:219 green:219 blue:219 alpha:1].CGColor;
+       lineLb.backgroundColor = [UIColor colorWithMyNeed:219 green:219 blue:219 alpha:1];
+       [cell.contentView addSubview:lineLb];
+       
    }
    else
    {
@@ -227,12 +254,43 @@
        contectLable.font = [UIFont fontWithName:@"STHeitiSC-Light" size:22];
        contectLable.textColor = [UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1];
        contectLable.textAlignment = NSTextAlignmentCenter;
-       contectLable.text = @"网络：赵刚（13800138000）    权限：张鹏（13800138000）    客服：刘小平（13800138000）";
+       contectLable.text = @"网络：赵刚（13501311453）      客服：刘小平（13521422062）      客服电话：（4006010982）";
        [cell.contentView addSubview:contectLable];
    }
    cell.selectionStyle = UITableViewCellSelectionStyleNone;
    return cell;
     
+}
+
+- (void)myOrderTapAction
+{
+    NSString *cookie = [[NSUserDefaults standardUserDefaults] objectForKey:@"Set-Cookie"];
+    NSArray *cookieArray = [cookie componentsSeparatedByString:@";"];
+    firstItemViewController *fivc = [[firstItemViewController alloc]init];
+    fivc.token = token;
+    //fivc.urlStr = @"http://dev.mapi.lhgene.cn/app/aindex.html#/salefinance";
+    fivc.urlStr = @"http://mapi.lhgene.cn/app/aindex.html#/salefinance";
+    if(cookieArray.count>0)
+    {
+        fivc.cookie = cookieArray[0];
+    }
+    [self.UF_ViewController.navigationController pushViewController:fivc animated:YES];
+}
+
+- (void)ziliaoTapAction
+{
+    NSString *cookie = [[NSUserDefaults standardUserDefaults] objectForKey:@"Set-Cookie"];
+    NSArray *cookieArray = [cookie componentsSeparatedByString:@";"];
+    firstItemViewController *fivc = [[firstItemViewController alloc]init];
+    fivc.token = token;
+    //fivc.urlStr = @"http://dev.mapi.lhgene.cn/app/aindex.html#/salefinance";
+    fivc.urlStr = @"http://lifehealthcare.com/services/disk.php";
+    if(cookieArray.count>0)
+    {
+        fivc.cookie = cookieArray[0];
+    }
+    [self.UF_ViewController.navigationController pushViewController:fivc animated:YES];
+
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

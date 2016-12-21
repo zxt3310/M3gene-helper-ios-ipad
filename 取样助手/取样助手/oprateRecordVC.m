@@ -167,7 +167,8 @@
     
     NSString *operateId = [dic objectForKey:@"id"];
     
-    NSString *urlStr = [NSString stringWithFormat:@"http://dev.mapi.lhgene.cn/mobi-cms/h5-opmore/%@?token=%@",operateId,_token];
+   // NSString *urlStr = [NSString stringWithFormat:@"http://dev.mapi.lhgene.cn/mobi-cms/h5-opmore/%@?token=%@",operateId,_token];
+    NSString *urlStr = [NSString stringWithFormat:@"http://mapi.lhgene.cn/mobi-cms/h5-opmore/%@?token=%@",operateId,_token];
     
     firstItemViewController *fivc = [[firstItemViewController alloc]init];
     fivc.urlStr = urlStr;

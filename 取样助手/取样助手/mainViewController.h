@@ -15,6 +15,7 @@
 #import "loginViewController.h"
 #import "publicMethod.h"
 #import "uploadIpadViewController.h"
+#import "firstItemViewController.h"
 
 @interface mainViewController :UFanBasicViewController  <loginUpdateToken>
 
@@ -26,6 +27,8 @@
 @property NSString *userName;
 @property NSString *token;
 @property NSArray *role;
+
+@property id <loginUpdateToken>leftVc;
 
 - (void)updateToken:(NSString *)currentToken name:(NSString *)name role:(NSArray *)roleArray;
 @end

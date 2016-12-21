@@ -8,17 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "publicMethod.h"
+#import "UIComboBox.h"
+#import "UISingleSelector.h"
 
-//单选控件
-@interface comboBox : UIView
-@property (nonatomic) NSArray *itemList; //选项文字
-@property (nonatomic) NSArray *itemId;   //选项对应输出
-@property (nonatomic) NSString *switchId; //选中标识
-- (NSString *)stringOfSelectedString;
-
-@end
-
-@interface registViewNew : UIView
+@interface registViewNew : UIScrollView  <UIGestureRecognizerDelegate,UIComboBoxDelegate,UISingleSelectorDelegate>
 
 @property NSString *SJYB;
 @property NSString *DDBH;
@@ -33,12 +26,15 @@
 @property NSInteger SEX;
 @property NSString *MZ;
 @property NSString *JG;
-@property NSInteger AZS;
+@property NSString *AZS_SWITCH;
 @property NSString *FBNL;
 @property NSString *LCBX;
-@property NSInteger JZAZS_SWITCH;
+@property NSString *JZAZS_SWITCH;
 @property NSString *JZAZS;
 @property NSString *GX;
 @property NSString *QTBS;
+
+- (void)show;
+- (void)resignFirstResponderNow;
 
 @end

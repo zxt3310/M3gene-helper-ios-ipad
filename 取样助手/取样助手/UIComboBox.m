@@ -20,6 +20,11 @@
     CGRect cellLenth;
 }
 @synthesize comboList = _comboList;
+@synthesize layerColor = _layerColor;
+@synthesize comborColor = _comborColor;
+@synthesize textFont = _textFont;
+@synthesize textColor = _textColor;
+@synthesize placeColor = _placeColor;
 
 - (instancetype) initWithFrame:(CGRect)frame
 {
@@ -33,6 +38,9 @@
         comboTF = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width - self.frame.size.height, self.frame.size.height)];
         comboTF.layer.borderWidth = 1;
         comboTF.enabled = NO;
+        comboTF.leftView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 10, 1)];
+        comboTF.leftViewMode = UITextFieldViewModeAlways;
+
         [self addSubview:comboTF];
         
         comboLb = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -55,11 +63,62 @@
     return self;
 }
 
+- (UIColor *)layerColor
+{
+    return _layerColor;
+}
+- (void)setLayerColor:(UIColor *)layerColor
+{
+    _layerColor = layerColor;
+    comboTF.layer.borderColor = layerColor.CGColor;
+}
+
+- (UIColor *)comborColor
+{
+    return _comborColor;
+}
+- (void)setComborColor:(UIColor *)comborColor
+{
+    _comborColor = comborColor;
+    comboLb.layer.borderColor = comborColor.CGColor;
+    comboLb.tintColor = comborColor;
+}
+
+- (UIFont *)textFont
+{
+    return _textFont;
+}
+- (void)setTextFont:(UIFont *)textFont
+{
+    _textFont = textFont;
+    comboTF.font = textFont;
+}
+
+- (UIColor *)textColor
+{
+    return _textColor;
+}
+- (void)setTextColor:(UIColor *)textColor
+{
+    _textColor = textColor;
+    comboTF.textColor = textColor;
+}
+
+- (UIColor *)placeColor
+{
+    return _placeColor;
+}
+- (void)setPlaceColor:(UIColor *)placeColor
+{
+    _placeColor = placeColor;
+    comboTF.textColor = comboLb.tintColor = placeColor;
+    comboTF.layer.borderColor = comboLb.layer.borderColor = placeColor.CGColor;
+}
+
 - (NSArray *)comboList
 {
     return _comboList;
 }
-
 - (void)setComboList:(NSArray *)comboList
 {
     _comboList = comboList;

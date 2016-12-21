@@ -77,7 +77,6 @@
     [webViewHtml5 evaluateJavaScript:@"document.title" completionHandler:^(NSString *titleStr,NSError *error){
         self.title = titleStr;
     }];
-    //NSString *title =[webViewHtml5 stringByEvaluatingJavaScriptFromString:@"document.title"];  //获取链接标题
 }
 
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler

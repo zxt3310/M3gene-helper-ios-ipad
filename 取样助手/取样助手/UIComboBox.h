@@ -11,11 +11,13 @@
 @interface UIComboBox : UIControl <UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic) NSArray *comboList;
-@property UIColor *layerColor;
-@property UIColor *comborColor;
-@property UIFont *textFont;
-@property UIColor *textColor;
+@property (nonatomic) UIColor *layerColor;
+@property (nonatomic) UIColor *comborColor;
+@property (nonatomic) UIFont *textFont;
+@property (nonatomic) UIColor *textColor;
+@property (nonatomic) UIColor *placeColor;
 @property NSString *selectString;
+
 
 - (void)dismissTable;
 @end

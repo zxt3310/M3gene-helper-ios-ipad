@@ -54,8 +54,8 @@
     [backBtn setTitle:@"" forState:UIControlStateNormal];
     [backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-    [backBtn setImage:[UIImage imageNamed:@"iconBack"] forState:UIControlStateNormal];
-    [backBtn setImage:[UIImage imageNamed:@"iconBack"] forState:UIControlStateHighlighted];
+    [backBtn setImage:[UIImage imageNamed:@"iconBack.png"] forState:UIControlStateNormal];
+    [backBtn setImage:[UIImage imageNamed:@"iconBack.png"] forState:UIControlStateHighlighted];
     [backBtn setImageEdgeInsets:UIEdgeInsetsMake(7, 0, 7, 8)];
     [backBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     [backBtn sizeToFit];
@@ -71,7 +71,7 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(rect.size.width + 16, 32, SCREEN_WEIGHT - (rect.size.width+8) * 2, 44)];
     titleLabel.text = @"草稿箱";
     titleLabel.textColor = [UIColor blackColor];
-    titleLabel.font = [UIFont boldSystemFontOfSize:36];
+    titleLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:36];// boldSystemFontOfSize:36];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [header addSubview:titleLabel];
 }

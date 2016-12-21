@@ -9,6 +9,12 @@
 #import "AppDelegate.h"
 #import "mainViewController.h"
 #import "oprateRecordVC.h"
+
+
+#define IOS8 ([[UIDevice currentDevice].systemVersion doubleValue] >= 8.0 && [[UIDevice currentDevice].systemVersion doubleValue] < 9.0)
+#define IOS8_10 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0 && [[UIDevice currentDevice].systemVersion doubleValue] < 10.0)
+#define IOS10 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 10.0)
+
 @interface AppDelegate ()
 
 
@@ -27,7 +33,7 @@
     mainViewController *mvc = [[mainViewController alloc] init];
     leftDrawerViewController *lvc = [[leftDrawerViewController alloc]init];
     lvc.mainVc = mvc;
-    
+    mvc.leftVc = lvc;
     UFanViewController *UF_view = [[UFanViewController alloc]initWithCenterViewController:mvc leftDrawerViewController:lvc];
     
     UINavigationController *unc = [[UINavigationController alloc] initWithRootViewController:UF_view];
@@ -38,7 +44,24 @@
     
     [self.window setRootViewController:unc];
     [self.window makeKeyAndVisible];
-   
+    
+//    [[UIApplication sharedApplication] registerForRemoteNotifications];
+//
+//    if (IOS10) {
+//        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+//        center.delegate = self;
+//        [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert) completionHandler:^(BOOL granted, NSError * _Nullable error) {
+//            if (!error) {
+//                NSLog(@"succeeded!");
+//            }
+//        }];
+//    } else if (IOS8_10){//iOS8-iOS10
+//        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound) categories:nil];
+//        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+//        [[UIApplication sharedApplication] registerForRemoteNotifications];
+//    }else {//iOS8以下
+//        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
+//    }
     return YES;
 }
 
@@ -67,6 +90,26 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSString *deviceTokenString2 = [[[[deviceToken description] stringByReplacingOccurrencesOfString:@"<"withString:@""]
+                                     stringByReplacingOccurrencesOfString:@">" withString:@""]
+                                    stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"方式2：%@", deviceTokenString2);
+}
+
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler
+{
+    NSLog(@"reciveNotification!!!");
+}
+
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSLog(@"%@",userInfo);
 }
 
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window

@@ -138,7 +138,8 @@
                 NSArray *cookieArray = [cookie componentsSeparatedByString:@";"];
                 firstItemViewController *fivc = [[firstItemViewController alloc]init];
                 fivc.token = lastToken;
-                fivc.urlStr = @"http://dev.mapi.lhgene.cn/app/aindex.html#/salefinance";
+                //fivc.urlStr = @"http://dev.mapi.lhgene.cn/app/aindex.html#/salefinance";
+                fivc.urlStr = @"http://mapi.lhgene.cn/app/aindex.html#/salefinance";
                 if(cookieArray.count>0)
                 {
                    fivc.cookie = cookieArray[0];

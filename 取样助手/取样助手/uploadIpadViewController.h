@@ -14,6 +14,7 @@
 #import <WebKit/WebKit.h>
 #import "CMCustomViews.h"
 #import "UIComboBox.h"
+#import "registView.h"
 
 @protocol cacheListRefresh <NSObject>
 
@@ -21,7 +22,7 @@
 
 @end
 
-@interface uploadIpadViewController : UIViewController <WKUIDelegate,WKNavigationDelegate>
+@interface uploadIpadViewController : UIViewController <WKUIDelegate,WKNavigationDelegate,UIScrollViewDelegate>
 @property NSArray *productList;
 @property NSString *token;
 @property NSString *userName;
