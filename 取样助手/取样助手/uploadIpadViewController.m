@@ -735,13 +735,19 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if(!response)
             {
+                alertMsgView(@"无法连接服务器，请检查网络", self);
                 NSLog(@"send Faild");
                 return ;
             }
             
             NSDictionary *responseData = parseJsonResponse(response);
             
-            NSString *errStr = JsonValue([responseData objectForKey:@"err"],@"NSString");
+            NSNumber *errStr = JsonValue([responseData objectForKey:@"err"],@"NSNumber");
+            
+            if (errStr == nil) {
+                alertMsgView(@"服务器维护中，请稍后再试", self);
+                return;
+            }
             
             NSInteger err = [errStr integerValue];
             
@@ -916,6 +922,7 @@
                 
                 if(!responsData)
                 {
+                    alertMsgView(@"无法连接服务器，请检查网络", self);
                     NSLog(@"return nil");
                     loadingView.hidden = YES;
                     return;
@@ -923,7 +930,12 @@
                 
                 NSDictionary *jsonData = parseJsonResponse(responsData);
                 
-                NSString *resault =[NSString stringWithFormat:@"%@",[jsonData objectForKey:@"err"]];
+                NSNumber *resault =JsonValue([jsonData objectForKey:@"err"],@"NSNumber");
+                if (resault == nil) {
+                    alertMsgView(@"服务器维护中，请稍后再试", self);
+                    loadingView.hidden = YES;
+                    return;
+                }
                 
                 NSInteger err = [resault integerValue];
                 if (err > 0) {
@@ -1131,6 +1143,7 @@
         NSData *response = sendGETRequest(strUrl, tokenDic);
         dispatch_async(dispatch_get_main_queue(), ^{
             if (!response) {
+                alertMsgView(@"无法连接服务器，请检查网络", self);
                 NSLog(@"response is null check");
                 return ;
             }
@@ -1138,7 +1151,11 @@
             NSLog(@"%@",strResp);
             
             NSDictionary *responseData = parseJsonResponse(response);
-            NSString *resault = JsonValue([responseData objectForKey:@"err"], @"NSString");
+            NSNumber *resault = JsonValue([responseData objectForKey:@"err"], @"NSNumber");
+            if (resault == nil) {
+                alertMsgView(@"服务器维护中，请稍后再试", self);
+                return;
+            }
             NSInteger err = [resault integerValue];
             if(err > 0)
             {

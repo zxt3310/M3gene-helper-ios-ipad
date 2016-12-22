@@ -16,6 +16,8 @@
 #import "publicMethod.h"
 #import "uploadIpadViewController.h"
 #import "firstItemViewController.h"
+#import "CustomURLCache.h"
+#import "DataCenterWebViewController.h"
 
 @interface mainViewController :UFanBasicViewController  <loginUpdateToken>
 

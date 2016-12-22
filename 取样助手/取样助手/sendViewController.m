@@ -410,7 +410,7 @@
     [codeNumber deleteCharactersInRange:NSMakeRange(0, 1)];
     
     //NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",codeNumber,@"order_code",_expressNumber,@"express_code",_expressName,@"express_type", nil];
-    NSString *post = [NSString stringWithFormat:@"order_code=%@&price=%@&express_code=%@&express_type=%@",codeNumber,priceTF.text,_expressNumber,_expressName];
+    NSString *post = [NSString stringWithFormat:@"order_code=%@&price=%@&express_code=%@&express_type=%@",codeNumber,priceTF.text,expressNumberTF.text,_expressName];
     
     //NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
     
@@ -422,6 +422,7 @@
             dispatch_async(dispatch_get_main_queue(),^{
                 if(!response)
                 {
+                    alertMsgView(@"无法链接服务器，请检查网络", self);
                     NSLog(@"send faild check");
                     return ;
                 }
@@ -430,7 +431,11 @@
                 NSLog(@"%@",respStr);
                 
                 NSDictionary *dic = parseJsonResponse(response);
-                NSString *resault = JsonValue([dic objectForKey:@"err"], @"NSString");
+                NSNumber *resault = JsonValue([dic objectForKey:@"err"], @"NSNumber");
+                if (resault == nil) {
+                    alertMsgView(@"服务器维护中，请稍后再试", self);
+                    return;
+                }
                 NSInteger err = [resault integerValue];
                 if(err > 0)
                 {
@@ -439,9 +444,15 @@
                     return;
                 }
                 
-                [self.switchDelegate tabBarSwitch];
-                [self.navigationController popToRootViewControllerAnimated:YES];
-
+                for (id object in self.view.subviews) {
+                    if ([object isKindOfClass:[UITextField class]]) {
+                        UITextField *textField = (UITextField *)object;
+                        textField.text = @"";
+                    }
+                }
+                [self clearBtClick];
+                alertMsgView(@"上传成功", self);
+                
         });
     });
     

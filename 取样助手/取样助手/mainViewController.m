@@ -85,7 +85,11 @@
     self=[super init];
     if(self)
     {
-      
+        CustomURLCache *urlCache = [[CustomURLCache alloc] initWithMemoryCapacity:20 * 1024 * 1024
+                                                                     diskCapacity:200 * 1024 * 1024
+                                                                         diskPath:nil
+                                                                        cacheTime:0];
+        [CustomURLCache setSharedURLCache:urlCache];
     }
     return self;
 }
@@ -281,10 +285,10 @@
 {
     NSString *cookie = [[NSUserDefaults standardUserDefaults] objectForKey:@"Set-Cookie"];
     NSArray *cookieArray = [cookie componentsSeparatedByString:@";"];
-    firstItemViewController *fivc = [[firstItemViewController alloc]init];
+    DataCenterWebViewController *fivc = [[DataCenterWebViewController alloc]init];
     fivc.token = token;
     //fivc.urlStr = @"http://dev.mapi.lhgene.cn/app/aindex.html#/salefinance";
-    fivc.urlStr = @"http://lifehealthcare.com/services/disk.php";
+    fivc.urlString = @"http://lifehealthcare.com/services/disk.php";
     if(cookieArray.count>0)
     {
         fivc.cookie = cookieArray[0];
