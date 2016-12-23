@@ -45,13 +45,14 @@
     [self.window setRootViewController:unc];
     [self.window makeKeyAndVisible];
     
-//    [[UIApplication sharedApplication] registerForRemoteNotifications];
-//
-//    if (IOS10) {
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+
+//    if (IOS10)
 //        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
 //        center.delegate = self;
 //        [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert) completionHandler:^(BOOL granted, NSError * _Nullable error) {
 //            if (!error) {
+//                [[UIApplication sharedApplication] registerForRemoteNotifications];
 //                NSLog(@"succeeded!");
 //            }
 //        }];
@@ -62,6 +63,8 @@
 //    }else {//iOS8以下
 //        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
 //    }
+    
+    
     return YES;
 }
 
@@ -96,13 +99,26 @@
 {
     NSString *deviceTokenString2 = [[[[deviceToken description] stringByReplacingOccurrencesOfString:@"<"withString:@""]
                                      stringByReplacingOccurrencesOfString:@">" withString:@""]
-                                    stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSLog(@"方式2：%@", deviceTokenString2);
+                                     stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    NSString *lastDeviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"];
+    if (![lastDeviceToken isEqualToString:deviceTokenString2]) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"token"];
+        [[NSUserDefaults standardUserDefaults] setObject:deviceTokenString2 forKey:@"deviceToken"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+
+    }
+    
+       NSLog(@"方式2：%@", deviceTokenString2);
 }
 
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler
 {
+    NSInteger number = [UIApplication sharedApplication].applicationIconBadgeNumber;
+    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:(number + 1)];
+    
     NSLog(@"reciveNotification!!!");
 }
 

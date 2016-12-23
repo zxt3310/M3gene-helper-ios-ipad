@@ -258,7 +258,7 @@
        contectLable.font = [UIFont fontWithName:@"STHeitiSC-Light" size:22];
        contectLable.textColor = [UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1];
        contectLable.textAlignment = NSTextAlignmentCenter;
-       contectLable.text = @"网络：赵刚（13501311453）      客服：刘小平（13521422062）      客服电话：（4006010982）";
+       contectLable.text = @"网络：蒋英龙（13121185670）      客服：刘晓平（13521422062）      客服电话：（4006010982）";
        [cell.contentView addSubview:contectLable];
    }
    cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -294,6 +294,8 @@
         fivc.cookie = cookieArray[0];
     }
     [self.UF_ViewController.navigationController pushViewController:fivc animated:YES];
+//    dataCenterViewController *dvc = [[dataCenterViewController alloc] init];
+//    [self.navigationController pushViewController:dvc animated:YES];
 
 }
 

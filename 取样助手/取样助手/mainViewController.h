@@ -18,6 +18,7 @@
 #import "firstItemViewController.h"
 #import "CustomURLCache.h"
 #import "DataCenterWebViewController.h"
+#import "dataCenterViewController.h"
 
 @interface mainViewController :UFanBasicViewController  <loginUpdateToken>
 

@@ -20,7 +20,6 @@
 @property UITextField *password_TF;
 @property UIButton *loginBt;
 @property UILabel *titleLable;
-
 @property NSString *placeUserName;
 
 @property id <loginUpdateToken> delegate;

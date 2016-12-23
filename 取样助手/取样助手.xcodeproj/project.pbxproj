@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5819DDCA1E0D08C60010C88B /* dataCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5819DDC91E0D08C60010C88B /* dataCenterViewController.m */; };
+		5819DDCE1E0D2E9E0010C88B /* pdf.png in Resources */ = {isa = PBXBuildFile; fileRef = 5819DDCB1E0D2E9E0010C88B /* pdf.png */; };
+		5819DDCF1E0D2E9E0010C88B /* pdf@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5819DDCC1E0D2E9E0010C88B /* pdf@2x.png */; };
+		5819DDD01E0D2E9E0010C88B /* pdf@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5819DDCD1E0D2E9E0010C88B /* pdf@3x.png */; };
 		581B245F1E0B753400FEFBEE /* CustomURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 581B245A1E0B753400FEFBEE /* CustomURLCache.m */; };
 		581B24601E0B753400FEFBEE /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 581B245C1E0B753400FEFBEE /* Reachability.m */; };
 		581B24611E0B753400FEFBEE /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 581B245E1E0B753400FEFBEE /* Util.m */; };
@@ -129,6 +133,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5819DDC81E0D08C60010C88B /* dataCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dataCenterViewController.h; sourceTree = "<group>"; };
+		5819DDC91E0D08C60010C88B /* dataCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = dataCenterViewController.m; sourceTree = "<group>"; };
+		5819DDCB1E0D2E9E0010C88B /* pdf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pdf.png; path = image/pdf.png; sourceTree = "<group>"; };
+		5819DDCC1E0D2E9E0010C88B /* pdf@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pdf@2x.png"; path = "image/pdf@2x.png"; sourceTree = "<group>"; };
+		5819DDCD1E0D2E9E0010C88B /* pdf@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pdf@3x.png"; path = "image/pdf@3x.png"; sourceTree = "<group>"; };
 		581B24591E0B753400FEFBEE /* CustomURLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomURLCache.h; path = "取样助手/CustomURLCache.h"; sourceTree = "<group>"; };
 		581B245A1E0B753400FEFBEE /* CustomURLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomURLCache.m; path = "取样助手/CustomURLCache.m"; sourceTree = "<group>"; };
 		581B245B1E0B753400FEFBEE /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = "取样助手/Reachability.h"; sourceTree = "<group>"; };
@@ -460,6 +469,9 @@
 		589540681DC1FDF000DDA5F8 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				5819DDCB1E0D2E9E0010C88B /* pdf.png */,
+				5819DDCC1E0D2E9E0010C88B /* pdf@2x.png */,
+				5819DDCD1E0D2E9E0010C88B /* pdf@3x.png */,
 				58E50CE21E0A1EBF002B6AA3 /* iconBack.png */,
 				58E50CE31E0A1EBF002B6AA3 /* iconBack@2x.png */,
 				58E50CE41E0A1EBF002B6AA3 /* iconBack@3x.png */,
@@ -541,6 +553,8 @@
 				5889D8C61DC091630052C6D7 /* mainViewController.m */,
 				581B24631E0B7F4900FEFBEE /* DataCenterWebViewController.h */,
 				581B24641E0B7F4900FEFBEE /* DataCenterWebViewController.m */,
+				5819DDC81E0D08C60010C88B /* dataCenterViewController.h */,
+				5819DDC91E0D08C60010C88B /* dataCenterViewController.m */,
 			);
 			path = Drawer;
 			sourceTree = "<group>";
@@ -684,6 +698,7 @@
 				58E50CE71E0A1EBF002B6AA3 /* iconBack@3x.png in Resources */,
 				706B00CF1DCB2D5D003953DD /* 密码@2x.png in Resources */,
 				703C29281DCA41D2004FA090 /* copy2@2x.png in Resources */,
+				5819DDD01E0D2E9E0010C88B /* pdf@3x.png in Resources */,
 				58E50CE51E0A1EBF002B6AA3 /* iconBack.png in Resources */,
 				703C29141DCA286A004FA090 /* jisongyangben@3x.png in Resources */,
 				703C292D1DCA41D2004FA090 /* unoperate.png in Resources */,
@@ -698,6 +713,7 @@
 				700A3E111DD0748000D507F1 /* 莲和logo120.png in Resources */,
 				703C292F1DCA41D2004FA090 /* unoperate@3x.png in Resources */,
 				58427ABC1E0A8B2100118F7D /* ziliao copy 2.png in Resources */,
+				5819DDCE1E0D2E9E0010C88B /* pdf.png in Resources */,
 				5837EC261DE6D81E009921E8 /* 客户.png in Resources */,
 				58B0991E1DEE74B600B87A4E /* nv@2x.png in Resources */,
 				58427ABE1E0A8B2100118F7D /* ziliao copy 2@2x.png in Resources */,
@@ -730,6 +746,7 @@
 				5837EC2A1DE6D81E009921E8 /* 投标纪录@2x.png in Resources */,
 				706B00D81DCB2DB9003953DD /* 用户名@2x.png in Resources */,
 				706B00CE1DCB2D5D003953DD /* 密码.png in Resources */,
+				5819DDCF1E0D2E9E0010C88B /* pdf@2x.png in Resources */,
 				5887AD3F1DE5A2A800FA00B1 /* 2.png in Resources */,
 				5837EC2C1DE6D81E009921E8 /* 消息.png in Resources */,
 				58B0991D1DEE74B600B87A4E /* nv.png in Resources */,
@@ -774,6 +791,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				589540671DC1F80900DDA5F8 /* sendViewController.m in Sources */,
+				5819DDCA1E0D08C60010C88B /* dataCenterViewController.m in Sources */,
 				58C25FE91DE5632500B8D88D /* UIViewController+UFanViewController.m in Sources */,
 				58C25FE81DE5632500B8D88D /* UFanViewController.m in Sources */,
 				703C29171DCA2BDE004FA090 /* publicMethod.m in Sources */,

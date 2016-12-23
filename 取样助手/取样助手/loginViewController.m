@@ -85,13 +85,14 @@
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^{
     NSString *strUrl = [NSString stringWithFormat:longin_URL];
-
-    NSString *post = [NSString stringWithFormat:@"username=%@&password=%@",_username_TF.text,_password_TF.text];
+        NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"];
+    NSString *post = [NSString stringWithFormat:@"username=%@&password=%@&iospush=%@",_username_TF.text,_password_TF.text,deviceToken];
 
     NSData *response = sendRequestWithFullURL(strUrl, post);
         dispatch_async(dispatch_get_main_queue(),^{
             if(!response)
             {
+                alertMsgView(@"无法连接服务器，请检查网络", self);
                 NSLog(@" response is null check net!");
                 return;
             }
@@ -103,9 +104,14 @@
             NSDictionary *jsonData = parseJsonResponse(response);
             if(!jsonData)
             {
+                alertMsgView(@"服务器维护中，请稍后再试", self);
                 return;
             }
             NSNumber *resault = [jsonData objectForKey:@"err"]; //JsonValue([jsonData objectForKey:@"err"],@"NSNumber");
+            if (resault == nil) {
+                alertMsgView(@"服务器维护中，亲稍后再试", self);
+                return;
+            }
             NSString *err = [NSString stringWithFormat:@"%@",resault];
             if(![err isEqualToString:@"0"])
             {
@@ -122,6 +128,7 @@
             NSArray *operations =[data objectForKey:@"operations"]; //JsonValue([data objectForKey:@"operations"], @"NSArray");
             if(!currentToken)
             {
+                alertMsgView(@"登陆失败,获取不到用户标识，请重试", self);
                 NSLog(@"Token = NULL Check");
                 return;
             }

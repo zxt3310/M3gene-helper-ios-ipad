@@ -45,7 +45,7 @@
     if ([request.HTTPMethod compare:@"GET"] != NSOrderedSame) {
         return [super cachedResponseForRequest:request];
     }
-    if (![request.URL.absoluteString containsString:@"lifehealthcare.com/services/"])
+    if (![request.URL.absoluteString containsString:@"lifehealthcare.com/services/disks"])
     {
         return [super cachedResponseForRequest:request];
     }

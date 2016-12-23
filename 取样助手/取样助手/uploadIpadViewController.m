@@ -261,13 +261,18 @@
                 
                 if(!responsData)
                 {
+                    alertMsgView(@"无法连接服务器，请检查网络", self);
                     NSLog(@"return nil");
                     return;
                 }
                 
                 NSDictionary *jsonData = parseJsonResponse(responsData);
                 
-                NSString *resault =[NSString stringWithFormat:@"%@",[jsonData objectForKey:@"err"]];
+                NSNumber *resault = JsonValue([jsonData objectForKey:@"err"],@"NSNumber");
+                if (resault == nil) {
+                    alertMsgView(@"服务器维护中，请重试", self);
+                    return;
+                }
                 
                 NSInteger err = [resault integerValue];
                 if (err > 0) {

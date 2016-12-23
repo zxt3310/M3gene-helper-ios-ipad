@@ -1,0 +1,147 @@
+//
+//  dataCenterViewController.m
+//  取样助手
+//
+//  Created by Zxt3310 on 2016/12/23.
+//  Copyright © 2016年 xxx. All rights reserved.
+//
+
+#import "dataCenterViewController.h"
+
+@interface dataCenterViewController ()
+{
+    UITableView *tableview;
+    NSArray *dataList;
+}
+
+@end
+
+@implementation dataCenterViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    tableview = [[UITableView alloc] init];
+    tableview.tableFooterView = [[UITableView alloc] initWithFrame:CGRectZero];
+    tableview.delegate = self;
+    tableview.dataSource = self;
+    self.view = tableview;
+
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBar.hidden = NO;
+    [self dataListRequest];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return dataList.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if(!cell)
+    {
+        UIFont *font = [UIFont fontWithName:@"STHeitiSC-Light" size:16];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        
+        
+        UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(100, cell.frame.origin.y + cell.frame.size.height/2 - 8, SCREEN_WEIGHT/3, 16)];
+        titleLb.font = font;
+        titleLb.tag = 10;
+        [cell.contentView addSubview:titleLb];
+        
+        UILabel *sizeLb = [[UILabel alloc] initWithFrame:CGRectMake(titleLb.frame.origin.x + titleLb.frame.size.width + 20, titleLb.frame.origin.y, 200, 16)];
+        sizeLb.tag = 20;
+        sizeLb.font = font;
+        [cell.contentView addSubview:sizeLb];
+        
+        UILabel *timeLb = [[UILabel alloc] initWithFrame:CGRectMake(sizeLb.frame.origin.x + sizeLb.frame.size.width + 20, sizeLb.frame.origin.y, 300, 16)];
+        timeLb.font = font;
+        timeLb.tag = 30;
+        [cell.contentView addSubview:timeLb];
+        
+        UIImageView *pdfImg = [[UIImageView alloc] initWithFrame:CGRectMake(70, titleLb.frame.origin.y - 2, 20, 20)];
+        pdfImg.image = [UIImage imageNamed:@"pdf"];
+        [cell.contentView addSubview:pdfImg];
+        
+    }
+    
+    NSDictionary *dataDic = JsonValue(dataList[indexPath.row],@"NSDictionary");
+    
+    UILabel *titleLabel = (UILabel *)[cell.contentView viewWithTag:10];
+    NSString *nameStr = JsonValue([dataDic objectForKey:@"name"],@"NSString");
+    titleLabel.text = nameStr;
+    
+    UILabel *siziLb = (UILabel *)[cell.contentView viewWithTag:20];
+    NSNumber *dataSize = JsonValue([dataDic objectForKey:@"size"], @"NSNumber");
+    CGFloat a = [dataSize floatValue]/1000000;
+    if (a<1) {
+        siziLb.text = [NSString stringWithFormat:@"文件大小：%.0f Kb",a*1000];
+    }
+    else
+    {
+        siziLb.text = [NSString stringWithFormat:@"文件大小：%.2f Mb",a];
+    }
+    
+    UILabel *timeLb = (UILabel *)[cell.contentView viewWithTag:30];
+    NSString *timeSt = JsonValue([dataDic objectForKey:@"date"], @"NSString");
+    timeLb.text = [NSString stringWithFormat:@"上传时间：%@",timeSt];
+    return cell;
+}
+
+
+- (void)dataListRequest
+{
+    NSString *urlStr = @"http://gzh.gentest.ranknowcn.com/m/api/disk";
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^{
+    
+        NSData *response = sendGETRequest(urlStr, nil);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+        
+            if (!response) {
+                alertMsgView(@"无法连接服务器，请检查网络", self);
+                return ;
+            }
+            
+            NSDictionary *jsonData = parseJsonResponse(response);
+            
+            if (!jsonData) {
+                alertMsgView(@"服务器维护中，请稍后再试", self);
+                return;
+            }
+            
+            NSNumber *result = JsonValue([jsonData objectForKey:@"err"], @"NSNumber");
+            if (result == nil) {
+                alertMsgView(@"服务区维护中，请稍后再试", self);
+                return;
+            }
+            
+            NSInteger err = [result integerValue];
+            if (err > 0) {
+                
+                NSString *errMsg = JsonValue([jsonData objectForKey:@"errmsg"], @"NSString");
+                
+                alertMsgView(errMsg, self);
+                
+                return;
+            }
+            
+            dataList = JsonValue([jsonData objectForKey:@"files"],@"NSArray");
+            
+            [tableview reloadData];
+        });
+    });
+    
+}
+
+
+@end
