@@ -90,3 +90,24 @@ NSDictionary *parseJsonString(NSString *str);
 
 NSData* loadRequestWithImg(NSDictionary *params,NSString *url);
 
+
+#pragma mark FFNSURLConnectionForHttps
+@interface FFNSURLConnectionForHttps : NSObject <NSURLConnectionDataDelegate>
+
+@property (strong, nonatomic) NSURLResponse *connectionResponse;
+@property (strong, nonatomic) NSError *connectionError;
+@property (strong, nonatomic) NSMutableData *receiveData;
+@property (assign, nonatomic) BOOL isRequestCompleted;
+@property (assign, nonatomic) BOOL isRequestExistsError;
+@property (strong, nonatomic) NSOperationQueue* ARQueue;
+@property (strong, nonatomic) void (^ARCHandler)(NSURLResponse* response, NSData* data, NSError* connectionError);
+
++ (NSData *)sendSynchronousRequest:(NSURLRequest *)request returningResponse:(NSURLResponse **)response error:(NSError **)error;
++ (void)sendAsynchronousRequest:(NSURLRequest*) request
+                          queue:(NSOperationQueue*) queue
+              completionHandler:(void (^)(NSURLResponse* response, NSData* data, NSError* connectionError)) handler;
+
+- (void)doIdle:(NSTimer *)theTimer;
+
+@end
+

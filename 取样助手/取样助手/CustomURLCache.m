@@ -151,7 +151,10 @@
     __block NSCachedURLResponse *cachedResponse = nil;
     //sendSynchronousRequest请求也要经过NSURLCache
     id boolExsite = [self.responseDictionary objectForKey:url];
-    if (boolExsite == nil || isNeedToUpdate)
+    if (!isNeedToUpdate) {
+        return cachedResponse;
+    }
+    if (boolExsite == nil)
     {
         if (self.cacheTime > 0) {
             return nil;

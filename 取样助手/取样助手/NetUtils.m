@@ -607,3 +607,192 @@ NSData* loadRequestWithImg(NSDictionary *params,NSString *url)
     
     return returnData;
 }
+
+
+
+
+
+#pragma mark FFNSURLConnectionForHttps
+@implementation FFNSURLConnectionForHttps
+@synthesize connectionResponse = _connectionResponse;
+@synthesize connectionError = _connectionError;
+@synthesize receiveData = _receiveData;
+@synthesize isRequestCompleted = _isRequestCompleted;
+@synthesize isRequestExistsError = _isRequestExistsError;
+@synthesize ARQueue = _ARQueue;
+@synthesize ARCHandler = _ARCHandler;
+
+//void (^completionHandler)(NSURLResponse* response, NSData* data, NSError* connectionError);
+
+- (id) init
+{
+    self = [super init];
+    if (self) {
+    }
+    
+    return self;
+}
+
+- (void)doIdle:(NSTimer *) theTimer
+{
+    //NSLog(@"FFNSURLConnectionForHttps sendSynchronousRequest timer idle");
+}
+
++ (NSData *)sendSynchronousRequest:(NSURLRequest *)request returningResponse:(NSURLResponse **)response error:(NSError **)error {
+    FFNSURLConnectionForHttps *ep_https_connection = [[FFNSURLConnectionForHttps alloc] init];
+    ep_https_connection.isRequestCompleted = NO;
+    ep_https_connection.isRequestExistsError = NO;
+    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:ep_https_connection];
+    if (conn)
+    {
+        NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:0.25 target:ep_https_connection selector:@selector(doIdle:) userInfo:nil repeats:YES];
+        while (!ep_https_connection.isRequestCompleted) {
+            //NSLog(@"loop");
+            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+        }
+        [timer invalidate];
+        if (response!=nil) *response = ep_https_connection.connectionResponse;
+        if (error!=nil) *error = ep_https_connection.connectionError;
+        if (ep_https_connection.isRequestExistsError) {
+            return nil;
+        }
+        else{
+            return ep_https_connection.receiveData;
+        }
+    }
+    return nil;
+}
+
++ (void)sendAsynchronousRequest:(NSURLRequest*) request
+                          queue:(NSOperationQueue*) queue
+              completionHandler:(void (^)(NSURLResponse* response, NSData* data, NSError* connectionError)) handler {
+    FFNSURLConnectionForHttps *ep_https_connection = [[FFNSURLConnectionForHttps alloc] init];
+    ep_https_connection.isRequestCompleted = NO;
+    ep_https_connection.isRequestExistsError = NO;
+    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:ep_https_connection];
+    if (conn)
+    {
+        ep_https_connection.ARQueue = queue;
+        ep_https_connection.ARCHandler = handler;
+    }
+    else
+    {
+        if (queue && handler) {
+            NSDictionary *userinfo = [NSDictionary dictionaryWithObject:@"The connection is failed to be created." forKey:NSLocalizedDescriptionKey];
+            NSError *aError = [NSError errorWithDomain:@"sendAsynchronousRequestErrorDomain" code:-1000 userInfo:userinfo];
+            [queue addOperationWithBlock:^()
+             {
+                 handler(nil, nil, aError);
+             }];
+        }
+    }
+}
+
+#pragma mark NSURLConnection (delegate)
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    //NSLog(@"FFNSURLConnectionForHttps didReceiveResponse");
+    _connectionResponse = response;
+    if (![response respondsToSelector:@selector(statusCode)] || [((NSHTTPURLResponse *)response) statusCode] < 400) {
+        NSInteger expected = response.expectedContentLength > 0 ? (NSInteger)response.expectedContentLength : 0;
+        
+        _receiveData = [[NSMutableData alloc] initWithCapacity:expected];
+    }
+    else {
+        NSLog(@"FFNSURLConnectionForHttps fail, %@", response);
+        [connection cancel];
+        _receiveData = nil;
+        _isRequestExistsError = YES;
+        _isRequestCompleted = YES;
+        if (_ARQueue && _ARCHandler) {
+            NSDictionary *userinfo = [NSDictionary dictionaryWithObject:@"The response statusCode is invalid." forKey:NSLocalizedDescriptionKey];
+            NSError *aError = [NSError errorWithDomain:@"sendAsynchronousRequestErrorDomain" code:-999 userInfo:userinfo];
+            [_ARQueue addOperationWithBlock:^()
+             {
+                 _ARCHandler(response, nil, aError);
+             }];
+        }
+    }
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    //NSLog(@"FFNSURLConnectionForHttps didReceiveData");
+    if (data == nil) {
+        NSLog(@"data is nil, FFNSURLConnectionForHttps");
+        return;
+    }
+    [_receiveData appendData:data];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)aConnection {
+    //NSLog(@"FFNSURLConnectionForHttps connectionDidFinishLoading");
+    _isRequestCompleted = YES;
+    _isRequestExistsError = NO;
+    if (_ARQueue && _ARCHandler) {
+        [_ARQueue addOperationWithBlock:^()
+         {
+             _ARCHandler(_connectionResponse, _receiveData, nil);
+         }];
+    }
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    NSLog(@"FFNSURLConnectionForHttps didFailWithError: %@", error);
+    _connectionError = error;
+    _isRequestCompleted = YES;
+    _isRequestExistsError = NO;
+    _receiveData = nil;
+    if (_ARQueue && _ARCHandler) {
+        [_ARQueue addOperationWithBlock:^()
+         {
+             _ARCHandler(_connectionResponse, nil, error);
+         }];
+    }
+}
+
+- (BOOL)connectionShouldUseCredentialStorage:(NSURLConnection __unused *)connection {
+    return YES;
+}
+
+- (void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge{
+    //[challenge.sender cancelAuthenticationChallenge:challenge];
+    /*if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+     NSURLCredential *credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
+     [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
+     } else {
+     [[challenge sender] continueWithoutCredentialForAuthenticationChallenge:challenge];
+     }*/
+    [challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
+    return;
+    /*
+     static CFArrayRef certs;
+     if (!certs) {
+     NSData *certData =[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:API_URL_STR ofType:@"der"]];
+     //SecCertificateRef rootcert =SecCertificateCreateWithData(kCFAllocatorDefault,CFBridgingRetain(certData));
+     SecCertificateRef rootcert = SecCertificateCreateWithData(NULL,(__bridge CFDataRef)certData);
+     const void *array[1] = { rootcert };
+     certs = CFArrayCreate(NULL, array, 1, &kCFTypeArrayCallBacks);
+     //CFRelease(rootcert);    // for completeness, really does not matter
+     }
+     
+     SecTrustRef trust = [[challenge protectionSpace] serverTrust];
+     int err;
+     SecTrustResultType trustResult = 0;
+     err = SecTrustSetAnchorCertificates(trust, certs);
+     
+     if (err == noErr) {
+     err = SecTrustEvaluate(trust,&trustResult);
+     }
+     //CFRelease(trust);
+     BOOL trusted = (err == noErr) && ((trustResult == kSecTrustResultProceed) || (trustResult == kSecTrustResultUnspecified));
+     
+     if (trusted) {
+     [challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
+     }else{
+     [challenge.sender cancelAuthenticationChallenge:challenge];
+     }
+     */
+}
+
+@end
+

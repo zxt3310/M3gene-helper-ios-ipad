@@ -12,6 +12,8 @@
 {
     UITableView *tableview;
     NSArray *dataList;
+    LoadingView *loadingView;
+    
 }
 
 @end
@@ -26,6 +28,13 @@
     tableview.delegate = self;
     tableview.dataSource = self;
     self.view = tableview;
+    
+    //loading 动画
+    float topY = SCREEN_HEIGHT/3;
+    loadingView = [[LoadingView alloc] initWithFrame:CGRectMake((SCREEN_WEIGHT- 80)/2, topY, 80, 70)];
+    loadingView.hidden = YES;
+    [self.view addSubview:loadingView];
+    
     [self dataListRequest];
 }
 
@@ -117,6 +126,8 @@
 {
     NSString *urlStr = [NSString stringWithFormat:@"%@/m/api/disk",dataCenter_URL];   // @"http://gzh.gentest.ranknowcn.com/m/api/disk";
     
+    loadingView.hidden = NO;
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^{
     
         NSData *response = sendGETRequest(urlStr, nil);
@@ -124,6 +135,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
         
             if (!response) {
+                loadingView.hidden = YES;
                 alertMsgView(@"无法连接服务器，请检查网络", self);
                 return ;
             }
@@ -131,12 +143,14 @@
             NSDictionary *jsonData = parseJsonResponse(response);
             
             if (!jsonData) {
+                loadingView.hidden = YES;
                 alertMsgView(@"服务器维护中，请稍后再试", self);
                 return;
             }
             
             NSNumber *result = JsonValue([jsonData objectForKey:@"err"], @"NSNumber");
             if (result == nil) {
+                loadingView.hidden = YES;
                 alertMsgView(@"服务区维护中，请稍后再试", self);
                 return;
             }
@@ -146,6 +160,7 @@
                 
                 NSString *errMsg = JsonValue([jsonData objectForKey:@"errmsg"], @"NSString");
                 
+                loadingView.hidden = YES;
                 alertMsgView(errMsg, self);
                 
                 return;
@@ -154,7 +169,12 @@
             dataList = JsonValue([jsonData objectForKey:@"files"],@"NSArray");
             
             [tableview reloadData];
-            [self updateData];
+            
+            Reachability *reach = [Reachability reachabilityForInternetConnection];
+            if(reach.isReachableViaWiFi)
+            {
+                [self updateData];
+            }
             
         });
     });
@@ -164,50 +184,91 @@
 - (void)updateData
 {
     UIWebView *webView = [[UIWebView alloc] init];
+    webView.delegate = self;
+    
+    __block float sizeOfAll;
+    __block float a;
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^{
         NSMutableDictionary *currentHashDic = [[NSMutableDictionary alloc] init];
         NSMutableDictionary *currentFileUrl = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary *currentFileSize = [[NSMutableDictionary alloc] init];
+        
         for (int i = 0; i<dataList.count ;i++) {
             NSDictionary *dataDic = dataList[i];
             NSString *md5Str = [dataDic objectForKey:@"hash"];
             NSString *fileName = [dataDic objectForKey:@"name"];
             NSString *fileUrl = [dataDic objectForKey:@"download"];
+            NSString *fileSize = [dataDic objectForKey:@"size"];
+            sizeOfAll += [fileSize floatValue];
+            
             [currentHashDic setObject:md5Str forKey:fileName]; //setValue:md5Str forKey:fileName];
             [currentFileUrl setObject:fileUrl forKey:fileName];
+            [currentFileSize setObject:fileSize forKey:fileName];
         }
         
         NSDictionary *lastHashDic = [[NSUserDefaults standardUserDefaults] objectForKey:@"fileHash"];
         NSDictionary *lastFileUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"fileUrl"];
         
+        dispatch_async(dispatch_get_main_queue(), ^{
+        loadingView.dscpLabel.text = @"同步中";
+        });
         //更新有变化的文件缓存
+        
         for (NSString *key in currentHashDic.allKeys)
         {
+            NSInteger size = [[currentFileSize objectForKey:key] floatValue];
+            a = size/sizeOfAll + a;
             if (![[lastHashDic objectForKey:key] isEqual:[currentHashDic objectForKey:key]]) {
                 
                 NSString *fileUrlStr = [currentFileUrl objectForKey:key];
                 
                 NSString *urlStr = [[NSString stringWithFormat:@"%@%@",dataCenter_URL,fileUrlStr] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                
                 [self.cache changeUpdateState];
-                [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]]];
+                
+                NSURLResponse *response = nil;
+                [FFNSURLConnectionForHttps sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] returningResponse:&response error:nil];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    loadingView.dscpLabel.text = [NSString stringWithFormat:@"同步中%.0f%%",a*100];
+                });
             }
         }
         
         //清除清单以外的文件缓存
+        
         for (NSString *key in lastHashDic.allKeys)
         {
             if (![currentHashDic objectForKey:key]) {
                 NSString *fileUrlStr = [lastFileUrl objectForKey:key];
                 NSString *urlStr = [[NSString stringWithFormat:@"%@%@",dataCenter_URL,fileUrlStr] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                 self.cache.cacheTime = 1;
-                [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]]];
+                
+                NSURLResponse *response = nil;
+                [FFNSURLConnectionForHttps sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] returningResponse:&response error:nil];
             }
         }
         
-        
-        [[NSUserDefaults standardUserDefaults] setObject:currentHashDic forKey:@"fileHash"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            loadingView.dscpLabel.text = @"同步完成";
+            [UIView animateWithDuration:1 animations:^{
+                loadingView.transform = CGAffineTransformMakeScale(1.3, 1.3);
+                loadingView.alpha = 0.0;
+            } completion:^(BOOL finished) {
+                if (finished) {
+                   
+                    loadingView.alpha = 1;
+                    loadingView.hidden = YES;
+                }
+            }];
+
+            
+            [[NSUserDefaults standardUserDefaults] setObject:currentHashDic forKey:@"fileHash"];
+            [[NSUserDefaults standardUserDefaults] setObject:currentFileUrl forKey:@"fileUrl"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        });
     });
 }
+
 
 @end

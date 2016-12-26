@@ -13,7 +13,7 @@
 #import "Reachability.h"
 #import "CustomURLCache.h"
 
-@interface dataCenterViewController : UIViewController <UITableViewDelegate,UITableViewDataSource>
+@interface dataCenterViewController : UIViewController <UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate>
 
 @property CustomURLCache *cache;
 
