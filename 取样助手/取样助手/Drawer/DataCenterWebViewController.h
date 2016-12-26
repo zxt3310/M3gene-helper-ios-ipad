@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "POPViewController.h"
+#import "CMCustomViews.h"
+#import "publicMethod.h"
 
 @interface DataCenterWebViewController : UIViewController<UIWebViewDelegate>
 
 @property NSString *urlString;
 @property NSString *token;
 @property NSString *cookie;
+
 
 @end

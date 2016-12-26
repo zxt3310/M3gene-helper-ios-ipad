@@ -11,6 +11,7 @@
 @interface DataCenterWebViewController ()
 {
     UIWebView *html5View;
+    LoadingView *loadingView;
 }
 
 @end
@@ -28,8 +29,15 @@
     
     [request addValue:_cookie forHTTPHeaderField:@"Set-Cookie"];
     [request addValue:_token forHTTPHeaderField:@"token"];
+    //request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
 
     [html5View loadRequest:[request copy]];
+    
+    //loading 动画
+    float topY = SCREEN_HEIGHT/3;
+    loadingView = [[LoadingView alloc] initWithFrame:CGRectMake((SCREEN_WEIGHT- 80)/2, topY, 80, 70)];
+    loadingView.hidden = YES;
+    [self.view addSubview:loadingView];
     
 }
 
@@ -55,8 +63,21 @@
     
 }
 
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    loadingView.dscpLabel.text = @"正在下载";
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    loadingView.hidden = NO;
+    
+    return  YES;
+}
+
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    loadingView.hidden = YES;
     NSString *titleStr = [html5View stringByEvaluatingJavaScriptFromString:@"document.title"];
     self.title = titleStr;
 }

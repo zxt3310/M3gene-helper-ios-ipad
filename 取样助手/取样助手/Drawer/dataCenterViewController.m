@@ -26,13 +26,17 @@
     tableview.delegate = self;
     tableview.dataSource = self;
     self.view = tableview;
-
+    [self dataListRequest];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBar.hidden = NO;
-    [self dataListRequest];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -93,13 +97,25 @@
     UILabel *timeLb = (UILabel *)[cell.contentView viewWithTag:30];
     NSString *timeSt = JsonValue([dataDic objectForKey:@"date"], @"NSString");
     timeLb.text = [NSString stringWithFormat:@"上传时间：%@",timeSt];
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *dataDic = JsonValue(dataList[indexPath.row],@"NSDictionary");
+
+    NSString *str = [dataDic objectForKey:@"download"];
+    NSString *urlSt = [[NSString stringWithFormat:@"%@%@",dataCenter_URL,str] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    DataCenterWebViewController *fivc = [[DataCenterWebViewController alloc]init];
+    fivc.urlString = urlSt;
+    [self.navigationController pushViewController:fivc animated:YES];
+}
 
 - (void)dataListRequest
 {
-    NSString *urlStr = @"http://gzh.gentest.ranknowcn.com/m/api/disk";
+    NSString *urlStr = [NSString stringWithFormat:@"%@/m/api/disk",dataCenter_URL];   // @"http://gzh.gentest.ranknowcn.com/m/api/disk";
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^{
     
@@ -138,10 +154,60 @@
             dataList = JsonValue([jsonData objectForKey:@"files"],@"NSArray");
             
             [tableview reloadData];
+            [self updateData];
+            
         });
     });
     
 }
 
+- (void)updateData
+{
+    UIWebView *webView = [[UIWebView alloc] init];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^{
+        NSMutableDictionary *currentHashDic = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary *currentFileUrl = [[NSMutableDictionary alloc] init];
+        for (int i = 0; i<dataList.count ;i++) {
+            NSDictionary *dataDic = dataList[i];
+            NSString *md5Str = [dataDic objectForKey:@"hash"];
+            NSString *fileName = [dataDic objectForKey:@"name"];
+            NSString *fileUrl = [dataDic objectForKey:@"download"];
+            [currentHashDic setObject:md5Str forKey:fileName]; //setValue:md5Str forKey:fileName];
+            [currentFileUrl setObject:fileUrl forKey:fileName];
+        }
+        
+        NSDictionary *lastHashDic = [[NSUserDefaults standardUserDefaults] objectForKey:@"fileHash"];
+        NSDictionary *lastFileUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"fileUrl"];
+        
+        //更新有变化的文件缓存
+        for (NSString *key in currentHashDic.allKeys)
+        {
+            if (![[lastHashDic objectForKey:key] isEqual:[currentHashDic objectForKey:key]]) {
+                
+                NSString *fileUrlStr = [currentFileUrl objectForKey:key];
+                
+                NSString *urlStr = [[NSString stringWithFormat:@"%@%@",dataCenter_URL,fileUrlStr] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                
+                [self.cache changeUpdateState];
+                [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]]];
+            }
+        }
+        
+        //清除清单以外的文件缓存
+        for (NSString *key in lastHashDic.allKeys)
+        {
+            if (![currentHashDic objectForKey:key]) {
+                NSString *fileUrlStr = [lastFileUrl objectForKey:key];
+                NSString *urlStr = [[NSString stringWithFormat:@"%@%@",dataCenter_URL,fileUrlStr] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                self.cache.cacheTime = 1;
+                [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]]];
+            }
+        }
+        
+        
+        [[NSUserDefaults standardUserDefaults] setObject:currentHashDic forKey:@"fileHash"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    });
+}
 
 @end

@@ -9,7 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "NetUtils.h"
 #import "publicMethod.h"
+#import "DataCenterWebViewController.h"
+#import "Reachability.h"
+#import "CustomURLCache.h"
 
 @interface dataCenterViewController : UIViewController <UITableViewDelegate,UITableViewDataSource>
+
+@property CustomURLCache *cache;
 
 @end

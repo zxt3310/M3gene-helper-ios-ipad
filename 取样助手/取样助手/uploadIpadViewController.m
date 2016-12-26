@@ -247,8 +247,12 @@
             NSString *uploadUrl = [NSString stringWithFormat:orderUpload_URL];
             
             NSMutableString *upImageId = [[NSMutableString alloc] init];
-            for (int i = 10; i<imageIdArray.count; i++) {
-                [upImageId appendFormat:@"%@,",imageIdArray[i]];
+            for (int i = 0; i<imageIdArray.count; i++) {
+                [upImageId appendFormat:@",%@",imageIdArray[i]];
+            }
+            if(upImageId.length > 0)
+            {
+                [upImageId deleteCharactersInRange:NSMakeRange(0, 1)];
             }
             
             NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:self.token,@"token",productId,@"product",numberLable.text,@"order_code",upOrderImg,@"pic",upImageId,@"medical_pics", nil];

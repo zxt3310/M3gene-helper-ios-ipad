@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Util.h"
 
+
 @interface CustomURLCache : NSURLCache
 
 @property(nonatomic, assign) NSInteger cacheTime;
@@ -16,5 +17,7 @@
 @property(nonatomic, retain) NSMutableDictionary *responseDictionary;
 
 - (id)initWithMemoryCapacity:(NSUInteger)memoryCapacity diskCapacity:(NSUInteger)diskCapacity diskPath:(NSString *)path cacheTime:(NSInteger)cacheTime;
+
+- (void)changeUpdateState;
 
 @end

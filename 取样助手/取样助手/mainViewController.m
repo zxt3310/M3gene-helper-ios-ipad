@@ -16,6 +16,7 @@
     BOOL allowRegist;
     BOOL allowSendEx;
     BOOL allowSendReport;
+    CustomURLCache *urlCache;
     //NSString *cookie;
 }
 
@@ -85,8 +86,8 @@
     self=[super init];
     if(self)
     {
-        CustomURLCache *urlCache = [[CustomURLCache alloc] initWithMemoryCapacity:20 * 1024 * 1024
-                                                                     diskCapacity:200 * 1024 * 1024
+        urlCache = [[CustomURLCache alloc] initWithMemoryCapacity:20 * 1024 * 1024
+                                                                     diskCapacity:1000 * 1024 * 1024
                                                                          diskPath:nil
                                                                         cacheTime:0];
         [CustomURLCache setSharedURLCache:urlCache];
@@ -283,19 +284,20 @@
 
 - (void)ziliaoTapAction
 {
-    NSString *cookie = [[NSUserDefaults standardUserDefaults] objectForKey:@"Set-Cookie"];
-    NSArray *cookieArray = [cookie componentsSeparatedByString:@";"];
-    DataCenterWebViewController *fivc = [[DataCenterWebViewController alloc]init];
-    fivc.token = token;
-    //fivc.urlStr = @"http://dev.mapi.lhgene.cn/app/aindex.html#/salefinance";
-    fivc.urlString = @"http://lifehealthcare.com/services/disk.php";
-    if(cookieArray.count>0)
-    {
-        fivc.cookie = cookieArray[0];
-    }
-    [self.UF_ViewController.navigationController pushViewController:fivc animated:YES];
-//    dataCenterViewController *dvc = [[dataCenterViewController alloc] init];
-//    [self.navigationController pushViewController:dvc animated:YES];
+//    NSString *cookie = [[NSUserDefaults standardUserDefaults] objectForKey:@"Set-Cookie"];
+//    NSArray *cookieArray = [cookie componentsSeparatedByString:@";"];
+//    DataCenterWebViewController *fivc = [[DataCenterWebViewController alloc]init];
+//    fivc.token = token;
+//    //fivc.urlStr = @"http://dev.mapi.lhgene.cn/app/aindex.html#/salefinance";
+//    fivc.urlString = @"http://lifehealthcare.com/services/disk.php";
+//    if(cookieArray.count>0)
+//    {
+//        fivc.cookie = cookieArray[0];
+//    }
+//    [self.UF_ViewController.navigationController pushViewController:fivc animated:YES];
+    dataCenterViewController *dvc = [[dataCenterViewController alloc] init];
+    dvc.cache = urlCache;
+    [self.navigationController pushViewController:dvc animated:YES];
 
 }
 

@@ -21,10 +21,13 @@
 @end
 
 @implementation CustomURLCache
-
+{
+    BOOL isNeedToUpdate;
+}
 @synthesize cacheTime = _cacheTime;
 @synthesize diskPath = _diskPath;
 @synthesize responseDictionary = _responseDictionary;
+
 
 - (id)initWithMemoryCapacity:(NSUInteger)memoryCapacity diskCapacity:(NSUInteger)diskCapacity diskPath:(NSString *)path cacheTime:(NSInteger)cacheTime {
     if (self = [self initWithMemoryCapacity:memoryCapacity diskCapacity:diskCapacity diskPath:path]) {
@@ -35,17 +38,17 @@
             self.diskPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
         
         self.responseDictionary = [NSMutableDictionary dictionaryWithCapacity:0];
+        
+        isNeedToUpdate = NO;
     }
     return self;
 }
 
-
-
 - (NSCachedURLResponse *)cachedResponseForRequest:(NSURLRequest *)request {
-    if ([request.HTTPMethod compare:@"GET"] != NSOrderedSame) {
-        return [super cachedResponseForRequest:request];
-    }
-    if (![request.URL.absoluteString containsString:@"lifehealthcare.com/services/disks"])
+//    if ([request.HTTPMethod compare:@"GET"] != NSOrderedSame) {
+//        return [super cachedResponseForRequest:request];
+//    }
+    if (![request.URL.absoluteString containsString:@"http://gzh.gentest.ranknowcn.com/disk"])
     {
         return [super cachedResponseForRequest:request];
     }
@@ -113,7 +116,7 @@
     NSDate *date = [NSDate date];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    if ([fileManager fileExistsAtPath:filePath]) {
+    if ([fileManager fileExistsAtPath:filePath] & !isNeedToUpdate) {
         BOOL expire = false;
         NSDictionary *otherInfo = [NSDictionary dictionaryWithContentsOfFile:otherInfoPath];
         
@@ -139,6 +142,7 @@
             
             [fileManager removeItemAtPath:filePath error:nil];
             [fileManager removeItemAtPath:otherInfoPath error:nil];
+            self.cacheTime = 0;
         }
     }
     if (![Reachability networkAvailable]) {
@@ -147,7 +151,12 @@
     __block NSCachedURLResponse *cachedResponse = nil;
     //sendSynchronousRequest请求也要经过NSURLCache
     id boolExsite = [self.responseDictionary objectForKey:url];
-    if (boolExsite == nil) {
+    if (boolExsite == nil || isNeedToUpdate)
+    {
+        if (self.cacheTime > 0) {
+            return nil;
+        }
+        
         [self.responseDictionary setValue:[NSNumber numberWithBool:TRUE] forKey:url];
   
         [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data,NSError *error)
@@ -172,6 +181,8 @@
                 [data writeToFile:filePath atomically:YES];
                 
                 cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:data];
+                
+                isNeedToUpdate = NO;
             }
             
         }];
@@ -179,10 +190,14 @@
         return cachedResponse;
         //NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
         
-        
     }
     return nil;
 }
 
+
+- (void)changeUpdateState
+{
+    isNeedToUpdate = YES;
+}
 
 @end
