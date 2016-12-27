@@ -34,9 +34,9 @@
     [super viewDidLoad];  
     
     self.view.backgroundColor = [UIColor whiteColor];
-    self.items = @[@"",@"",@"",@"",@""];
-    self.itemsMenu = @[@"",@"我的订单",@"草稿箱",@"操作记录",@"注销"];
-    self.itemsImageName =@[@"",WDDD_IMG,CGX_IMG,CZJL_IMG/*,WDXX_IMG,WDKH_IMG*/,WDKH_IMG];
+    self.items = @[@"",@"",@"",@"",@"",@""];
+    self.itemsMenu = @[@"",@"我的订单",@"订单进度",@"草稿箱",@"操作记录",@"注销"];
+    self.itemsImageName =@[@"",WDDD_IMG,WDDD_IMG,CGX_IMG,CZJL_IMG/*,WDXX_IMG,WDKH_IMG*/,WDKH_IMG];
     // Do any additional setup after loading the view.
     
     MainVc = (mainViewController *)_mainVc;
@@ -138,13 +138,27 @@
                 NSArray *cookieArray = [cookie componentsSeparatedByString:@";"];
                 firstItemViewController *fivc = [[firstItemViewController alloc]init];
                 fivc.token = lastToken;
-                //fivc.urlStr = @"http://dev.mapi.lhgene.cn/app/aindex.html#/salefinance";
-                fivc.urlStr = @"http://mapi.lhgene.cn/app/aindex.html#/salefinance";
+                fivc.urlStr = myOrderPage_URL;
                 if(cookieArray.count>0)
                 {
                    fivc.cookie = cookieArray[0];
                 }
                 [self.UF_ViewController.navigationController pushViewController:fivc animated:YES];
+            }
+            else if ([self.itemsMenu[indexPath.row] isEqualToString:@"订单进度"])
+            {
+                NSString *cookie = [[NSUserDefaults standardUserDefaults] objectForKey:@"Set-Cookie"];
+                NSArray *cookieArray = [cookie componentsSeparatedByString:@";"];
+                firstItemViewController *fivc = [[firstItemViewController alloc]init];
+                fivc.token = lastToken;
+                //fivc.urlStr = @"http://dev.mapi.lhgene.cn/app/aindex.html#/salefinance";
+                fivc.urlStr = @"http://dev.mapi.lhgene.cn/app/s/plan3.html";
+                if(cookieArray.count>0)
+                {
+                    fivc.cookie = cookieArray[0];
+                }
+                [self.UF_ViewController.navigationController pushViewController:fivc animated:YES];
+
             }
             else if([self.itemsMenu[indexPath.row] isEqualToString:@"草稿箱"])
             {

@@ -728,6 +728,8 @@ NSData* loadRequestWithImg(NSDictionary *params,NSString *url)
     //NSLog(@"FFNSURLConnectionForHttps connectionDidFinishLoading");
     _isRequestCompleted = YES;
     _isRequestExistsError = NO;
+    
+    
     if (_ARQueue && _ARCHandler) {
         [_ARQueue addOperationWithBlock:^()
          {

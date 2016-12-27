@@ -78,7 +78,5 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     loadingView.hidden = YES;
-    NSString *titleStr = [html5View stringByEvaluatingJavaScriptFromString:@"document.title"];
-    self.title = titleStr;
 }
 @end

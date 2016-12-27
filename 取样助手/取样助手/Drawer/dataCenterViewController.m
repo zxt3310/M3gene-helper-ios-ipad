@@ -28,13 +28,13 @@
     tableview.delegate = self;
     tableview.dataSource = self;
     self.view = tableview;
-    
+    self.title = @"资料中心";
     //loading 动画
     float topY = SCREEN_HEIGHT/3;
     loadingView = [[LoadingView alloc] initWithFrame:CGRectMake((SCREEN_WEIGHT- 80)/2, topY, 80, 70)];
     loadingView.hidden = YES;
     [self.view addSubview:loadingView];
-    
+    tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self dataListRequest];
 }
 
@@ -47,6 +47,7 @@
 {
     [super viewDidAppear:animated];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -84,6 +85,11 @@
         pdfImg.image = [UIImage imageNamed:@"pdf"];
         [cell.contentView addSubview:pdfImg];
         
+        UILabel *lineLb = [[UILabel alloc] initWithFrame:CGRectMake(40, cell.frame.size.height-1 , SCREEN_WEIGHT - 80, 0.5)];
+        lineLb.layer.borderWidth = 0.5;
+        lineLb.layer.borderColor = [UIColor colorWithMyNeed:171 green:171 blue:171 alpha:1].CGColor;
+        [cell.contentView addSubview:lineLb];
+        
     }
     
     NSDictionary *dataDic = JsonValue(dataList[indexPath.row],@"NSDictionary");
@@ -119,6 +125,7 @@
     NSString *urlSt = [[NSString stringWithFormat:@"%@%@",dataCenter_URL,str] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     DataCenterWebViewController *fivc = [[DataCenterWebViewController alloc]init];
     fivc.urlString = urlSt;
+    fivc.title = [dataDic objectForKey:@"name"];
     [self.navigationController pushViewController:fivc animated:YES];
 }
 
@@ -175,6 +182,10 @@
             {
                 [self updateData];
             }
+            else
+            {
+                loadingView.hidden = YES;
+            }
             
         });
     });
@@ -224,15 +235,38 @@
                 NSString *fileUrlStr = [currentFileUrl objectForKey:key];
                 
                 NSString *urlStr = [[NSString stringWithFormat:@"%@%@",dataCenter_URL,fileUrlStr] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                [self.cache changeUpdateState];
                 
+                NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+                request.cachePolicy = NSURLRequestReloadIgnoringCacheData;
                 NSURLResponse *response = nil;
-                [FFNSURLConnectionForHttps sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] returningResponse:&response error:nil];
+                NSError *error = nil;
+                NSData *data = [FFNSURLConnectionForHttps sendSynchronousRequest:[request copy] returningResponse:&response error:&error];
+                if (error) {
+                    [currentHashDic removeObjectForKey:key];
+                    [currentFileUrl removeObjectForKey:key];
+                    continue;
+                }
                 
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    loadingView.dscpLabel.text = [NSString stringWithFormat:@"同步中%.0f%%",a*100];
-                });
+                NSString *url = request.URL.absoluteString;
+                NSString *fileName = [_cache cacheRequestFileName:url];
+                NSString *otherInfoFileName = [_cache cacheRequestOtherInfoFileName:url];
+                NSString *filePath = [_cache cacheFilePath:fileName];
+                NSString *otherInfoPath = [_cache cacheFilePath:otherInfoFileName];
+                NSDate *date = [NSDate date];
+                
+                NSLog(@"cache url --- %@ ",url);
+                
+                //save to cache
+                NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%f", [date timeIntervalSince1970]], @"time",
+                                      response.MIMEType, @"MIMEType",
+                                      response.textEncodingName, @"textEncodingName", nil];
+                [dict writeToFile:otherInfoPath atomically:YES];
+                [data writeToFile:filePath atomically:YES];
+
             }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                loadingView.dscpLabel.text = [NSString stringWithFormat:@"同步中%.0f%%",a*100];
+            });
         }
         
         //清除清单以外的文件缓存
@@ -250,6 +284,11 @@
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [[NSUserDefaults standardUserDefaults] setObject:currentHashDic forKey:@"fileHash"];
+            [[NSUserDefaults standardUserDefaults] setObject:currentFileUrl forKey:@"fileUrl"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+
             loadingView.dscpLabel.text = @"同步完成";
             [UIView animateWithDuration:1 animations:^{
                 loadingView.transform = CGAffineTransformMakeScale(1.3, 1.3);
@@ -263,9 +302,6 @@
             }];
 
             
-            [[NSUserDefaults standardUserDefaults] setObject:currentHashDic forKey:@"fileHash"];
-            [[NSUserDefaults standardUserDefaults] setObject:currentFileUrl forKey:@"fileUrl"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
         });
     });
 }

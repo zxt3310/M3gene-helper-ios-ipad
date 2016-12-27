@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CustomURLCache.h"
 
 
 #define longin_URL            @"http://dev.mapi.lhgene.cn/mobi-cms/login"
@@ -21,7 +22,8 @@
 #define medical_pic_delete_URL @"http://dev.mapi.lhgene.cn/mobi-cms/order/medical-pic-delete"
 #define orderComplate_URL     @"http://dev.mapi.lhgene.cn/mobi-cms/order/h5more"
 #define orderCheck_URL        @"http://dev.mapi.lhgene.cn/mobi-cms/order/check"
- 
+#define myOrderPage_URL       @"http://dev.mapi.lhgene.cn/app/aindex.html#/salefinance"
+#define orderProcess_URL      @"http://dev.mapi.lhgene.cn/app/s/plan3.html"
 
 //#define longin_URL            @"http://mapi.lhgene.cn/mobi-cms/login"
 //#define orderUpload_URL        @"http://mapi.lhgene.cn/mobi-cms/order/upload"
@@ -35,7 +37,10 @@
 //#define medical_pic_delete_URL @"http://mapi.lhgene.cn/mobi-cms/order/medical-pic-delete"
 //#define orderComplate_URL     @"http://mapi.lhgene.cn/mobi-cms/order/h5more"
 //#define orderCheck_URL        @"http://mapi.lhgene.cn/mobi-cms/order/check"
+//#define myOrderPage_URL       @"http://mapi.lhgene.cn/app/aindex.html#/salefinance"
+//#define orderProcess_URL      @"http://mapi.lhgene.cn/app/s/plan3.html"
 #define dataCenter_URL        @"http://gzh.gentest.ranknowcn.com"
+#define dataCenter_GET_URL    @"http://gzh.gentest.ranknowcn.com/m/api/disk"
 
 #define WDDD_IMG @"订单查看订单"
 #define CGX_IMG  @"草稿箱"

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Util.h"
+#import "NetUtils.h"
 
 
 @interface CustomURLCache : NSURLCache
@@ -16,8 +17,13 @@
 @property(nonatomic, retain) NSString *diskPath;
 @property(nonatomic, retain) NSMutableDictionary *responseDictionary;
 
+@property BOOL isFinishCache;
+
 - (id)initWithMemoryCapacity:(NSUInteger)memoryCapacity diskCapacity:(NSUInteger)diskCapacity diskPath:(NSString *)path cacheTime:(NSInteger)cacheTime;
 
-- (void)changeUpdateState;
+//new
+- (NSString *)cacheRequestFileName:(NSString *)requestUrl;
+- (NSString *)cacheRequestOtherInfoFileName:(NSString *)requestUrl;
+- (NSString *)cacheFilePath:(NSString *)file;
 
 @end

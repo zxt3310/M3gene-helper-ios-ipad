@@ -22,7 +22,7 @@
 
 @implementation CustomURLCache
 {
-    BOOL isNeedToUpdate;
+    BOOL isDataCenterMainPage;
 }
 @synthesize cacheTime = _cacheTime;
 @synthesize diskPath = _diskPath;
@@ -39,7 +39,7 @@
         
         self.responseDictionary = [NSMutableDictionary dictionaryWithCapacity:0];
         
-        isNeedToUpdate = NO;
+        isDataCenterMainPage = NO;
     }
     return self;
 }
@@ -48,9 +48,15 @@
 //    if ([request.HTTPMethod compare:@"GET"] != NSOrderedSame) {
 //        return [super cachedResponseForRequest:request];
 //    }
-    if (![request.URL.absoluteString containsString:@"http://gzh.gentest.ranknowcn.com/disk"])
+    if (![request.URL.absoluteString containsString:@"http://gzh.gentest.ranknowcn.com"])
     {
         return [super cachedResponseForRequest:request];
+    }
+    
+    if ([request.URL.absoluteString isEqualToString:dataCenter_GET_URL]) {
+        if ([Reachability networkAvailable]) {
+            isDataCenterMainPage = YES;
+        }
     }
     
     return [self dataFromRequest:request];
@@ -116,7 +122,7 @@
     NSDate *date = [NSDate date];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    if ([fileManager fileExistsAtPath:filePath] & !isNeedToUpdate) {
+    if ([fileManager fileExistsAtPath:filePath] & !isDataCenterMainPage) {
         BOOL expire = false;
         NSDictionary *otherInfo = [NSDictionary dictionaryWithContentsOfFile:otherInfoPath];
         
@@ -138,7 +144,7 @@
             NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:data];
             return cachedResponse;
         } else {
-            NSLog(@"cache expire ... ");
+            NSLog(@"cache expire ... 删除缓存 ");
             
             [fileManager removeItemAtPath:filePath error:nil];
             [fileManager removeItemAtPath:otherInfoPath error:nil];
@@ -148,12 +154,13 @@
     if (![Reachability networkAvailable]) {
         return nil;
     }
+    if (!isDataCenterMainPage) {
+        return nil;
+    }
+    isDataCenterMainPage = NO;
     __block NSCachedURLResponse *cachedResponse = nil;
     //sendSynchronousRequest请求也要经过NSURLCache
     id boolExsite = [self.responseDictionary objectForKey:url];
-    if (!isNeedToUpdate) {
-        return cachedResponse;
-    }
     if (boolExsite == nil)
     {
         if (self.cacheTime > 0) {
@@ -164,8 +171,9 @@
   
         [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data,NSError *error)
         {
-            if (response && data) {
-                
+            
+            if (response && data)
+            {
                 [self.responseDictionary removeObjectForKey:url];
                 
                 if (error) {
@@ -174,33 +182,27 @@
                     cachedResponse = nil;
                 }
                 
-                NSLog(@"cache url --- %@ ",url);
+                dispatch_async(dispatch_get_main_queue(), ^{
                 
-                //save to cache
-                NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%f", [date timeIntervalSince1970]], @"time",
-                                      response.MIMEType, @"MIMEType",
-                                      response.textEncodingName, @"textEncodingName", nil];
-                [dict writeToFile:otherInfoPath atomically:YES];
-                [data writeToFile:filePath atomically:YES];
+                    NSLog(@"cache url --- %@ ",url);
+                    
+                    //save to cache
+                    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%f", [date timeIntervalSince1970]], @"time",
+                                          response.MIMEType, @"MIMEType",
+                                          response.textEncodingName, @"textEncodingName", nil];
+                    [dict writeToFile:otherInfoPath atomically:YES];
+                    [data writeToFile:filePath atomically:YES];
+                    
+                    cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:data];
                 
-                cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:data];
-                
-                isNeedToUpdate = NO;
+                 });
             }
-            
         }];
 
         return cachedResponse;
         //NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        
     }
     return nil;
-}
-
-
-- (void)changeUpdateState
-{
-    isNeedToUpdate = YES;
 }
 
 @end

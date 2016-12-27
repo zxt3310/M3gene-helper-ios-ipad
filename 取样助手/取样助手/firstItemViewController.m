@@ -38,7 +38,7 @@
     if(!_isOperatePage)
     {
         [request addValue:_cookie forHTTPHeaderField:@"Set-Cookie"];
-        [request addValue:_token forHTTPHeaderField:@"token"];
+        //[request addValue:_token forHTTPHeaderField:@"token"];
         NSLog(@"%@",request.allHTTPHeaderFields);
     }
 
