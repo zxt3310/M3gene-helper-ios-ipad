@@ -11,15 +11,15 @@
 @interface dataCenterViewController ()
 {
     UITableView *tableview;
-    NSArray *dataList;
     LoadingView *loadingView;
     
+    dispatch_group_t group;
 }
 
 @end
 
 @implementation dataCenterViewController
-
+@synthesize dataList = dataList;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -35,7 +35,7 @@
     loadingView.hidden = YES;
     [self.view addSubview:loadingView];
     tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self dataListRequest];
+  //  [self dataListRequest];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -190,17 +190,18 @@
         });
     });
     
+
+    
 }
 
 - (void)updateData
 {
-    UIWebView *webView = [[UIWebView alloc] init];
-    webView.delegate = self;
-    
     __block float sizeOfAll;
     __block float a;
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^{
+    group = dispatch_group_create();
+    
+    dispatch_group_async(group,dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^{
         NSMutableDictionary *currentHashDic = [[NSMutableDictionary alloc] init];
         NSMutableDictionary *currentFileUrl = [[NSMutableDictionary alloc] init];
         NSMutableDictionary *currentFileSize = [[NSMutableDictionary alloc] init];
@@ -303,6 +304,11 @@
 
             
         });
+    });
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        
+        NSLog(@"finish to download!!!!!!");
+        
     });
 }
 

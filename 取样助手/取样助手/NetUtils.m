@@ -638,6 +638,9 @@ NSData* loadRequestWithImg(NSDictionary *params,NSString *url)
     //NSLog(@"FFNSURLConnectionForHttps sendSynchronousRequest timer idle");
 }
 
+
+
+
 + (NSData *)sendSynchronousRequest:(NSURLRequest *)request returningResponse:(NSURLResponse **)response error:(NSError **)error {
     FFNSURLConnectionForHttps *ep_https_connection = [[FFNSURLConnectionForHttps alloc] init];
     ep_https_connection.isRequestCompleted = NO;

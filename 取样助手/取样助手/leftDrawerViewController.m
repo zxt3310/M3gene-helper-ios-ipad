@@ -138,6 +138,7 @@
                 NSArray *cookieArray = [cookie componentsSeparatedByString:@";"];
                 firstItemViewController *fivc = [[firstItemViewController alloc]init];
                 fivc.token = lastToken;
+                fivc.title = @"订单管理";
                 fivc.urlStr = myOrderPage_URL;
                 if(cookieArray.count>0)
                 {
@@ -151,8 +152,7 @@
                 NSArray *cookieArray = [cookie componentsSeparatedByString:@";"];
                 firstItemViewController *fivc = [[firstItemViewController alloc]init];
                 fivc.token = lastToken;
-                //fivc.urlStr = @"http://dev.mapi.lhgene.cn/app/aindex.html#/salefinance";
-                fivc.urlStr = @"http://dev.mapi.lhgene.cn/app/s/plan3.html";
+                fivc.urlStr = orderProcess_URL;
                 if(cookieArray.count>0)
                 {
                     fivc.cookie = cookieArray[0];

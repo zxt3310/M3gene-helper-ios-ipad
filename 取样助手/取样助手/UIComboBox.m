@@ -52,6 +52,7 @@
         comboLb.titleLabel.font = [UIFont systemFontOfSize:self.frame.size.height * 0.77];
         [self addSubview:comboLb];
         
+        
         tableview = [[UITableView alloc]initWithFrame:CGRectMake(self.frame.origin.x,self.frame.origin.y + self.frame.size.height + 3,self.frame.size.width,40)];
         tableview.delegate = self;
         tableview.dataSource = self;
@@ -225,7 +226,17 @@
 //        temp.size.height += tableview.frame.size.height + 3;
 //        self.frame = temp;
         
-        [self.superview addSubview:tableview];
+        UIView *superView = self;
+        CGRect absoluteRect;
+        do {
+            superView = superView.superview;
+            absoluteRect = [self convertRect:tableview.frame toView:superView];
+        } while ([superView.superview isMemberOfClass:[UIView class]]);
+        
+        
+        tableview.frame = absoluteRect;
+        
+        [superView addSubview:tableview];
         
         isShow = YES;
     }

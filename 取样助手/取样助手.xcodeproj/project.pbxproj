@@ -78,6 +78,7 @@
 		58E50CE51E0A1EBF002B6AA3 /* iconBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 58E50CE21E0A1EBF002B6AA3 /* iconBack.png */; };
 		58E50CE61E0A1EBF002B6AA3 /* iconBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58E50CE31E0A1EBF002B6AA3 /* iconBack@2x.png */; };
 		58E50CE71E0A1EBF002B6AA3 /* iconBack@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58E50CE41E0A1EBF002B6AA3 /* iconBack@3x.png */; };
+		58E54C551E16366900A32CDA /* VIPCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E54C541E16366900A32CDA /* VIPCardViewController.m */; };
 		58E741001DEFC8DE00D2927B /* POPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E740FF1DEFC8DE00D2927B /* POPViewController.m */; };
 		700A3E0F1DD0748000D507F1 /* 莲和logo 58.png in Resources */ = {isa = PBXBuildFile; fileRef = 700A3E0C1DD0748000D507F1 /* 莲和logo 58.png */; };
 		700A3E101DD0748000D507F1 /* 莲和logo 80.png in Resources */ = {isa = PBXBuildFile; fileRef = 700A3E0D1DD0748000D507F1 /* 莲和logo 80.png */; };
@@ -232,6 +233,8 @@
 		58E50CE31E0A1EBF002B6AA3 /* iconBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconBack@2x.png"; path = "image/iconBack@2x.png"; sourceTree = "<group>"; };
 		58E50CE41E0A1EBF002B6AA3 /* iconBack@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconBack@3x.png"; path = "image/iconBack@3x.png"; sourceTree = "<group>"; };
 		58E50CE81E0A30F7002B6AA3 /* 取样助手.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "取样助手.entitlements"; sourceTree = "<group>"; };
+		58E54C531E16366900A32CDA /* VIPCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIPCardViewController.h; sourceTree = "<group>"; };
+		58E54C541E16366900A32CDA /* VIPCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIPCardViewController.m; sourceTree = "<group>"; };
 		58E740FE1DEFC8DE00D2927B /* POPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POPViewController.h; sourceTree = "<group>"; };
 		58E740FF1DEFC8DE00D2927B /* POPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POPViewController.m; sourceTree = "<group>"; };
 		700A3E0C1DD0748000D507F1 /* 莲和logo 58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "莲和logo 58.png"; path = "image/莲和logo 58.png"; sourceTree = "<group>"; };
@@ -555,6 +558,8 @@
 				581B24641E0B7F4900FEFBEE /* DataCenterWebViewController.m */,
 				5819DDC81E0D08C60010C88B /* dataCenterViewController.h */,
 				5819DDC91E0D08C60010C88B /* dataCenterViewController.m */,
+				58E54C531E16366900A32CDA /* VIPCardViewController.h */,
+				58E54C541E16366900A32CDA /* VIPCardViewController.m */,
 			);
 			path = Drawer;
 			sourceTree = "<group>";
@@ -801,6 +806,7 @@
 				58B4F92A1DE7E95900527BFE /* uploadIpadViewController.m in Sources */,
 				586DD1931DEEB6120026E67E /* draftViewController.m in Sources */,
 				705E33481DC9C17800024A25 /* CMCustomViews.m in Sources */,
+				58E54C551E16366900A32CDA /* VIPCardViewController.m in Sources */,
 				58C25FEE1DE5635900B8D88D /* leftDrawerViewController.m in Sources */,
 				58E741001DEFC8DE00D2927B /* POPViewController.m in Sources */,
 				5828E4C81DFFA53E0040E2A2 /* UIComboBox.m in Sources */,

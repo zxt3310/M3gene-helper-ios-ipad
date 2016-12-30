@@ -19,6 +19,7 @@
 #import "CustomURLCache.h"
 #import "DataCenterWebViewController.h"
 #import "dataCenterViewController.h"
+#import "VIPCardViewController.h"
 
 @interface mainViewController :UFanBasicViewController  <loginUpdateToken>
 

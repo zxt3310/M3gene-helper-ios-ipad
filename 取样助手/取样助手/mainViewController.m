@@ -17,7 +17,10 @@
     BOOL allowSendEx;
     BOOL allowSendReport;
     CustomURLCache *urlCache;
+    
+    NSArray *dataList;
     //NSString *cookie;
+    LoadingView *loadingView;
 }
 
 @end
@@ -27,19 +30,18 @@
 @synthesize token = token;
 @synthesize role = role;
 @synthesize productList = productList;
-- (void)loadView
-{
-    [super loadView];
-    _tableView.scrollEnabled = NO;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, (83 + 45), SCREEN_WEIGHT, SCREEN_HEIGHT - 83) style:UITableViewStylePlain];
     [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];
+    _tableView.scrollEnabled = NO;
     [self.view addSubview:self.tableView];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    [self dataListRequest];
     
     UITextField *newsLable = [[UITextField alloc]initWithFrame:CGRectMake(0, 103, SCREEN_WEIGHT, 45)];
     newsLable.backgroundColor = [UIColor colorWithMyNeed:250 green:247 blue:216 alpha:1];
@@ -79,6 +81,18 @@
     [self productListRequest];
     [self setNewBar];
     
+    
+    loadingView = [[LoadingView alloc] initWithFrame:CGRectMake(700, 500 + 5, 80, 70)];
+    loadingView.loadingImage.backgroundColor = [UIColor whiteColor];
+    loadingView.loadingImage.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    loadingView.backgroundColor = [UIColor whiteColor];
+    loadingView.dscpLabel.textColor = [UIColor blackColor];
+    loadingView.alpha = 1;
+    loadingView.dscpLabel.text = @"同步中";
+    //loadingView.hidden = YES;
+    [self.view addSubview:loadingView];
+
+    
 }
 
 - (instancetype)init
@@ -100,7 +114,6 @@
     userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
     token = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
     
-
     if(!userName || !token)
     {
         loginViewController *lvc = [[loginViewController alloc] init];
@@ -113,7 +126,6 @@
         lvc.leftdelegate = self.leftVc;
         [self presentViewController:unv animated:YES completion:nil];
     }
-    //[self setRightButton];
 }
 
 - (void)setNewBar
@@ -243,11 +255,12 @@
        [ziliaoImg addGestureRecognizer:ziliaoTap];
        [cell.contentView addSubview:ziliaoImg];
        
-       UILabel *lineLb = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/2-1, 3, 2, 193*SCREEN_HEIGHT/768-3)];
+       UILabel *lineLb = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/2-1, 26, 2, 142*SCREEN_HEIGHT/768)];
        lineLb.layer.borderWidth = 1;
        lineLb.layer.borderColor = [UIColor colorWithMyNeed:219 green:219 blue:219 alpha:1].CGColor;
        lineLb.backgroundColor = [UIColor colorWithMyNeed:219 green:219 blue:219 alpha:1];
        [cell.contentView addSubview:lineLb];
+       
        
    }
    else
@@ -273,6 +286,7 @@
     NSArray *cookieArray = [cookie componentsSeparatedByString:@";"];
     firstItemViewController *fivc = [[firstItemViewController alloc]init];
     fivc.token = token;
+    fivc.title = @"订单管理";
     fivc.urlStr = myOrderPage_URL;
     if(cookieArray.count>0)
     {
@@ -283,20 +297,13 @@
 
 - (void)ziliaoTapAction
 {
-//    NSString *cookie = [[NSUserDefaults standardUserDefaults] objectForKey:@"Set-Cookie"];
-//    NSArray *cookieArray = [cookie componentsSeparatedByString:@";"];
-//    DataCenterWebViewController *fivc = [[DataCenterWebViewController alloc]init];
-//    fivc.token = token;
-//    //fivc.urlStr = @"http://dev.mapi.lhgene.cn/app/aindex.html#/salefinance";
-//    fivc.urlString = @"http://lifehealthcare.com/services/disk.php";
-//    if(cookieArray.count>0)
-//    {
-//        fivc.cookie = cookieArray[0];
-//    }
-//    [self.UF_ViewController.navigationController pushViewController:fivc animated:YES];
-    dataCenterViewController *dvc = [[dataCenterViewController alloc] init];
-    dvc.cache = urlCache;
-    [self.navigationController pushViewController:dvc animated:YES];
+//    dataCenterViewController *dvc = [[dataCenterViewController alloc] init];
+//    dvc.dataList = dataList;
+//    dvc.cache = urlCache;
+//    [self.navigationController pushViewController:dvc animated:YES];
+    
+    VIPCardViewController *vip = [[VIPCardViewController alloc] init];
+    [self.navigationController pushViewController:vip animated:YES];
 
 }
 
@@ -334,8 +341,7 @@
                 uivc.productList = productList;
                 uivc.token = token;
                 uivc.userName = userName;
-                [self.UF_ViewController.navigationController pushViewController:uivc animated:YES]; 
-
+                [self.UF_ViewController.navigationController pushViewController:uivc animated:YES];
             }
             else
             {
@@ -378,47 +384,6 @@
     }
 }
 
-- (void)tabBarSwitch
-{
-    self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:1];
-    
-}
-
-- (void)setRightButton
-{
-    UIButton *logoutBt = [UIButton buttonWithType:UIButtonTypeSystem];
-    [logoutBt setTitle:userName forState:UIControlStateNormal];
-    logoutBt.tintColor = [UIColor blackColor];
-    logoutBt.frame = CGRectMakeWithAutoSize(0, 0, 60, 14);
-    [logoutBt setHidden:NO];
-    [logoutBt addTarget:self action:@selector(logoutBtClick) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:logoutBt];
-}
-
-- (void)logoutBtClick
-{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"消息" message:@"确定登出莲和助手？" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *ula = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
-    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-    
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"token"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        loginViewController *lvc = [[loginViewController alloc] init];
-        lvc.placeUserName = userName;
-        lvc.delegate = self;
-        UINavigationController *unc = [[UINavigationController alloc]initWithRootViewController:lvc];
-        [unc.navigationBar setTitleTextAttributes:
-         @{NSFontAttributeName:[UIFont fontWithName:@"STHeitiSC-Light" size:18],
-           NSForegroundColorAttributeName:[UIColor blackColor]}];
-        [self presentViewController:unc animated:YES completion:nil];
-    
-    }];
-    
-    [alert addAction:ula];
-    [alert addAction:confirm];
-    [self presentViewController:alert animated:YES completion:nil];
-}
 
 - (void)productListRequest
 {
@@ -436,7 +401,11 @@
         NSLog(@"%@",strResp);
         
         NSDictionary *responseData = parseJsonResponse(response);
-        NSString *resault = JsonValue([responseData objectForKey:@"err"], @"NSString");
+        NSNumber *resault = JsonValue([responseData objectForKey:@"err"], @"NSNumber");
+        if (resault == nil) {
+            alertMsgView(@"数据异常，稍后再试", self);
+            return;
+        }
         NSInteger err = [resault integerValue];
         if(err > 0)
         {
@@ -475,6 +444,180 @@
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
+}
+
+
+- (void)dataListRequest
+{
+    NSString *urlStr = [NSString stringWithFormat:@"%@/m/api/disk",dataCenter_URL];   // @"http://gzh.gentest.ranknowcn.com/m/api/disk";
+    
+    loadingView.hidden = NO;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^{
+        
+        NSData *response = sendGETRequest(urlStr, nil);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if (!response) {
+                loadingView.hidden = YES;
+                alertMsgView(@"无法连接服务器，请检查网络", self);
+                return ;
+            }
+            
+            NSDictionary *jsonData = parseJsonResponse(response);
+            
+            if (!jsonData) {
+                loadingView.hidden = YES;
+                alertMsgView(@"服务器维护中，请稍后再试", self);
+                return;
+            }
+            
+            NSNumber *result = JsonValue([jsonData objectForKey:@"err"], @"NSNumber");
+            if (result == nil) {
+                loadingView.hidden = YES;
+                alertMsgView(@"服务区维护中，请稍后再试", self);
+                return;
+            }
+            
+            NSInteger err = [result integerValue];
+            if (err > 0) {
+                
+                NSString *errMsg = JsonValue([jsonData objectForKey:@"errmsg"], @"NSString");
+                
+                loadingView.hidden = YES;
+                alertMsgView(errMsg, self);
+                
+                return;
+            }
+            
+            dataList = JsonValue([jsonData objectForKey:@"files"],@"NSArray");
+            
+            Reachability *reach = [Reachability reachabilityForInternetConnection];
+            if(reach.isReachableViaWiFi)
+            {
+                [self updateData];
+            }
+            else
+            {
+                loadingView.hidden = YES;
+            }
+            
+        });
+    });
+    
+}
+
+
+- (void)updateData
+{
+    __block float sizeOfAll;
+    __block float a;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^{
+        NSMutableDictionary *currentHashDic = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary *currentFileUrl = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary *currentFileSize = [[NSMutableDictionary alloc] init];
+        
+        for (int i = 0; i<dataList.count ;i++) {
+            NSDictionary *dataDic = dataList[i];
+            NSString *md5Str = [dataDic objectForKey:@"hash"];
+            NSString *fileName = [dataDic objectForKey:@"name"];
+            NSString *fileUrl = [dataDic objectForKey:@"download"];
+            NSString *fileSize = [dataDic objectForKey:@"size"];
+            sizeOfAll += [fileSize floatValue];
+            
+            [currentHashDic setObject:md5Str forKey:fileName]; //setValue:md5Str forKey:fileName];
+            [currentFileUrl setObject:fileUrl forKey:fileName];
+            [currentFileSize setObject:fileSize forKey:fileName];
+        }
+        
+        NSDictionary *lastHashDic = [[NSUserDefaults standardUserDefaults] objectForKey:@"fileHash"];
+        NSDictionary *lastFileUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"fileUrl"];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            loadingView.dscpLabel.text = @"同步中";
+        });
+        //更新有变化的文件缓存
+        
+        for (NSString *key in currentHashDic.allKeys)
+        {
+            NSInteger size = [[currentFileSize objectForKey:key] floatValue];
+            a = size/sizeOfAll + a;
+            if (![[lastHashDic objectForKey:key] isEqual:[currentHashDic objectForKey:key]]) {
+                
+                NSString *fileUrlStr = [currentFileUrl objectForKey:key];
+                
+                NSString *urlStr = [[NSString stringWithFormat:@"%@%@",dataCenter_URL,fileUrlStr] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                
+                NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+                request.cachePolicy = NSURLRequestReloadIgnoringCacheData;
+                NSURLResponse *response = nil;
+                NSError *error = nil;
+                NSData *data = [FFNSURLConnectionForHttps sendSynchronousRequest:[request copy] returningResponse:&response error:&error];
+                if (error) {
+                    [currentHashDic removeObjectForKey:key];
+                    [currentFileUrl removeObjectForKey:key];
+                    continue;
+                }
+                
+                NSString *url = request.URL.absoluteString;
+                NSString *fileName = [urlCache cacheRequestFileName:url];
+                NSString *otherInfoFileName = [urlCache cacheRequestOtherInfoFileName:url];
+                NSString *filePath = [urlCache cacheFilePath:fileName];
+                NSString *otherInfoPath = [urlCache cacheFilePath:otherInfoFileName];
+                NSDate *date = [NSDate date];
+                
+                NSLog(@"cache url --- %@ ",url);
+                
+                //save to cache
+                NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%f", [date timeIntervalSince1970]], @"time",
+                                      response.MIMEType, @"MIMEType",
+                                      response.textEncodingName, @"textEncodingName", nil];
+                [dict writeToFile:otherInfoPath atomically:YES];
+                [data writeToFile:filePath atomically:YES];
+                
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                loadingView.dscpLabel.text = [NSString stringWithFormat:@"同步中%.0f%%",a*100];
+            });
+        }
+        
+        //清除清单以外的文件缓存
+        
+        for (NSString *key in lastHashDic.allKeys)
+        {
+            if (![currentHashDic objectForKey:key]) {
+                NSString *fileUrlStr = [lastFileUrl objectForKey:key];
+                NSString *urlStr = [[NSString stringWithFormat:@"%@%@",dataCenter_URL,fileUrlStr] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                urlCache.cacheTime = 1;
+                
+                NSURLResponse *response = nil;
+                [FFNSURLConnectionForHttps sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] returningResponse:&response error:nil];
+            }
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [[NSUserDefaults standardUserDefaults] setObject:currentHashDic forKey:@"fileHash"];
+            [[NSUserDefaults standardUserDefaults] setObject:currentFileUrl forKey:@"fileUrl"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            loadingView.dscpLabel.text = @"同步完成";
+            [UIView animateWithDuration:1 animations:^{
+                loadingView.transform = CGAffineTransformMakeScale(1.3, 1.3);
+                loadingView.alpha = 0.0;
+            } completion:^(BOOL finished) {
+                if (finished) {
+                    
+                    loadingView.alpha = 1;
+                    loadingView.hidden = YES;
+                }
+            }];
+            
+            
+        });
+    });
 }
 
 @end

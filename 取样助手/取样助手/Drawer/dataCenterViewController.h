@@ -16,7 +16,7 @@
 @interface dataCenterViewController : UIViewController <UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate>
 
 @property CustomURLCache *cache;
-
+@property NSArray *dataList;
 
 
 

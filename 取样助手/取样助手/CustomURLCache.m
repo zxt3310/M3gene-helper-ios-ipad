@@ -58,7 +58,7 @@
             isDataCenterMainPage = YES;
         }
     }
-    
+
     return [self dataFromRequest:request];
 }
 
@@ -114,6 +114,7 @@
 }
 
 - (NSCachedURLResponse *)dataFromRequest:(NSURLRequest *)request {
+    
     NSString *url = request.URL.absoluteString;
     NSString *fileName = [self cacheRequestFileName:url];
     NSString *otherInfoFileName = [self cacheRequestOtherInfoFileName:url];
