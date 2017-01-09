@@ -16,7 +16,7 @@
 @property (nonatomic) UIFont *textFont;
 @property (nonatomic) UIColor *textColor;
 @property (nonatomic) UIColor *placeColor;
-@property NSString *selectString;
+@property (readonly) NSString *selectString;
 
 
 - (void)dismissTable;

@@ -7,6 +7,7 @@
 //
 
 #define CUSTOM_FONT [UIFont fontWithName:@"STHeitiSC-Light" size:22]
+#define TEXT_FONT [UIFont fontWithName:@"STHeitiSC-Light" size:18]
 #define CUSTOM_COLOR [UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1]
 #define LB_Origin_Left_X   0
 #define LB_Origin_Middle_X 347*SCREEN_WEIGHT/1024
@@ -36,7 +37,7 @@
         titleTag.backgroundColor = [UIColor colorWithMyNeed:88 green:207 blue:225 alpha:1];
         [self addSubview:titleTag];
         
-        UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(titleTag.frame.origin.x + titleTag.frame.size.width + 10, titleTag.frame.origin.y, 100, 25)];
+        UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(titleTag.frame.origin.x + titleTag.frame.size.width + 18, titleTag.frame.origin.y, 100, 25)];
         title.tag = 1;
         title.text = _titleStr;
         title.font = CUSTOM_FONT;
@@ -89,8 +90,11 @@
         temp.size.height = 40;
         self.frame = temp;
         self.layer.borderWidth = 1;
-        self.font = CUSTOM_FONT;
+        self.layer.borderColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1].CGColor;
+        self.font = TEXT_FONT;
         self.textColor = [UIColor colorWithMyNeed:117 green:117 blue:117 alpha:1];
+        self.leftView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 10, 1)];
+        self.leftViewMode = UITextFieldViewModeAlways;
     }
     return self;
 }
@@ -111,7 +115,7 @@
     cardInfoView.titleStr = @"卡片信息";
     [self.view addSubview:cardInfoView];
     
-    contentLb *cardIdLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 79*SCREEN_HEIGHT/768, 119, 22)];
+    contentLb *cardIdLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 79*SCREEN_HEIGHT/768, 110, 22)];
     cardIdLb.text = @"*卡号";
     [cardInfoView addSubview:cardIdLb];
     
@@ -124,16 +128,76 @@
     
     UIComboBox *productCbo = [[UIComboBox alloc] initWithFrame:CGRectMake(721*SCREEN_WEIGHT/1024, cardIdLb.frame.origin.y - 10, 218, 40)];
     productCbo.comboList = @[@"和普安",@"和家安",@"和美安"];
-    productCbo.placeColor = [UIColor colorWithMyNeed:155 green:155 blue:155 alpha:1];
+    productCbo.placeColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1];
+    productCbo.textColor = [UIColor colorWithMyNeed:117 green:117 blue:117 alpha:1];
+    productCbo.textFont = TEXT_FONT;
     [cardInfoView addSubview:productCbo];
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     
     contentView *userInfoView = [[contentView alloc ] initWithFrame:CGRectMake(0, cardInfoView.frame.origin.y + cardInfoView.frame.size.height + 10, SCREEN_WEIGHT, 242*SCREEN_HEIGHT/768)];
-    userInfoView.titleStr = @"用户姓名";
+    userInfoView.titleStr = @"用户资料";
     [self.view addSubview:userInfoView];
     
+    contentLb *userNameLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 74 *SCREEN_HEIGHT/768, 110, 22)];
+    userNameLb.text = @"*姓名";
+    [userInfoView addSubview:userNameLb];
     
+    contentTextField *userNameTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Left_X, userNameLb.frame.origin.y - 10, 0, 0)];
+    [userInfoView addSubview:userNameTf];
+    
+    contentLb *genderLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Middle_X, userNameLb.frame.origin.y, 110, 22)];
+    genderLb.text = @"*性别";
+    [userInfoView addSubview:genderLb];
+    
+    UIComboBox *genderCbo = [[UIComboBox alloc] initWithFrame:CGRectMake(TF_Origin_Middle_X, userNameTf.frame.origin.y, 185*SCREEN_WEIGHT/1024, 40*SCREEN_HEIGHT/768)];
+    genderCbo.comboList = @[@"男",@"女"];
+    genderCbo.placeColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1];
+    genderCbo.textColor = [UIColor colorWithMyNeed:117 green:117 blue:117 alpha:1];
+    genderCbo.textFont = TEXT_FONT;
+    [userInfoView addSubview:genderCbo];
+    
+    contentLb *telLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Right_X, userNameLb.frame.origin.y, 110, 20)];
+    telLb.text = @"*联系方式";
+    [userInfoView addSubview:telLb];
+    
+    contentTextField *telTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Right_X, userNameTf.frame.origin.y, 0, 0)];
+    [userInfoView addSubview:telTf];
+    
+    contentLb *birthLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 130 * SCREEN_HEIGHT/768, 110, 22)];
+    birthLb.text = @"出生年月";
+    [userInfoView addSubview:birthLb];
+    
+    contentTextField *birthTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Left_X, birthLb.frame.origin.y - 10, 0, 0)];
+    [userInfoView addSubview:birthTf];
+    
+    contentLb *occupationLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Middle_X, birthLb.frame.origin.y, 110, 22)];
+    occupationLb.text = @"职业";
+    [userInfoView addSubview:occupationLb];
+    
+    contentTextField *occupationTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Middle_X, birthTf.frame.origin.y, 0, 0)];
+    [userInfoView addSubview:occupationTf];
+    
+    contentLb *carLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Right_X, birthLb.frame.origin.y, 110, 22)];
+    carLb.text = @"车型";
+    [userInfoView addSubview:carLb];
+    
+    contentTextField *carTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Right_X, birthTf.frame.origin.y, 0, 0)];
+    [userInfoView addSubview:carTf];
+    
+    contentLb *hobbyLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 185 *SCREEN_HEIGHT/768, 110, 22)];
+    hobbyLb.text = @"爱好";
+    [userInfoView addSubview:hobbyLb];
+    
+    contentTextField *hobbyTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Left_X, hobbyLb.frame.origin.y - 10, 0, 0)];
+    [userInfoView addSubview:hobbyTf];
+    
+    contentLb *additionLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Middle_X, hobbyLb.frame.origin.y, 110, 22)];
+    additionLb.text = @"备注";
+    [userInfoView addSubview:additionLb];
+    
+    contentTextField *additionTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Middle_X, hobbyTf.frame.origin.y, 0, 0)];
+    [userInfoView addSubview:additionTf];
     
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -142,6 +206,36 @@
     payInfoView.titleStr = @"付款信息";
     [self.view addSubview:payInfoView];
     
+    contentLb *payNumberLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X,79*SCREEN_HEIGHT/768, 150 *SCREEN_WEIGHT/1024, 22)];
+    payNumberLb.text = @"*付款金额";
+    [payInfoView addSubview:payNumberLb];
+    
+    contentTextField *payNumberTf = [[contentTextField alloc] initWithFrame:CGRectMake(158*SCREEN_WEIGHT/1024, 69*SCREEN_HEIGHT*768,0,0)];
+    [payInfoView addSubview:payNumberTf];
+    
+    contentLb *payType = [[contentLb alloc] initWithFrame:CGRectMake(347*SCREEN_WEIGHT/1024, payNumberLb.frame.origin.y, 110*SCREEN_WEIGHT/1024, 22)];
+    payType.text = @"付款方式";
+    [payInfoView addSubview:payType];
+    
+    UIComboBox *payTypeCbo = [[UIComboBox alloc] initWithFrame:CGRectMake(TF_Origin_Middle_X, payNumberTf.frame.origin.y, 185*SCREEN_WEIGHT/1024, 40*SCREEN_HEIGHT/768)];
+    payTypeCbo.comboList = @[@"微信",@"支付宝"];
+    payTypeCbo.placeColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1];
+    payTypeCbo.textColor = [UIColor colorWithMyNeed:117 green:117 blue:117 alpha:1];
+    payTypeCbo.textFont = TEXT_FONT;
+    [payInfoView addSubview:payTypeCbo];
+    
+    contentLb *payDateLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Right_X, payNumberLb.frame.origin.y, 110*SCREEN_WEIGHT/1024, 22)];
+    payDateLb.text = @"付款日期";
+    [payInfoView addSubview:payDateLb];
+    
+    contentTextField *payDateTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Right_X, payNumberTf.frame.origin.y, 0, 0)];
+    [payInfoView addSubview:payDateTf];
+    
+    contentLb *pay
+
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     UIButton *saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     saveBtn.frame = CGRectMake(425, 697, 174, 52);
     saveBtn.layer.cornerRadius = 10;
@@ -214,7 +308,22 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+    
+    for (id object in self.view.subviews) {
+        if ([object isKindOfClass:[contentView class]]) {
+            contentView *subView = (contentView *)object;
+            for (id control in subView.subviews) {
+                if ([control isKindOfClass:[UIComboBox class]]) {
+                    UIComboBox *box = (UIComboBox *)control;
+                    [box dismissTable];
+                }
+            }
+        }
+    }
+}
 
 
 @end

@@ -17,7 +17,7 @@
     CGRect orignFrame;
     NSIndexPath *currentIndex;
     
-    CGRect cellLenth;
+    UIView *superView; //最外层view，用来避免菜单遮挡
 }
 @synthesize comboList = _comboList;
 @synthesize layerColor = _layerColor;
@@ -33,14 +33,11 @@
     {
         isShow = NO;
         
-        orignFrame = frame;
-        
         comboTF = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width - self.frame.size.height, self.frame.size.height)];
         comboTF.layer.borderWidth = 1;
         comboTF.enabled = NO;
         comboTF.leftView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 10, 1)];
         comboTF.leftViewMode = UITextFieldViewModeAlways;
-
         [self addSubview:comboTF];
         
         comboLb = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -52,8 +49,7 @@
         comboLb.titleLabel.font = [UIFont systemFontOfSize:self.frame.size.height * 0.77];
         [self addSubview:comboLb];
         
-        
-        tableview = [[UITableView alloc]initWithFrame:CGRectMake(self.frame.origin.x,self.frame.origin.y + self.frame.size.height + 3,self.frame.size.width,40)];
+        tableview = [[UITableView alloc]initWithFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height + 3,self.frame.size.width,40)];
         tableview.delegate = self;
         tableview.dataSource = self;
         tableview.layer.borderWidth = 1;
@@ -134,9 +130,9 @@
     }
 
     tableview.frame = temp;
-    cellLenth = temp;
-    
+
     [tableview reloadData];
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -151,8 +147,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGRect tableTemp = cellLenth;
-//    CGRect selfTemp = self.frame;
+    CGRect tableTemp = tableView.frame;
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if(!cell)
@@ -175,22 +170,17 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
     }
-    
-    cellLenth.size.width = cell.textLabel.text.length * cell.textLabel.font.pointSize + 50;
-    if(tableTemp.size.width > tableView.frame.size.width)
-    {
-        if (cellLenth.size.width > tableTemp.size.width) {
-           
-            tableView.frame = cellLenth;
-        }
-        else
-        {
-            tableView.frame = tableTemp;
-        }
+    //计算文字长度
+    tableTemp.size.width = cell.textLabel.text.length * cell.textLabel.font.pointSize + 50;
+    //重算列表宽度
+    tableView.frame = (tableTemp.size.width > tableView.frame.size.width)?tableTemp:tableView.frame;
+    //根据宽度重新计算列表位移
+    if (tableView.frame.origin.x + tableView.frame.size.width > superView.frame.size.width) {
+        CGRect temp = tableView.frame;
+        temp.origin.x = superView.frame.size.width - tableView.frame.size.width - 3;
+        tableView.frame = temp;
     }
-//    //重新计算控件宽度
-//    selfTemp.size.width = tableView.frame.size.width;
-//    self.frame = selfTemp;
+
     
     return cell;
 
@@ -221,20 +211,6 @@
             tableview.transform = CGAffineTransformMakeScale(1, 1);
         }];
         
-//        //重新计算控件高度
-//        CGRect temp = orignFrame;
-//        temp.size.height += tableview.frame.size.height + 3;
-//        self.frame = temp;
-        
-        UIView *superView = self;
-        CGRect absoluteRect;
-        do {
-            superView = superView.superview;
-            absoluteRect = [self convertRect:tableview.frame toView:superView];
-        } while ([superView.superview isMemberOfClass:[UIView class]]);
-        
-        
-        tableview.frame = absoluteRect;
         
         [superView addSubview:tableview];
         
@@ -251,7 +227,6 @@
             tableview.alpha = 0.0;
         } completion:^(BOOL finished) {
             if (finished) {
-                self.frame = orignFrame;
                 [tableview removeFromSuperview];
                 [tableview reloadData];
                 isShow = NO;
@@ -260,4 +235,15 @@
     }
 }
 
+- (void)didMoveToSuperview
+{
+    //保证列表是加载到最外层view上，防止被同级控件遮挡
+    superView = self;
+    do {
+        superView = superView.superview;
+        
+    } while ([superView.superview isMemberOfClass:[UIView class]]);
+    
+    tableview.frame = [self.superview convertRect:tableview.frame toView:superView];
+}
 @end
