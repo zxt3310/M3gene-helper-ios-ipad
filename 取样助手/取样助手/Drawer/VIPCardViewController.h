@@ -12,5 +12,6 @@
 #import "UIComboBox.h"
 
 @interface VIPCardViewController : UIViewController
+@property NSString *token;
 
 @end

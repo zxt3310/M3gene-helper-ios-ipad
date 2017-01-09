@@ -175,12 +175,14 @@
     //重算列表宽度
     tableView.frame = (tableTemp.size.width > tableView.frame.size.width)?tableTemp:tableView.frame;
     //根据宽度重新计算列表位移
+     CGRect temp = tableView.frame;
     if (tableView.frame.origin.x + tableView.frame.size.width > superView.frame.size.width) {
-        CGRect temp = tableView.frame;
         temp.origin.x = superView.frame.size.width - tableView.frame.size.width - 3;
-        tableView.frame = temp;
     }
-
+    if (tableView.frame.origin.y + tableView.frame.size.height > superView.frame.size.height) {
+        temp.origin.y = temp.origin.y - temp.size.height - self.frame.size.height - 6;
+    }
+    tableView.frame = temp;
     
     return cell;
 
@@ -191,6 +193,7 @@
     if(!(indexPath.row == 0))
     {
         _selectString = comboTF.text = _comboList[indexPath.row - 1];
+        _selectId = indexPath.row - 1;
 
         currentIndex = indexPath;
         
@@ -210,8 +213,7 @@
             tableview.alpha = 1;
             tableview.transform = CGAffineTransformMakeScale(1, 1);
         }];
-        
-        
+
         [superView addSubview:tableview];
         
         isShow = YES;

@@ -48,13 +48,13 @@
 //    if ([request.HTTPMethod compare:@"GET"] != NSOrderedSame) {
 //        return [super cachedResponseForRequest:request];
 //    }
-    if (![request.URL.absoluteString containsString:@"http://gzh.gentest.ranknowcn.com"])
+    if (![request.URL.absoluteString containsString:@"disk"])
     {
         return [super cachedResponseForRequest:request];
     }
     
     if ([request.URL.absoluteString isEqualToString:dataCenter_GET_URL]) {
-        if ([Reachability networkAvailable]) {
+        if ([Reachability reachabilityForInternetConnection]) {
             isDataCenterMainPage = YES;
         }
     }
