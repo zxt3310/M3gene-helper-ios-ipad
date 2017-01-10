@@ -92,12 +92,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    if(cacheList.count == 0)
-//    {
-//        return 2;
-//    }
-//    else
-        return cacheList.count;
+    return cacheList.count;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -147,8 +142,6 @@
         UILabel *lineLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 160*SCREEN_HEIGHT/768, SCREEN_WEIGHT, 10*SCREEN_HEIGHT/768)];
         lineLabel.backgroundColor = [UIColor colorWithMyNeed:216 green:216 blue:216 alpha:1];
         [cell.contentView addSubview:lineLabel];
-
-        
     }
     
     NSDictionary *cacheDic = cacheList[indexPath.row];
@@ -164,18 +157,35 @@
     {
         type.text = @"【样本寄送】";
     }
+    else if ([typeName isEqualToString:@"CACHE_VIP"])
+    {
+        type.text = @"【贵宾卡录入】";
+    }
     else
     {
         type.text = @"【报告寄送】";
     }
     
     UILabel *name = (UILabel *)[cell.contentView viewWithTag:2];
-    NSString *str = [cacheDic objectForKey:@"registStr"];
-    NSDictionary *dic = parseJsonString(str);
-    name.text = [NSString stringWithFormat:@"客户：%@",[dic objectForKey:@"name"]];
     
-    UILabel *number = (UILabel*)[cell.contentView viewWithTag:3];
-    number.text = [NSString stringWithFormat:@"订单:%@",[cacheDic objectForKey:@"code_number"]];
+    if ([typeName isEqualToString:@"CACHE_ORDER"]) {
+        
+        NSString *str = [cacheDic objectForKey:@"registStr"];
+        NSDictionary *dic = parseJsonString(str);
+        name.text = [NSString stringWithFormat:@"客户：%@",[dic objectForKey:@"name"]];
+        
+        UILabel *number = (UILabel*)[cell.contentView viewWithTag:3];
+        number.text = [NSString stringWithFormat:@"订单:%@",[dic objectForKey:@"code_number"]];
+    }
+    
+    if ([typeName isEqualToString:@"CACHE_VIP"]) {
+        
+        NSDictionary *dic = [cacheDic objectForKey:@"registStr"];
+        name.text = [NSString stringWithFormat:@"客户：%@",[dic objectForKey:@"name"]];
+        UILabel *number = (UILabel*)[cell.contentView viewWithTag:3];
+        number.text = [NSString stringWithFormat:@"卡号:%@",[dic objectForKey:@"code"]];
+    }
+   
     
     UILabel *time = (UILabel *)[cell.contentView viewWithTag:4];
     time.text = [cacheDic objectForKey:@"operateTime"];
@@ -233,7 +243,6 @@
     upLoadView.deleteIndex = index.row;
     upLoadView.isReEditOperate = YES;
     [self.navigationController pushViewController:upLoadView animated:YES];
-    
 }
 
 - (void)refresh:(NSArray *)array

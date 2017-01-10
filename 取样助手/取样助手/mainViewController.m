@@ -406,6 +406,7 @@
 //            [self.UF_ViewController.navigationController pushViewController:fivc animated:YES];
             VIPCardViewController *vip = [[VIPCardViewController alloc] init];
             vip.token = token;
+            vip.userName = userName;
             [self.navigationController pushViewController:vip animated:YES];
         }
         else

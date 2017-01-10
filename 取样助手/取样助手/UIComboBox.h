@@ -17,7 +17,9 @@
 @property (nonatomic) UIColor *textColor;
 @property (nonatomic) UIColor *placeColor;
 @property (readonly) NSString *selectString;
-@property (readonly) NSInteger selectId;
+@property (nonatomic) NSInteger selectId;
+
+- (void)resetCombo;
 
 
 - (void)dismissTable;

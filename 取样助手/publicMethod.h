@@ -79,3 +79,10 @@ CGRectMakeWithAutoSize(CGFloat x, CGFloat y, CGFloat width, CGFloat height)
     rect.size.height = SCREEN_HEIGHT *height/667;
     return rect;
 }
+
+@protocol cacheListRefresh <NSObject>
+
+- (void)refresh:(NSArray *)array;
+
+@end
+

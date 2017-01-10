@@ -98,6 +98,7 @@
         self.textColor = [UIColor colorWithMyNeed:117 green:117 blue:117 alpha:1];
         self.leftView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 10, 1)];
         self.leftViewMode = UITextFieldViewModeAlways;
+
     }
     return self;
 }
@@ -108,9 +109,29 @@
 @interface VIPCardViewController ()
 @end
 @implementation VIPCardViewController
+{
+    UIDatePicker *datepicker;
+    contentTextField *birthTf;
+    
+    float currentTf_originY;
+    NSMutableDictionary *postDic;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _isReEditOperate = NO;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeContentViewPoint:) name:UIKeyboardWillShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeContentViewPoint:) name:UIKeyboardWillHideNotification object:nil];
     
     self.view.backgroundColor = [UIColor colorWithMyNeed:216 green:216 blue:216 alpha:1];
     
@@ -124,6 +145,7 @@
     
     contentTextField *cardIdTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Left_X, cardIdLb.frame.origin.y - 10, 0, 0)];
     cardIdTf.tag = Origin_TAG;
+    cardIdTf.delegate = self;
     [cardInfoView addSubview:cardIdTf];
     
     contentLb *productLb = [[contentLb alloc] initWithFrame:CGRectMake(600*SCREEN_WEIGHT/1024, cardIdLb.frame.origin.y, 110*SCREEN_HEIGHT/768, 22)];
@@ -150,6 +172,7 @@
     
     contentTextField *userNameTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Left_X, userNameLb.frame.origin.y - 10, 0, 0)];
     userNameTf.tag = Origin_TAG + 2;
+    userNameTf.delegate = self;
     [userInfoView addSubview:userNameTf];
     
     contentLb *genderLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Middle_X, userNameLb.frame.origin.y, 110, 22)];
@@ -170,14 +193,16 @@
     
     contentTextField *telTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Right_X, userNameTf.frame.origin.y, 0, 0)];
     telTf.tag = Origin_TAG + 4;
+    telTf.delegate = self;
     [userInfoView addSubview:telTf];
     
     contentLb *birthLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 130 * SCREEN_HEIGHT/768, 110, 22)];
     birthLb.text = @"出生年月";
     [userInfoView addSubview:birthLb];
     
-    contentTextField *birthTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Left_X, birthLb.frame.origin.y - 10, 0, 0)];
+    birthTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Left_X, birthLb.frame.origin.y - 10, 0, 0)];
     birthTf.tag = Origin_TAG + 5;
+    birthTf.delegate = self;
     [userInfoView addSubview:birthTf];
     
     contentLb *occupationLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Middle_X, birthLb.frame.origin.y, 110, 22)];
@@ -186,6 +211,7 @@
     
     contentTextField *occupationTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Middle_X, birthTf.frame.origin.y, 0, 0)];
     occupationTf.tag = Origin_TAG + 6;
+    occupationTf.delegate = self;
     [userInfoView addSubview:occupationTf];
     
     contentLb *carLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Right_X, birthLb.frame.origin.y, 110, 22)];
@@ -194,6 +220,7 @@
     
     contentTextField *carTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Right_X, birthTf.frame.origin.y, 0, 0)];
     carTf.tag = Origin_TAG + 7;
+    carTf.delegate = self;
     [userInfoView addSubview:carTf];
     
     contentLb *hobbyLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 185 *SCREEN_HEIGHT/768, 110, 22)];
@@ -202,6 +229,7 @@
     
     contentTextField *hobbyTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Left_X, hobbyLb.frame.origin.y - 10, 0, 0)];
     hobbyTf.tag = Origin_TAG + 8;
+    hobbyTf.delegate = self;
     [userInfoView addSubview:hobbyTf];
     
     contentLb *additionLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Middle_X, hobbyLb.frame.origin.y, 110, 22)];
@@ -210,6 +238,7 @@
     
     contentTextField *additionTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Middle_X, hobbyTf.frame.origin.y, 0, 0)];
     additionTf.tag = Origin_TAG + 9;
+    additionTf.delegate = self;
     [userInfoView addSubview:additionTf];
     
     
@@ -225,6 +254,7 @@
     
     contentTextField *payNumberTf = [[contentTextField alloc] initWithFrame:CGRectMake(158*SCREEN_WEIGHT/1024, 69*SCREEN_HEIGHT/768,0,0)];
     payNumberTf.tag = Origin_TAG + 10;
+    payNumberTf.delegate = self;
     [payInfoView addSubview:payNumberTf];
     
     contentLb *payType = [[contentLb alloc] initWithFrame:CGRectMake(347*SCREEN_WEIGHT/1024, payNumberLb.frame.origin.y, 110*SCREEN_WEIGHT/1024, 22)];
@@ -245,6 +275,7 @@
     
     contentTextField *payDateTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Right_X, payNumberTf.frame.origin.y, 0, 0)];
     payDateTf.tag = Origin_TAG + 12;
+    payDateTf.delegate = self;
     [payInfoView addSubview:payDateTf];
     
     contentLb *payTypeDitailLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 130*SCREEN_HEIGHT/768, 150 *SCREEN_WEIGHT/1024, 22)];
@@ -253,6 +284,7 @@
     
     contentTextField *payTypeDitailTf = [[contentTextField alloc] initWithFrame:CGRectMake(payNumberTf.frame.origin.x, 124*SCREEN_HEIGHT/768, 0, 0)];
     payTypeDitailTf.tag = Origin_TAG + 13;
+    payTypeDitailTf.delegate = self;
     [payInfoView addSubview:payTypeDitailTf];
     
     contentLb *payAddition = [[contentLb alloc] initWithFrame:CGRectMake(351*SCREEN_WEIGHT/1024, 136*SCREEN_HEIGHT/768, 500, 16)];
@@ -276,14 +308,32 @@
     [self.view addSubview:saveBtn];
     
     [self setNewBar];
-
+    
+    datepicker = [[UIDatePicker alloc] init];
+    datepicker.maximumDate = [NSDate date];
+    datepicker.minimumDate = [NSDate dateWithTimeIntervalSinceNow:-100*365*24*3600];
+    datepicker.datePickerMode = UIDatePickerModeDate;
+    birthTf.inputView = datepicker;
+    UIToolbar *bar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WEIGHT, 40)];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(switchDateAction)];
+    bar.items = @[item];
+    birthTf.inputAccessoryView = bar;
     
 }
 
-- (void)saveBtnClickAction
+- (void)switchDateAction
+{
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateStr = [format stringFromDate:datepicker.date];
+    birthTf.text = dateStr;
+    [birthTf resignFirstResponder];
+}
+
+- (void)collectContentInfo
 {
     NSArray *jsonKeyArray = @[@"code",@"card_type",@"name",@"gender",@"phone",@"birthday",@"career",@"motor_type",@"interest",@"remark",@"payment_amount",@"payment_type",@"pay_time",@"pay_info"];
-    NSMutableDictionary *postDic = [[NSMutableDictionary alloc] init];
+    postDic = [[NSMutableDictionary alloc] init];
     for (int i = 0; i<jsonKeyArray.count; i++) {
         [postDic setObject:[[NSObject alloc]init] forKey:jsonKeyArray[i]];
     }
@@ -304,6 +354,12 @@
             }
         }
     }
+
+}
+
+- (void)saveBtnClickAction
+{
+    [self collectContentInfo];
     
     NSMutableString *postStr = [[NSMutableString alloc] init];
     for(NSString *key in postDic.allKeys)
@@ -328,7 +384,7 @@
                 alertMsgView(@"无法连接到服务器，请检查网络或稍后再试", self);
                 return;
             }
-            
+
             NSDictionary *responseDic = parseJsonResponse(responseData);
             if (!responseData) {
                 alertMsgView(@"保存失败，请稍后再试", self);
@@ -346,21 +402,32 @@
                 return;
             }
             
-            alertMsgView(@"保存成功", self);
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"消息" message:@"上传成功" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *ula = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+            [alert addAction:ula];
+            [self presentViewController:alert animated:YES completion:^{
+                if(_isReEditOperate)
+                {
+                    NSArray *arry = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
+                    NSMutableArray *operateArray = [[NSMutableArray alloc]initWithArray:arry];
+                    [operateArray removeObjectAtIndex:_deleteIndex];
+                    arry = [operateArray copy];
+                    [self.refreshDelegate refresh:arry];
+                }
+                [self clearAll];
+            }];
         });
     });
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
-
 }
 
 - (void)setNewBar
@@ -402,6 +469,59 @@
     titleLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:36];// boldSystemFontOfSize:36];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [header addSubview:titleLabel];
+    
+    UIButton *cacheBt = [UIButton buttonWithType:UIButtonTypeCustom];
+    [cacheBt setTitle:@"暂存到草稿箱" forState:UIControlStateNormal];
+    cacheBt.titleLabel.textColor = [UIColor whiteColor];
+    cacheBt.frame = CGRectMake(876 * SCREEN_WEIGHT/1024, 46*SCREEN_HEIGHT/768, 120*SCREEN_WEIGHT/1024, 40);
+    cacheBt.backgroundColor = [UIColor colorWithMyNeed:88 green:207 blue:225 alpha:1];
+    cacheBt.layer.cornerRadius = 10;
+    [cacheBt addTarget:self action:@selector(cacheBtClick) forControlEvents:UIControlEventTouchUpInside];
+    [header addSubview:cacheBt];
+}
+
+- (void)cacheBtClick
+{
+    [self collectContentInfo];
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    dateFormat.locale = [[NSLocale alloc]initWithLocaleIdentifier:@"zh_CN"];
+    [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *timeStr = [dateFormat stringFromDate:[NSDate date]];
+    
+
+    NSArray *cacheArray = @[@"cacheType",@"operateTime",@"registStr"];
+    NSArray *cacheData = @[@"CACHE_VIP",timeStr,postDic];
+    NSDictionary *cacheDic = [NSDictionary dictionaryWithObjects:cacheData forKeys:cacheArray];
+    
+    //存入数组
+    
+    NSArray *arry = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
+    NSMutableArray *operateArray = [[NSMutableArray alloc]initWithArray:arry];
+    if(_isReEditOperate)
+    {
+        [operateArray removeObjectAtIndex:_deleteIndex];
+    }
+    [operateArray addObject:cacheDic];
+    arry = [operateArray copy];
+    
+    @try
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:arry forKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    } @catch (NSException *exception) {
+        NSLog(@"%@",exception);
+    } @finally {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"消息" message:@"保存成功" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *ula = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        
+        [alert addAction:ula];
+        [self presentViewController:alert animated:YES completion:^{
+            [self clearAll];
+            [self.refreshDelegate refresh:arry];
+        }];
+    }
+
 }
 
 - (void)backAction
@@ -426,5 +546,62 @@
     }
 }
 
+- (void)clearAll
+{
+    for (id object in self.view.subviews) {
+        if ([object isKindOfClass:[contentView class]]) {
+            contentView *content = (contentView *) object;
+            for (id control in content.subviews) {
+                if ([control isKindOfClass:[contentTextField class]]) {
+                    contentTextField *tempTf = (contentTextField *)control;
+                    tempTf.text = @"";
+                }
+                if ([control isKindOfClass:[UIComboBox class]])
+                {
+                    UIComboBox *tempCbo = (UIComboBox *)control;
+                    [tempCbo resetCombo];
+                }
+            }
+        }
+    }
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    currentTf_originY = [textField.superview convertRect:textField.frame toView:self.view].origin.y;
+    return YES;
+}
+
+- (void) changeContentViewPoint:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    NSValue *value = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGFloat keyBoardEndY = value.CGRectValue.origin.y;  // 得到键盘弹出后的键盘视图所在y坐标
+    NSNumber *duration = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    
+    if (![notification.name isEqual:UIKeyboardWillHideNotification] && keyBoardEndY > currentTf_originY + 40) {
+        return;
+    }
+    
+    // 添加移动动画，使视图跟随键盘移动
+    [UIView animateWithDuration:duration.doubleValue animations:^{
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationCurve:[curve intValue]];
+        if (![notification.name isEqual:UIKeyboardWillShowNotification]) {
+            self.view.center = CGPointMake(self.view.center.x, keyBoardEndY - self.view.bounds.size.height/2.0);   // keyBoardEndY的坐标包括了状态栏的高度，要减去
+        }
+        else
+        {
+            self.view.center = CGPointMake(self.view.center.x, self.view.bounds.size.height/2.0 - currentTf_originY + keyBoardEndY - 50);   // keyBoardEndY的坐标包括了状态栏的高度，要减去
+        }
+    }];
+}
 
 @end

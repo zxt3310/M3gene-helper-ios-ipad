@@ -11,7 +11,13 @@
 #import "NetUtils.h"
 #import "UIComboBox.h"
 
-@interface VIPCardViewController : UIViewController
+@interface VIPCardViewController : UIViewController <UITextFieldDelegate>
+
 @property NSString *token;
+@property NSString *userName;
+@property BOOL isReEditOperate;
+@property NSInteger deleteIndex;
+
+@property id <cacheListRefresh> refreshDelegate;
 
 @end

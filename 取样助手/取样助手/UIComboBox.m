@@ -25,6 +25,7 @@
 @synthesize textFont = _textFont;
 @synthesize textColor = _textColor;
 @synthesize placeColor = _placeColor;
+@synthesize selectId = _selectId;
 
 - (instancetype) initWithFrame:(CGRect)frame
 {
@@ -135,6 +136,20 @@
 
 }
 
+- (void)setSelectId:(NSInteger)selectId
+{
+    selectId = _selectId;
+    
+    NSIndexPath *index = [NSIndexPath indexPathForRow:selectId inSection:0];
+    
+    [self tableView:tableview didSelectRowAtIndexPath:index];
+}
+
+- (NSInteger)selectId
+{
+    return _selectId;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 40;
@@ -235,6 +250,12 @@
             }
         }];
     }
+}
+
+- (void)resetCombo{
+    comboTF.text = @"";
+    _selectString = nil;
+    _selectId = -1;
 }
 
 - (void)didMoveToSuperview

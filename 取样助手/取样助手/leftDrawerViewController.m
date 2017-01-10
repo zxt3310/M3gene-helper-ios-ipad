@@ -152,6 +152,7 @@
                 NSArray *cookieArray = [cookie componentsSeparatedByString:@";"];
                 firstItemViewController *fivc = [[firstItemViewController alloc]init];
                 fivc.token = lastToken;
+                fivc.title = @"订单进度";
                 fivc.urlStr = orderProcess_URL;
                 if(cookieArray.count>0)
                 {

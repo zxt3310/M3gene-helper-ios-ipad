@@ -347,9 +347,8 @@
         [operateArray addObject:cacheDic];
         arry = [operateArray copy];
         
-        
-        @try {
-            
+        @try
+        {
             [[NSUserDefaults standardUserDefaults] setObject:arry forKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
             [[NSUserDefaults standardUserDefaults]synchronize];
         } @catch (NSException *exception) {
@@ -360,7 +359,6 @@
             
             [alert addAction:ula];
             [self presentViewController:alert animated:YES completion:^{
-                
                 [self clearUItext];
                 [self.refreshDelegate refresh:arry];
             }];
@@ -537,18 +535,6 @@
     
     [productView addSubview:productTF];
     [self.view addSubview:productView];
-}
-
-- (void)egg:(UITapGestureRecognizer *)sender{
-    
-    com = [[UIComboBox alloc] initWithFrame:CGRectMake(180, 300, 200, 20)];
-    com.comboList = @[@"abc",@"放假诶我房间叫我减肥减肥",@"分法哈哈哈哈哈哈哈哈哈哈哈哥哥哥哥哥哥哥哥哥哥",@"12fsd"];
-    [productView addSubview:com];
-    
-    UITextField *textLb = [[UITextField alloc] initWithFrame:CGRectMake(180, 380, 200, 20)];
-    textLb.layer.borderWidth  = 1;
-    textLb.backgroundColor = [UIColor redColor];
-    [productView addSubview: textLb];
 }
 
 - (void)okClick
@@ -996,7 +982,6 @@
         [medicalPicView addSubview:imageView];
         
     }
-    
     
     isTakeMedicalPhoto = NO;
     

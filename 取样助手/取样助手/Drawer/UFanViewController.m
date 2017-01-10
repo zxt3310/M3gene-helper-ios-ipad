@@ -89,7 +89,7 @@
     isShow = NO;
 }
 
-- (void)panAction:(UIPanGestureRecognizer *)panGesture{
+- (void)panAction:(UIScreenEdgePanGestureRecognizer *)panGesture{
     
     [self updateShadowOfLeftView:YES];
     
@@ -111,7 +111,7 @@
         
         CGFloat duration;
         
-        if (translatedPoint.x <= UFDrawerWidth && translatedPoint.x >= UFDrawerWidth/2) {
+        if (translatedPoint.x <= UFDrawerWidth && translatedPoint.x >= UFDrawerWidth/6) {
             duration = (UFDrawerWidth - translatedPoint.x) / drawer_speed;
             [UIView animateWithDuration:duration animations:^{
                 self.leftDrawerViewController.view.transform = CGAffineTransformMakeTranslation(UFDrawerWidth, 0);
@@ -172,7 +172,9 @@
     [tapGes setDelegate:self];
     [self.coverView addGestureRecognizer:tapGes];
     
-    UIPanGestureRecognizer *panGes = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panAction:)];
+    //UIPanGestureRecognizer *panGes = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panAction:)];
+    UIScreenEdgePanGestureRecognizer *panGes = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(panAction:)];
+    panGes.edges = UIRectEdgeLeft;
     [panGes setDelegate:self];
     [self.view addGestureRecognizer:panGes];
 }
@@ -252,7 +254,7 @@
         self.coverView.alpha = 1;
         //self.leftDrawerViewController.view.backgroundColor = [UIColor colorWithRed:142.0/255 green:126.0/255 blue:188.0/255 alpha:1];
         self.leftDrawerViewController.view.alpha = .9;
-        self.coverView.backgroundColor = [UIColor colorWithRed:142.0/255 green:126.0/255 blue:188.0/255 alpha:.5];
+        self.coverView.backgroundColor = [UIColor colorWithRed:42.0/255 green:42.0/255 blue:42.0/255 alpha:.5];
         self.leftDrawerViewController.view.transform = CGAffineTransformMakeTranslation(UFDrawerWidth, 0);
     } completion:^(BOOL finished) {
         //

@@ -16,11 +16,6 @@
 #import "UIComboBox.h"
 #import "registView.h"
 
-@protocol cacheListRefresh <NSObject>
-
-- (void)refresh:(NSArray *)array;
-
-@end
 
 @interface uploadIpadViewController : UIViewController <WKUIDelegate,WKNavigationDelegate,UIScrollViewDelegate>
 @property NSArray *productList;
