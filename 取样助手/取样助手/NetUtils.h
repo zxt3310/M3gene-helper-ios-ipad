@@ -30,6 +30,8 @@
 #define dataCenter_URL         @"http://dev.mapi.lhgene.cn"
 #define dataCenter_GET_URL     @"http://dev.mapi.lhgene.cn/m/api/disk"
 #define VIPCARD_UPLOAD_URL     @"http://dev.mapi.lhgene.cn/mobi-cms/card/bind"
+#define VIPCARD_productList_URL @"http://dev.mapi.lhgene.cn/mobi-cms/card/get_sales_cards"
+
 //正式环境
 //#define longin_URL             @"http://mapi.lhgene.cn/mobi-cms/login"
 //#define orderUpload_URL        @"http://mapi.lhgene.cn/mobi-cms/order/upload"
@@ -52,7 +54,7 @@
 //#define dataCenter_URL         @"http://mapi.lhgene.cn"
 //#define dataCenter_GET_URL     @"http://mapi.lhgene.cn/m/api/disk"
 //#define VIPCARD_UPLOAD_URL     @"http://mapi.lhgene.cn/mobi-cms/card/bind"
-
+//#define VIPCARD_productList_URL @"http://mapi.lhgene.cn/mobi-cms/card/get_sales_cards"
 #define WDDD_IMG @"订单查看订单"
 #define CGX_IMG  @"草稿箱"
 #define CZJL_IMG @"投标纪录"

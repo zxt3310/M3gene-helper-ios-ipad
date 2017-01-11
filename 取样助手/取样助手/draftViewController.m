@@ -110,7 +110,7 @@
         CGFloat y = 30 * SCREEN_HEIGHT/768;
         UIFont *font = [UIFont fontWithName:@"STHeitiSC-Light" size:22];
         //操作类型  tag 1
-        UILabel *typeLable = [[UILabel alloc] initWithFrame:CGRectMake(65*SCREEN_WEIGHT/1024, y, 150*SCREEN_WEIGHT/1024, 20)];
+        UILabel *typeLable = [[UILabel alloc] initWithFrame:CGRectMake(65*SCREEN_WEIGHT/1024, y, 200*SCREEN_WEIGHT/1024, 20)];
         typeLable.font = font;
         typeLable.tag = 1;
         [cell.contentView addSubview:typeLable];
@@ -229,20 +229,38 @@
 {
     NSIndexPath *index = [tableview indexPathForCell:(UITableViewCell *)sender.superview.superview];
     NSDictionary *dic = cacheList[index.row];
-    uploadIpadViewController *upLoadView = [[uploadIpadViewController alloc]init];
-    upLoadView.userName = user;
-    upLoadView.productName = [dic objectForKey:@"productName"];
-    upLoadView.productId = [dic objectForKey:@"productId"];
-    upLoadView.number = [dic objectForKey:@"code_number"];
-    upLoadView.registString = [dic objectForKey:@"registStr"];
-    upLoadView.token = token;
-    NSData *imgData = [dic objectForKey:@"orderPic"];
-    upLoadView.upOrderImg = [UIImage imageWithData:imgData];
-    upLoadView.refreshDelegate = self;
-    upLoadView.productList = self.productList;
-    upLoadView.deleteIndex = index.row;
-    upLoadView.isReEditOperate = YES;
-    [self.navigationController pushViewController:upLoadView animated:YES];
+    if ([[dic objectForKey:@"cacheType"]isEqualToString:@"CACHE_ORDER"]) {
+        uploadIpadViewController *upLoadView = [[uploadIpadViewController alloc]init];
+        upLoadView.userName = user;
+        upLoadView.productName = [dic objectForKey:@"productName"];
+        upLoadView.productId = [dic objectForKey:@"productId"];
+        upLoadView.number = [dic objectForKey:@"code_number"];
+        upLoadView.registString = [dic objectForKey:@"registStr"];
+        upLoadView.token = token;
+        NSData *imgData = [dic objectForKey:@"orderPic"];
+        upLoadView.upOrderImg = [UIImage imageWithData:imgData];
+        upLoadView.refreshDelegate = self;
+        upLoadView.productList = self.productList;
+        upLoadView.deleteIndex = index.row;
+        upLoadView.isReEditOperate = YES;
+        [self.navigationController pushViewController:upLoadView animated:YES];
+    }
+    else if ([[dic objectForKey:@"cacheType"] isEqualToString:@"CACHE_VIP"])
+    {
+        NSDictionary *contentDic = [dic objectForKey:@"registStr"];
+        VIPCardViewController *vip = [[VIPCardViewController alloc] init];
+        vip.userName = user;
+        for(NSString *key in contentDic.allKeys)
+        {
+            [vip setValue:[contentDic objectForKey:key] forKey:key];
+        }
+        vip.isReEditOperate = YES;
+        vip.refreshDelegate = self;
+        vip.deleteIndex = index.row;
+        vip.token = token;
+        [self.navigationController pushViewController:vip animated:YES];
+    }
+    
 }
 
 - (void)refresh:(NSArray *)array

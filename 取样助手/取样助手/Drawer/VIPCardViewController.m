@@ -115,6 +115,11 @@
     
     float currentTf_originY;
     NSMutableDictionary *postDic;
+    NSArray *cardListJson; //从json数据中分离出的卡片总列表
+    NSArray *cardList;  //根据下拉菜单选择过滤出的针对产品的卡片列表
+    
+    UIComboBox *productCbo;
+    UIComboBox *cardCbo;
 }
 
 - (instancetype)init
@@ -122,6 +127,9 @@
     self = [super init];
     if (self) {
         _isReEditOperate = NO;
+        _card_type = -1;
+        _payment_type = -1;
+        _gender = -1;
     }
     return self;
 }
@@ -139,26 +147,35 @@
     cardInfoView.titleStr = @"卡片信息";
     [self.view addSubview:cardInfoView];
     
-    contentLb *cardIdLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 79*SCREEN_HEIGHT/768, 110, 22)];
-    cardIdLb.text = @"*卡号";
-    [cardInfoView addSubview:cardIdLb];
-    
-    contentTextField *cardIdTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Left_X, cardIdLb.frame.origin.y - 10, 0, 0)];
-    cardIdTf.tag = Origin_TAG;
-    cardIdTf.delegate = self;
-    [cardInfoView addSubview:cardIdTf];
-    
-    contentLb *productLb = [[contentLb alloc] initWithFrame:CGRectMake(600*SCREEN_WEIGHT/1024, cardIdLb.frame.origin.y, 110*SCREEN_HEIGHT/768, 22)];
+    contentLb *productLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 79*SCREEN_HEIGHT/768, 110, 22)];
     productLb.text = @"产品选择";
     [cardInfoView addSubview:productLb];
     
-    UIComboBox *productCbo = [[UIComboBox alloc] initWithFrame:CGRectMake(721*SCREEN_WEIGHT/1024, cardIdLb.frame.origin.y - 10, 218, 40)];
+    productCbo = [[UIComboBox alloc] initWithFrame:CGRectMake(TF_Origin_Left_X, productLb.frame.origin.y - 10, 218, 40)];
+    productCbo.delegate = self;
     productCbo.comboList = @[@"和普安",@"和家安",@"和家欢",@"和美安",@"爱无忧"];
     productCbo.placeColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1];
     productCbo.textColor = [UIColor colorWithMyNeed:117 green:117 blue:117 alpha:1];
     productCbo.textFont = TEXT_FONT;
     productCbo.tag = Origin_TAG + 1;
+    productCbo.selectId = _card_type;
     [cardInfoView addSubview:productCbo];
+    
+    contentLb *cardIdLb = [[contentLb alloc] initWithFrame:CGRectMake(600*SCREEN_WEIGHT/1024, productLb.frame.origin.y, 110*SCREEN_HEIGHT/768, 22)];
+    cardIdLb.text = @"*卡号";
+    [cardInfoView addSubview:cardIdLb];
+    
+    cardCbo = [[UIComboBox alloc] initWithFrame:CGRectMake(721*SCREEN_WEIGHT/1024, productLb.frame.origin.y - 10, 218,40)];
+    cardCbo.tag = Origin_TAG;
+    cardCbo.placeColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1];
+    cardCbo.textColor = [UIColor colorWithMyNeed:117 green:117 blue:117 alpha:1];
+    cardCbo.textFont = TEXT_FONT;
+    cardCbo.comboList = cardList;
+    if (_code) {
+        [cardCbo setValue:[NSString stringWithFormat:@"LH%@",_code] forKey:@"selectString"];
+    }
+    [cardInfoView addSubview:cardCbo];
+
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     
@@ -173,6 +190,7 @@
     contentTextField *userNameTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Left_X, userNameLb.frame.origin.y - 10, 0, 0)];
     userNameTf.tag = Origin_TAG + 2;
     userNameTf.delegate = self;
+    userNameTf.text = _name;
     [userInfoView addSubview:userNameTf];
     
     contentLb *genderLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Middle_X, userNameLb.frame.origin.y, 110, 22)];
@@ -185,6 +203,7 @@
     genderCbo.textColor = [UIColor colorWithMyNeed:117 green:117 blue:117 alpha:1];
     genderCbo.textFont = TEXT_FONT;
     genderCbo.tag = Origin_TAG + 3;
+    genderCbo.selectId = _gender;
     [userInfoView addSubview:genderCbo];
     
     contentLb *telLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Right_X, userNameLb.frame.origin.y, 110, 20)];
@@ -194,6 +213,7 @@
     contentTextField *telTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Right_X, userNameTf.frame.origin.y, 0, 0)];
     telTf.tag = Origin_TAG + 4;
     telTf.delegate = self;
+    telTf.text = _phone;
     [userInfoView addSubview:telTf];
     
     contentLb *birthLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 130 * SCREEN_HEIGHT/768, 110, 22)];
@@ -203,6 +223,7 @@
     birthTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Left_X, birthLb.frame.origin.y - 10, 0, 0)];
     birthTf.tag = Origin_TAG + 5;
     birthTf.delegate = self;
+    birthTf.text = _birthday;
     [userInfoView addSubview:birthTf];
     
     contentLb *occupationLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Middle_X, birthLb.frame.origin.y, 110, 22)];
@@ -212,6 +233,7 @@
     contentTextField *occupationTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Middle_X, birthTf.frame.origin.y, 0, 0)];
     occupationTf.tag = Origin_TAG + 6;
     occupationTf.delegate = self;
+    occupationTf.text = _career;
     [userInfoView addSubview:occupationTf];
     
     contentLb *carLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Right_X, birthLb.frame.origin.y, 110, 22)];
@@ -221,6 +243,7 @@
     contentTextField *carTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Right_X, birthTf.frame.origin.y, 0, 0)];
     carTf.tag = Origin_TAG + 7;
     carTf.delegate = self;
+    carTf.text = _motor_type;
     [userInfoView addSubview:carTf];
     
     contentLb *hobbyLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 185 *SCREEN_HEIGHT/768, 110, 22)];
@@ -230,6 +253,7 @@
     contentTextField *hobbyTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Left_X, hobbyLb.frame.origin.y - 10, 0, 0)];
     hobbyTf.tag = Origin_TAG + 8;
     hobbyTf.delegate = self;
+    hobbyTf.text = _interest;
     [userInfoView addSubview:hobbyTf];
     
     contentLb *additionLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Middle_X, hobbyLb.frame.origin.y, 110, 22)];
@@ -239,8 +263,8 @@
     contentTextField *additionTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Middle_X, hobbyTf.frame.origin.y, 0, 0)];
     additionTf.tag = Origin_TAG + 9;
     additionTf.delegate = self;
+    additionTf.text = _remark;
     [userInfoView addSubview:additionTf];
-    
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     
@@ -248,25 +272,27 @@
     payInfoView.titleStr = @"付款信息";
     [self.view addSubview:payInfoView];
     
-    contentLb *payNumberLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X,79*SCREEN_HEIGHT/768, 150 *SCREEN_WEIGHT/1024, 22)];
+    contentLb *payNumberLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X + 80,79*SCREEN_HEIGHT/768, 150 *SCREEN_WEIGHT/1024, 22)];
     payNumberLb.text = @"*付款金额";
     [payInfoView addSubview:payNumberLb];
     
-    contentTextField *payNumberTf = [[contentTextField alloc] initWithFrame:CGRectMake(158*SCREEN_WEIGHT/1024, 69*SCREEN_HEIGHT/768,0,0)];
+    contentTextField *payNumberTf = [[contentTextField alloc] initWithFrame:CGRectMake(158*SCREEN_WEIGHT/1024 + 80, 69*SCREEN_HEIGHT/768,0,0)];
     payNumberTf.tag = Origin_TAG + 10;
     payNumberTf.delegate = self;
+    payNumberTf.text = _payment_amount;
     [payInfoView addSubview:payNumberTf];
     
-    contentLb *payType = [[contentLb alloc] initWithFrame:CGRectMake(347*SCREEN_WEIGHT/1024, payNumberLb.frame.origin.y, 110*SCREEN_WEIGHT/1024, 22)];
+    contentLb *payType = [[contentLb alloc] initWithFrame:CGRectMake(347*SCREEN_WEIGHT/1024 + 250, payNumberLb.frame.origin.y, 110*SCREEN_WEIGHT/1024, 22)];
     payType.text = @"*付款方式";
     [payInfoView addSubview:payType];
     
-    UIComboBox *payTypeCbo = [[UIComboBox alloc] initWithFrame:CGRectMake(TF_Origin_Middle_X, payNumberTf.frame.origin.y, 185*SCREEN_WEIGHT/1024, 40*SCREEN_HEIGHT/768)];
+    UIComboBox *payTypeCbo = [[UIComboBox alloc] initWithFrame:CGRectMake(TF_Origin_Middle_X + 250, payNumberTf.frame.origin.y, 185*SCREEN_WEIGHT/1024, 40*SCREEN_HEIGHT/768)];
     payTypeCbo.comboList = @[@"刷卡",@"微信",@"支付宝"];
     payTypeCbo.placeColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1];
     payTypeCbo.textColor = [UIColor colorWithMyNeed:117 green:117 blue:117 alpha:1];
     payTypeCbo.textFont = TEXT_FONT;
     payTypeCbo.tag = Origin_TAG + 11;
+    payTypeCbo.selectId = _payment_type;
     [payInfoView addSubview:payTypeCbo];
     
     contentLb *payDateLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Right_X, payNumberLb.frame.origin.y, 110*SCREEN_WEIGHT/1024, 22)];
@@ -276,18 +302,20 @@
     contentTextField *payDateTf = [[contentTextField alloc] initWithFrame:CGRectMake(TF_Origin_Right_X, payNumberTf.frame.origin.y, 0, 0)];
     payDateTf.tag = Origin_TAG + 12;
     payDateTf.delegate = self;
+    payDateTf.text = _pay_time;
     [payInfoView addSubview:payDateTf];
     
-    contentLb *payTypeDitailLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 130*SCREEN_HEIGHT/768, 150 *SCREEN_WEIGHT/1024, 22)];
+    contentLb *payTypeDitailLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X + 80, 130*SCREEN_HEIGHT/768, 150 *SCREEN_WEIGHT/1024, 22)];
     payTypeDitailLb.text = @"*付款方式信息";
     [payInfoView addSubview:payTypeDitailLb];
     
     contentTextField *payTypeDitailTf = [[contentTextField alloc] initWithFrame:CGRectMake(payNumberTf.frame.origin.x, 124*SCREEN_HEIGHT/768, 0, 0)];
     payTypeDitailTf.tag = Origin_TAG + 13;
     payTypeDitailTf.delegate = self;
+    payTypeDitailTf.text = _pay_info;
     [payInfoView addSubview:payTypeDitailTf];
     
-    contentLb *payAddition = [[contentLb alloc] initWithFrame:CGRectMake(351*SCREEN_WEIGHT/1024, 136*SCREEN_HEIGHT/768, 500, 16)];
+    contentLb *payAddition = [[contentLb alloc] initWithFrame:CGRectMake(351*SCREEN_WEIGHT/1024 + 80, 136*SCREEN_HEIGHT/768, 500, 16)];
     payAddition.textAlignment = NSTextAlignmentLeft;
     payAddition.text = @"（刷卡－填写卡后4位，支付宝－填写支付宝名称,微信－填写微信号）";
     payAddition.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
@@ -310,8 +338,11 @@
     [self setNewBar];
     
     datepicker = [[UIDatePicker alloc] init];
+    NSCalendar *cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *comp = [[NSDateComponents alloc] init];
+    [comp setYear:-120];
     datepicker.maximumDate = [NSDate date];
-    datepicker.minimumDate = [NSDate dateWithTimeIntervalSinceNow:-100*365*24*3600];
+    datepicker.minimumDate = [cal dateByAddingComponents:comp toDate:[NSDate date] options:0];
     datepicker.datePickerMode = UIDatePickerModeDate;
     birthTf.inputView = datepicker;
     UIToolbar *bar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WEIGHT, 40)];
@@ -319,6 +350,10 @@
     bar.items = @[item];
     birthTf.inputAccessoryView = bar;
     
+    [self productRequest];
+    
+    payDateLb.hidden = YES;
+    payDateTf.hidden = YES;
 }
 
 - (void)switchDateAction
@@ -337,7 +372,6 @@
     for (int i = 0; i<jsonKeyArray.count; i++) {
         [postDic setObject:[[NSObject alloc]init] forKey:jsonKeyArray[i]];
     }
-    
     for (id object in self.view.subviews) {
         if ([object isKindOfClass:[contentView class]]) {
             contentView *content = (contentView *) object;
@@ -349,12 +383,18 @@
                 if ([control isKindOfClass:[UIComboBox class]])
                 {
                     UIComboBox *tempCbo = (UIComboBox *)control;
-                    [postDic setValue:[NSString stringWithFormat:@"%ld",(long)tempCbo.selectId] forKey:jsonKeyArray[tempCbo.tag - 100]];
+                    if(tempCbo.tag == Origin_TAG)
+                    {
+                        [postDic setValue:[tempCbo.selectString stringByReplacingOccurrencesOfString:@"LH" withString:@""] forKey:jsonKeyArray[tempCbo.tag - 100]];
+                    }
+                    else
+                    {
+                        [postDic setValue:[NSString stringWithFormat:@"%ld",(long)tempCbo.selectId] forKey:jsonKeyArray[tempCbo.tag - 100]];
+                    }
                 }
             }
         }
     }
-
 }
 
 - (void)saveBtnClickAction
@@ -416,6 +456,38 @@
                 }
                 [self clearAll];
             }];
+        });
+    });
+}
+
+- (void)productRequest
+{
+    NSString *urlStr = VIPCARD_productList_URL;
+    NSDictionary *headerDic = [NSDictionary dictionaryWithObjectsAndKeys:_token,@"token", nil];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *returnData = sendGETRequest(urlStr, headerDic);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!returnData) {
+                alertMsgView(@"获取产品列表失败，无法连接到服务器", self);
+                return ;
+            }
+            
+            NSDictionary *responseDic = parseJsonResponse(returnData);
+            if (!responseDic) {
+                alertMsgView(@"获取产品列表失败，请返回上一级菜单并重试", self);
+                return;
+            }
+            NSNumber *resault = [responseDic objectForKey:@"err"];
+            if (!resault) {
+                alertMsgView(@"获取产品列表失败,返回数据有误，请稍后再试", self);
+            }
+            if ([resault integerValue] > 0) {
+                NSString *errmsg = [responseDic objectForKey:@"errmsg"];
+                alertMsgView(errmsg, self);
+                return;
+            }
+            productCbo.comboList = JsonValue([responseDic objectForKey:@"card_types"],@"NSArray");
+            cardListJson = JsonValue([responseDic objectForKey:@"data"], @"NSArray");
         });
     });
 }
@@ -599,9 +671,25 @@
         }
         else
         {
-            self.view.center = CGPointMake(self.view.center.x, self.view.bounds.size.height/2.0 - currentTf_originY + keyBoardEndY - 50);   // keyBoardEndY的坐标包括了状态栏的高度，要减去
+            self.view.center = CGPointMake(self.view.center.x, self.view.bounds.size.height/2.0 - currentTf_originY + keyBoardEndY - 50);
         }
     }];
+}
+
+- (void)UIComboBox:(UIComboBox *)comboBox didSelectRow:(NSIndexPath *)indexPath
+{
+    NSMutableArray *cardArray = [[NSMutableArray alloc] init];
+    for (int i = 0; i<cardListJson.count; i++) {
+        NSDictionary *cardDic = JsonValue(cardListJson[i],@"NSDictionary");
+        NSNumber *cardType = JsonValue([cardDic objectForKey:@"card_type"],@"NSNumber");
+        NSInteger type = [cardType integerValue];
+        if (type == indexPath.row - 1) {
+            NSString *cardId = [NSString stringWithFormat:@"LH%@",JsonValue([cardDic objectForKey:@"code"],@"NSString")];
+            [cardArray addObject:cardId];
+        }
+    }
+    [cardCbo resetCombo];
+    cardCbo.comboList = [cardArray copy];
 }
 
 @end

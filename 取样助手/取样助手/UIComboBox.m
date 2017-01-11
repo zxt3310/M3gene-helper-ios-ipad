@@ -33,6 +33,7 @@
     if(self)
     {
         isShow = NO;
+        self.selectId = -1;
         
         comboTF = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width - self.frame.size.height, self.frame.size.height)];
         comboTF.layer.borderWidth = 1;
@@ -136,12 +137,17 @@
 
 }
 
+- (void)setValue:(id)value forKey:(NSString *)key
+{
+    if ([key isEqualToString:@"selectString"]) {
+        comboTF.text = _selectString = value;
+    }
+}
+
 - (void)setSelectId:(NSInteger)selectId
 {
-    selectId = _selectId;
-    
-    NSIndexPath *index = [NSIndexPath indexPathForRow:selectId inSection:0];
-    
+    _selectId = selectId;
+    NSIndexPath *index = [NSIndexPath indexPathForRow:selectId + 1 inSection:0];
     [self tableView:tableview didSelectRowAtIndexPath:index];
 }
 
@@ -189,11 +195,14 @@
     tableTemp.size.width = cell.textLabel.text.length * cell.textLabel.font.pointSize + 50;
     //重算列表宽度
     tableView.frame = (tableTemp.size.width > tableView.frame.size.width)?tableTemp:tableView.frame;
+    
     //根据宽度重新计算列表位移
+    //如果菜单右边缘超出屏幕则向左平移
      CGRect temp = tableView.frame;
     if (tableView.frame.origin.x + tableView.frame.size.width > superView.frame.size.width) {
         temp.origin.x = superView.frame.size.width - tableView.frame.size.width - 3;
     }
+    //如果菜单下边缘超出屏幕则平移至上方
     if (tableView.frame.origin.y + tableView.frame.size.height > superView.frame.size.height) {
         temp.origin.y = temp.origin.y - temp.size.height - self.frame.size.height - 6;
     }
@@ -226,7 +235,7 @@
     {
         [UIView animateWithDuration:.15 animations:^{
             tableview.alpha = 1;
-            tableview.transform = CGAffineTransformMakeScale(1, 1);
+            //tableview.transform = CGAffineTransformMakeScale(1, 1); //由于需要频繁计算table的frame，此段代码会造成frame变动
         }];
 
         [superView addSubview:tableview];
@@ -240,7 +249,7 @@
     if(isShow)
     {
         [UIView animateWithDuration:.15 animations:^{
-            tableview.transform = CGAffineTransformMakeScale(1.3, 1.3);
+            //tableview.transform = CGAffineTransformMakeScale(1.3, 1.3);
             tableview.alpha = 0.0;
         } completion:^(BOOL finished) {
             if (finished) {
