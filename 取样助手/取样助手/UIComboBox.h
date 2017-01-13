@@ -18,6 +18,7 @@
 @property (nonatomic) UIColor *placeColor;
 @property (readonly) NSString *selectString;
 @property (nonatomic) NSInteger selectId;
+@property NSString *introductStr;
 
 - (void)resetCombo;
 

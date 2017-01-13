@@ -72,6 +72,16 @@
         userNameLb.tag = 3;
         [cell.contentView addSubview:userNameLb];
         
+        UIButton *passWordResign = [UIButton buttonWithType:UIButtonTypeSystem];
+        passWordResign.frame = CGRectMake(300, 60, 88, 30);
+        passWordResign.titleLabel.font = titleLable.font;
+        [passWordResign setTitle:@"修改密码" forState:UIControlStateNormal];
+        passWordResign.titleLabel.textColor = [UIColor colorWithMyNeed:120 green:167 blue:255 alpha:1];
+        [passWordResign addTarget:self action:@selector(pswdBtnClickAction) forControlEvents:UIControlEventTouchUpInside];
+        passWordResign.hidden = YES;
+        passWordResign.tag = 4;
+        [cell.contentView addSubview:passWordResign];
+        
         cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(60*SCREEN_WEIGHT/1024, 39*SCREEN_HEIGHT/768 - 15, 27*SCREEN_WEIGHT/1024, 27*SCREEN_HEIGHT/768)];   //侧边栏图标
         cellImageView.tag = 2;
         [cell.contentView addSubview:cellImageView];
@@ -98,13 +108,16 @@
     
     if(indexPath.row == 0)
       {
-          UILabel *nameLb = [(UILabel *)cell.contentView viewWithTag:3];
+          UILabel *nameLb = (UILabel *)[cell.contentView viewWithTag:3];
           nameLb.text = lastUser;
+          
+          UIButton *btn = (UIButton *)[cell.contentView viewWithTag:4];
+          btn.hidden = NO;
           
           leftImg.frame = CGRectMake(55*SCREEN_WEIGHT/1024, 33*SCREEN_HEIGHT/768, 82*SCREEN_WEIGHT/1024, 82*SCREEN_HEIGHT/768);
           leftImg.image = [UIImage imageNamed:@"touxiang"];
           cell.backgroundColor = [UIColor colorWithMyNeed:236 green:236 blue:236 alpha:1];
-          cell.userInteractionEnabled = NO;
+          cell.selectionStyle = UITableViewCellSelectionStyleNone;
       }
 
     return cell;
@@ -125,8 +138,20 @@
    
 }
 
+- (void)pswdBtnClickAction
+{
+    passWordEditView *pev = [[passWordEditView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    pev.userName = lastUser;
+    pev.token = lastToken;
+    [[UIApplication sharedApplication].keyWindow addSubview:pev];
+    
+}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.row == 0) {
+        return;
+    }
     
     [self.UF_ViewController closeDrawerAnimtaion:YES complete:^(BOOL finished)
     {

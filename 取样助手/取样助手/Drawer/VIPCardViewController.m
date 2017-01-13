@@ -689,6 +689,13 @@
         }
     }
     [cardCbo resetCombo];
+    if (cardArray.count == 0) {
+        cardCbo.introductStr = @"无此产品相关卡片";
+    }
+    else
+    {
+        cardCbo.introductStr = @"-请选择-";
+    }
     cardCbo.comboList = [cardArray copy];
 }
 

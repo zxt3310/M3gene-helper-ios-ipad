@@ -34,6 +34,7 @@
     {
         isShow = NO;
         self.selectId = -1;
+        _introductStr = @"-请选择-";
         
         comboTF = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width - self.frame.size.height, self.frame.size.height)];
         comboTF.layer.borderWidth = 1;
@@ -177,7 +178,7 @@
     }
     
     if (indexPath.row == 0) {
-        cell.textLabel.text = @"-请选择-";
+        cell.textLabel.text = _introductStr;
     }
     else
     {

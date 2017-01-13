@@ -134,6 +134,7 @@
             }
             [[NSUserDefaults standardUserDefaults] setObject:operations forKey:@"role"];
             [[NSUserDefaults standardUserDefaults] setObject:_username_TF.text forKey:@"userName"];
+            [[NSUserDefaults standardUserDefaults] setObject:_password_TF.text forKey:[NSString stringWithFormat:@"pwdfor%@",_username_TF.text]];
             [[NSUserDefaults standardUserDefaults] setObject:currentToken forKey:@"token"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             

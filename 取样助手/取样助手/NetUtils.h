@@ -26,6 +26,10 @@
 #define orderProcess_URL       @"http://dev.mapi.lhgene.cn/app/s/plan3.html"
 #define operate_Ditail_URL     @"http://dev.mapi.lhgene.cn/mobi-cms/h5-opmore"
 #define gbk_input_URL          @"http://dev.mapi.lhgene.cn/app/mindex.html#/mobile/bind_card"
+#define SINGLE_ORDER_URL       @"http://dev.mapi.lhgene.cn/app/mindex.html#/mobile/salefinance_order"
+#define SINGLE_VIP_URL         @"http://dev.mapi.lhgene.cn/app/mindex.html#/mobile/salefinance_card"
+#define SINGLE_PAY_URL         @"http://dev.mapi.lhgene.cn/app/mindex.html#/mobile/salefinance"
+#define CHANGE_PASSWORD_URL    @"http://dev.mapi.lhgene.cn/mobi-cms/change_password"
 
 #define dataCenter_URL         @"http://dev.mapi.lhgene.cn"
 #define dataCenter_GET_URL     @"http://dev.mapi.lhgene.cn/m/api/disk"
@@ -49,6 +53,10 @@
 //#define orderProcess_URL       @"http://mapi.lhgene.cn/app/s/plan3.html"
 //#define operate_Ditail_URL     @"http://mapi.lhgene.cn/mobi-cms/h5-opmore"
 //#define gbk_input_URL          @"http://mapi.lhgene.cn/app/mindex.html#/mobile/bind_card"
+//#define SINGLE_ORDER_URL       @"http://mapi.lhgene.cn/app/mindex.html#/mobile/salefinance_order"
+//#define SINGLE_VIP_URL         @"http://mapi.lhgene.cn/app/mindex.html#/mobile/salefinance_card"
+//#define SINGLE_PAY_URL         @"http://mapi.lhgene.cn/app/mindex.html#/mobile/salefinance"
+//#define CHANGE_PASSWORD_URL    @"http://dev.mapi.lhgene.cn/mobi-cms/change_password"
 //
 //
 //#define dataCenter_URL         @"http://mapi.lhgene.cn"

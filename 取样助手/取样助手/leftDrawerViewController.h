@@ -13,6 +13,7 @@
 #import "mainViewController.h"
 #import "draftViewController.h"
 #import "oprateRecordVC.h"
+#import "passWordEditView.h"
 //#import "Address.h"
 
 @interface leftDrawerViewController : UFanBasicViewController <loginUpdateToken>
