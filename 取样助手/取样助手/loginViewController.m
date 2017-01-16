@@ -85,7 +85,7 @@
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^{
     NSString *strUrl = [NSString stringWithFormat:longin_URL];
-        NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"];
+    NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"];
     NSString *post = [NSString stringWithFormat:@"username=%@&password=%@&iospush=%@",_username_TF.text,_password_TF.text,deviceToken];
 
     NSData *response = sendRequestWithFullURL(strUrl, post);
