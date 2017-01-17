@@ -11,10 +11,12 @@
 @interface detailView : UIView
 @property UIPickerView *productPicker;
 @property UILabel *titleLable;
+@property (nonatomic)BOOL hidden;
 @end
 @implementation detailView
 @synthesize productPicker = productPicker;
 @synthesize titleLable = titleLable;
+@synthesize hidden = _hidden;
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -28,6 +30,17 @@
         [self addSubview:titleLable];
     }
     return self;
+}
+
+- (void)setHidden:(BOOL)hidden
+{
+    super.hidden = hidden;
+    for (id object in self.subviews) {
+        if ([object isKindOfClass:[registViewNew class]]) {
+            registViewNew *tempView = (registViewNew *)object;
+            tempView.hidden = hidden;
+        }
+    }
 }
 
 @end
@@ -118,7 +131,7 @@
         imageViewCount = 10;
         isTakeMedicalPhoto = NO;
 
-        listView = [NSArray arrayWithObjects:productView,scanCodeView,orderPicView,registPageView,medicalPicView,nil];//diseseSelectView, nil];
+        listView = [NSArray arrayWithObjects:productView,scanCodeView,orderPicView,registPageView,medicalPicView,diseseSelectView, nil];
     }
     return self;
 }
@@ -152,7 +165,7 @@
     [self setOrderPicView];
     [self setRegistView];
     [self setMedicalPicView];
-   // [self setDiseseSelectView];
+    [self setDiseseSelectView];
     //默认选中第一行并实现第一行点击效果
     NSIndexPath *firstpath = [NSIndexPath indexPathForRow:0 inSection:0];
     [leftView selectRowAtIndexPath:firstpath animated:YES scrollPosition:UITableViewScrollPositionTop];
@@ -240,73 +253,72 @@
 }
 - (void)sendBtClick
 {
-        loadingView.dscpLabel.text = @"正在上传";
-        loadingView.hidden = NO;
+    loadingView.dscpLabel.text = @"正在上传";
+    loadingView.hidden = NO;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^{
+        NSString *uploadUrl = [NSString stringWithFormat:orderUpload_URL];
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^{
-            NSString *uploadUrl = [NSString stringWithFormat:orderUpload_URL];
+        NSMutableString *upImageId = [[NSMutableString alloc] init];
+        for (int i = 0; i<imageIdArray.count; i++) {
+            [upImageId appendFormat:@",%@",imageIdArray[i]];
+        }
+        if(upImageId.length > 0)
+        {
+            [upImageId deleteCharactersInRange:NSMakeRange(0, 1)];
+        }
+        
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:self.token,@"token",productId,@"product",numberLable.text,@"order_code",upOrderImg,@"pic",upImageId,@"medical_pics", nil];
+        
+        NSData *responsData = [self loadRequestWithImg:dic urlstring:uploadUrl];
+        
+        dispatch_async(dispatch_get_main_queue(),^{
             
-            NSMutableString *upImageId = [[NSMutableString alloc] init];
-            for (int i = 0; i<imageIdArray.count; i++) {
-                [upImageId appendFormat:@",%@",imageIdArray[i]];
-            }
-            if(upImageId.length > 0)
+            loadingView.hidden = YES;
+            
+            if(!responsData)
             {
-                [upImageId deleteCharactersInRange:NSMakeRange(0, 1)];
+                alertMsgView(@"无法连接服务器，请检查网络", self);
+                NSLog(@"return nil");
+                return;
             }
             
-            NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:self.token,@"token",productId,@"product",numberLable.text,@"order_code",upOrderImg,@"pic",upImageId,@"medical_pics", nil];
+            NSDictionary *jsonData = parseJsonResponse(responsData);
             
-            NSData *responsData = [self loadRequestWithImg:dic urlstring:uploadUrl];
+            NSNumber *resault = JsonValue([jsonData objectForKey:@"err"],@"NSNumber");
+            if (resault == nil) {
+                alertMsgView(@"服务器维护中，请重试", self);
+                return;
+            }
             
-            dispatch_async(dispatch_get_main_queue(),^{
+            NSInteger err = [resault integerValue];
+            if (err > 0) {
+                NSString *errormsg = replaceUnicode(JsonValue([jsonData objectForKey:@"errmsg"],@"NSString"));
+                alertMsgView(errormsg, self);
+                return;
+            }
+            else
+            {
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"消息" message:@"上传成功" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *ula = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
                 
-                loadingView.hidden = YES;
-                
-                if(!responsData)
-                {
-                    alertMsgView(@"无法连接服务器，请检查网络", self);
-                    NSLog(@"return nil");
-                    return;
-                }
-                
-                NSDictionary *jsonData = parseJsonResponse(responsData);
-                
-                NSNumber *resault = JsonValue([jsonData objectForKey:@"err"],@"NSNumber");
-                if (resault == nil) {
-                    alertMsgView(@"服务器维护中，请重试", self);
-                    return;
-                }
-                
-                NSInteger err = [resault integerValue];
-                if (err > 0) {
-                    NSString *errormsg = replaceUnicode(JsonValue([jsonData objectForKey:@"errmsg"],@"NSString"));
-                    alertMsgView(errormsg, self);
-                    return;
-                }
-                else
-                {
-                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"消息" message:@"上传成功" preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction *ula = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+                [alert addAction:ula];
+                [self presentViewController:alert animated:YES completion:^{
                     
-                    [alert addAction:ula];
-                    [self presentViewController:alert animated:YES completion:^{
-                        
-                        if(isReEditOperate)
-                        {
-                            NSArray *arry = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
-                            NSMutableArray *operateArray = [[NSMutableArray alloc]initWithArray:arry];
-                            [operateArray removeObjectAtIndex:deleteIndex];
-                            arry = [operateArray copy];
-                            [self.refreshDelegate refresh:arry];
-                        }
+                    if(isReEditOperate)
+                    {
+                        NSArray *arry = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
+                        NSMutableArray *operateArray = [[NSMutableArray alloc]initWithArray:arry];
+                        [operateArray removeObjectAtIndex:deleteIndex];
+                        arry = [operateArray copy];
+                        [self.refreshDelegate refresh:arry];
+                    }
 
-                        [self clearUItext];
-                    }];
-                }
-            });
+                    [self clearUItext];
+                }];
+            }
         });
-
+    });
 }
 
 - (void)cacheBtClick
@@ -498,8 +510,6 @@
         else {
             
         }
-
-        
     }
 }
 
@@ -525,13 +535,6 @@
     productView.productPicker.tag = 1;
 
     productTF.text = productName;
-    
-//    UIToolbar *toolBar = [[UIToolbar alloc]init];
-//    toolBar.barTintColor = [UIColor whiteColor];
-//    toolBar.frame = CGRectMake(0, 19, SCREEN_WEIGHT, 35);
-//    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(okClick)];
-//    toolBar.items = @[item];
-//    productTF.inputAccessoryView = toolBar;
     
     [productView addSubview:productTF];
     [self.view addSubview:productView];
@@ -689,26 +692,26 @@
 
 - (void)setDiseseSelectView
 {
-    diseseSelectView.titleLable.text = @"疾病选择";
-    diseseSelectView.productPicker = [[UIPickerView alloc]init];
-    diseseSelectView.productPicker.delegate = self;
-    diseseTF = [[UITextField alloc]initWithFrame:CGRectMake(180, 55, 400, 30)];
-    diseseTF.font = [UIFont fontWithName:@"STHeitiSC-Light" size:22];
-    diseseTF.placeholder = @"点击选择";
-    diseseTF.textAlignment = NSTextAlignmentCenter;
-    diseseTF.layer.borderWidth = 1;
-    diseseTF.inputView = diseseSelectView.productPicker;
-    diseseSelectView.productPicker.tag = 2;
-    
-    diseseTF.text = diseseName;
-    
-    [diseseSelectView addSubview:diseseTF];
+//    diseseSelectView.titleLable.text = @"疾病选择";
+//    diseseSelectView.productPicker = [[UIPickerView alloc]init];
+//    diseseSelectView.productPicker.delegate = self;
+//    diseseTF = [[UITextField alloc]initWithFrame:CGRectMake(180, 55, 400, 30)];
+//    diseseTF.font = [UIFont fontWithName:@"STHeitiSC-Light" size:22];
+//    diseseTF.placeholder = @"点击选择";
+//    diseseTF.textAlignment = NSTextAlignmentCenter;
+//    diseseTF.layer.borderWidth = 1;
+//    diseseTF.inputView = diseseSelectView.productPicker;
+//    diseseSelectView.productPicker.tag = 2;
+//    
+//    diseseTF.text = diseseName;
+//    
+//    [diseseSelectView addSubview:diseseTF];
 //    [self.view addSubview:diseseSelectView];
     
-//    registViewNew *registview = [[registViewNew alloc] initWithFrame:CGRectMake(0, 0, diseseSelectView.frame.size.width, diseseSelectView.frame.size.height)];
-//    registview.delegate = self;
-//    [registview show];
-//    [diseseSelectView addSubview:registview];
+    registViewNew *registview = [[registViewNew alloc] initWithFrame:CGRectMake(0, 0, diseseSelectView.frame.size.width, diseseSelectView.frame.size.height)];
+    registview.delegate = self;
+    [registview show];
+    [diseseSelectView addSubview:registview];
     
     [self.view addSubview:diseseSelectView];
     

@@ -569,28 +569,30 @@
     NSString *strUrl = [NSString stringWithFormat:productList_URL];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *response = sendGETRequest(strUrl, nil);
-        if (!response) {
-            NSLog(@"response is null check");
-            dispatch_async(dispatch_get_main_queue(), ^{
-                alertMsgView(@"网络异常，无法获取产品列表", self);});
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!response) {
+                NSLog(@"response is null check");
+                
+                alertMsgView(@"网络异常，无法获取产品列表", self);
+                
+                return ;
+            }
+            NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",strResp);
             
-            return ;
-        }
-        NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",strResp);
-        
-        NSDictionary *responseData = parseJsonResponse(response);
-        NSNumber *resault = JsonValue([responseData objectForKey:@"err"], @"NSNumber");
-        if (resault == nil) {
-            alertMsgView(@"数据异常，稍后再试", self);
-            return;
-        }
-        NSInteger err = [resault integerValue];
-        if(err > 0)
-        {
-            return;
-        }
-        productList = JsonValue([responseData objectForKey:@"data"], @"NSArray");
+            NSDictionary *responseData = parseJsonResponse(response);
+            NSNumber *resault = JsonValue([responseData objectForKey:@"err"], @"NSNumber");
+            if (resault == nil) {
+                alertMsgView(@"数据异常，稍后再试", self);
+                return;
+            }
+            NSInteger err = [resault integerValue];
+            if(err > 0)
+            {
+                return;
+            }
+            productList = JsonValue([responseData objectForKey:@"data"], @"NSArray");
+        });
     });
 }
 
@@ -645,7 +647,7 @@
             
             if (!response) {
                 loadingView.hidden = YES;
-                alertMsgView(@"无法连接服务器，请检查网络", self);
+                alertMsgView(@"无法获取资料文件列表，无法连接服务器，请检查网络", self);
                 return ;
             }
             
@@ -791,13 +793,10 @@
                 loadingView.alpha = 0.0;
             } completion:^(BOOL finished) {
                 if (finished) {
-                    
                     loadingView.alpha = 1;
                     loadingView.hidden = YES;
                 }
             }];
-            
-            
         });
     });
 }

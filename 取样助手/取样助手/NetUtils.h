@@ -56,7 +56,7 @@
 //#define SINGLE_ORDER_URL       @"http://mapi.lhgene.cn/app/mindex.html#/mobile/salefinance_order"
 //#define SINGLE_VIP_URL         @"http://mapi.lhgene.cn/app/mindex.html#/mobile/salefinance_card"
 //#define SINGLE_PAY_URL         @"http://mapi.lhgene.cn/app/mindex.html#/mobile/salefinance"
-//#define CHANGE_PASSWORD_URL    @"http://dev.mapi.lhgene.cn/mobi-cms/change_password"
+//#define CHANGE_PASSWORD_URL    @"http://mapi.lhgene.cn/mobi-cms/change_password"
 //
 //
 //#define dataCenter_URL         @"http://mapi.lhgene.cn"
@@ -84,7 +84,6 @@ NSString* urlEncode(NSString *str);
 NSString* replaceUnicode(NSString *unicodeStr);
 
 #pragma mark POST methods:
-
 NSData *sendRequestWithFullURL(NSString *fullURL, NSString *post);
 
 NSData *sendRequestWithFullURLandHeaders(NSString *fullURL, NSString *post ,NSDictionary *additionalHeaders);

@@ -65,8 +65,10 @@
     UIDatePicker *datePicker;
     contentTF *CJRQtf;
     contentTF *DDBHtf;
+    CGRect currentTf_frame;
+    float lastScroll;
 }
-
+@synthesize hidden = _hidden;
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -81,6 +83,20 @@
         [self addGestureRecognizer:tap];
     }
     return self;
+}
+
+- (void)setHidden:(BOOL)hidden
+{
+    super.hidden = hidden;
+    if (!hidden) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeContentViewPoint:) name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeContentViewPoint:) name:UIKeyboardWillHideNotification object:nil];
+    }
+    else
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    }
 }
 
 - (void)show
@@ -124,6 +140,7 @@
     toolBar.items = @[item];
     CJRQtf.inputAccessoryView = toolBar;
     [self addSubview:CJRQtf];
+    
     
     //送检单位
     contentLable *SJDWlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:130 isLeft:YES isLable:YES] andText:@"送检单位"];
@@ -296,10 +313,20 @@
     [saveBt setTitle:@"保存" forState:UIControlStateNormal];
     saveBt.tintColor = [UIColor whiteColor];
     [self addSubview:saveBt];
+    
+    [self setTextFieldDelegate];
 
 }
 
-
+- (void)setTextFieldDelegate
+{
+    for (id object in self.subviews) {
+        if ([object isKindOfClass:[contentTF class]]) {
+            contentTF *tempTf = (contentTF *)object;
+            tempTf.delegate = self;
+        }
+    }
+}
 
 //计算纵向位置
 - (CGRect)caculateFrameY:(CGFloat)y isLeft:(BOOL)isLeft isLable:(BOOL)isLable
@@ -373,6 +400,45 @@
 - (void)fillNumber:(NSString *)numberStr
 {
     DDBHtf.text = numberStr;
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    currentTf_frame = [self convertRect:textField.frame toView:self.superview.superview];
+    return YES;
+}
+
+- (void) changeContentViewPoint:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    NSValue *value = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGFloat keyBoardEndY = value.CGRectValue.origin.y;  // 得到键盘弹出后的键盘视图所在y坐标
+    NSNumber *duration = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    
+    if (![notification.name isEqual:UIKeyboardWillHideNotification] && keyBoardEndY > currentTf_frame.origin.y + currentTf_frame.size.height) {
+        return;
+    }
+    
+    // 添加移动动画，使视图跟随键盘移动
+    [UIView animateWithDuration:duration.doubleValue animations:^{
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationCurve:[curve intValue]];
+        
+        if (![notification.name isEqual:UIKeyboardWillShowNotification]) {
+            if (lastScroll == 0) {
+                return ;
+            }
+            [self setContentOffset:CGPointMake(0, self.contentOffset.y - lastScroll) animated:YES]; // keyBoardEndY的坐标包括了状态栏的高度，要减去
+            lastScroll = 0;
+        }
+        else
+        {
+            float a = self.contentOffset.y;
+            [self setContentOffset:CGPointMake(0, self.contentOffset.y + currentTf_frame.origin.y + currentTf_frame.size.height + 10 - keyBoardEndY)];
+            lastScroll = self.contentOffset.y - a;
+        }
+    }];
 }
 
 - (void)UIComboBox:(UIComboBox *)comboBox didSelectRow:(NSIndexPath *)indexPath

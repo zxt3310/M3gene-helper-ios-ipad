@@ -22,8 +22,8 @@
 
 - (void)resetCombo;
 
-
 - (void)dismissTable;
+
 @end
 
 @protocol UIComboBoxDelegate <NSObject>

@@ -54,7 +54,7 @@
     }
     
     if ([request.URL.absoluteString isEqualToString:dataCenter_GET_URL]) {
-        if ([Reachability reachabilityForInternetConnection]) {
+        if ([Reachability reachabilityForInternetConnection].isReachable) {
             isDataCenterMainPage = YES;
         }
     }

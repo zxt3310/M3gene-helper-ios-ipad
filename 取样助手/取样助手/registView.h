@@ -11,7 +11,7 @@
 #import "UIComboBox.h"
 #import "UISingleSelector.h"
 
-@interface registViewNew : UIScrollView  <UIGestureRecognizerDelegate,UIComboBoxDelegate,UISingleSelectorDelegate>
+@interface registViewNew : UIScrollView  <UIGestureRecognizerDelegate,UIComboBoxDelegate,UISingleSelectorDelegate,UITextFieldDelegate>
 
 @property NSString *SJYB;
 @property NSString *DDBH;
@@ -34,6 +34,7 @@
 @property NSString *GX;
 @property NSString *QTBS;
 
+@property (nonatomic)BOOL hidden;
 - (void)show;
 - (void)resignFirstResponderNow;
 
