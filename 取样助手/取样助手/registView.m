@@ -67,6 +67,10 @@
     contentTF *DDBHtf;
     CGRect currentTf_frame;
     float lastScroll;
+    NSArray *organization_id_Array;
+    NSArray *doctor_id_Array;
+    UIComboBox *SJDWcb;
+    UIComboBox *SJYScb;
 }
 @synthesize hidden = _hidden;
 - (instancetype)initWithFrame:(CGRect)frame
@@ -143,13 +147,12 @@
     
     
     //送检单位
-    contentLable *SJDWlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:130 isLeft:YES isLable:YES] andText:@"送检单位"];
+    contentLable *SJDWlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:130 isLeft:YES isLable:YES] andText:@"送检机构"];
     [self addSubview:SJDWlb];
     
-    UIComboBox *SJDWcb = [[UIComboBox alloc] initWithFrame:[self caculateFrameY:130 isLeft:YES isLable:NO]];
+    SJDWcb = [[UIComboBox alloc] initWithFrame:[self caculateFrameY:130 isLeft:YES isLable:NO]];
     SJDWcb.tag = 100;
     SJDWcb.delegate = self;
-    SJDWcb.comboList = @[@"北大医院",@"301医院",@"北京武警总医院",@"协和医院",@"积水潭医院"];
     SJDWcb.placeColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1];
     SJDWcb.comborColor = SJDWcb.textColor = [UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1];
     SJDWcb.textFont = [UIFont fontWithName:@"STHeitiSC-Light" size:16];
@@ -159,10 +162,9 @@
     contentLable *SJYSlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:130 isLeft:NO isLable:YES] andText:@"送检医生"];
     [self addSubview:SJYSlb];
     
-    UIComboBox *SJYScb = [[UIComboBox alloc]initWithFrame:[self caculateFrameY:130 isLeft:NO isLable:NO]];
-    SJYScb.delegate = self;
+    SJYScb = [[UIComboBox alloc]initWithFrame:[self caculateFrameY:130 isLeft:NO isLable:NO]];
     SJYScb.tag = 101;
-    SJYScb.comboList = @[@"王医生",@"李医生",@"赵医生",@"孙医生",@"刘医生",@"郑大夫",@"郭博士"];
+    SJYScb.delegate = self;
     SJYScb.placeColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1];
     SJYScb.comborColor = SJYScb.textColor = [UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1];
     SJYScb.textFont = [UIFont fontWithName:@"STHeitiSC-Light" size:16];
@@ -265,7 +267,8 @@
     //临床表现
     contentLable *LCBXlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:490 isLeft:YES isLable:YES] andText:@"临床表现及治愈情况"];
     [self addSubview:LCBXlb];
-    contentTF *LCBXtf = [[contentTF alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    UITextView *LCBXtf = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    LCBXtf.layer.borderWidth = 1;
     LCBXtf.frame = CGRectMake(52*SCREEN_WEIGHT/1024,523 * SCREEN_HEIGHT/768, 588*SCREEN_WEIGHT/1024, 101*SCREEN_HEIGHT/768);
     LCBXtf.text = _LCBX;
     [self addSubview:LCBXtf];
@@ -290,7 +293,8 @@
     GXcb.comborColor = GXcb.textColor = [UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1];
     GXcb.textFont = [UIFont fontWithName:@"STHeitiSC-Light" size:16];
     [self addSubview:GXcb];
-    contentTF *JZAZStf = [[contentTF alloc] initWithFrame:CGRectZero];
+    UITextView *JZAZStf = [[UITextView alloc] initWithFrame:CGRectZero];
+    JZAZStf.layer.borderWidth = 1;
     JZAZStf.frame = CGRectMake(52*SCREEN_WEIGHT/1024,672*SCREEN_HEIGHT/768, 588*SCREEN_WEIGHT/1024, 101*SCREEN_HEIGHT/768);
     JZAZStf.text = _JZAZS;
     [self addSubview:JZAZStf];
@@ -298,7 +302,8 @@
     //其他疾病
     contentLable *QTBSlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:788 isLeft:YES isLable:YES] andText:@"其他疾病"];
     [self addSubview:QTBSlb];
-    contentTF *QTBStf = [[contentTF alloc] initWithFrame:[self caculateFrameY:821 isLeft:YES isLable:NO]];
+    UITextView *QTBStf = [[UITextView alloc] initWithFrame:[self caculateFrameY:821 isLeft:YES isLable:NO]];
+    QTBStf.layer.borderWidth = 1;
     QTBStf.frame = CGRectMake(52*SCREEN_WEIGHT/1024,821*SCREEN_HEIGHT/768, 588*SCREEN_WEIGHT/1024, 101*SCREEN_HEIGHT/768);
     QTBStf.text = _QTBS;
     [self addSubview:QTBStf];
@@ -314,9 +319,21 @@
     saveBt.tintColor = [UIColor whiteColor];
     [self addSubview:saveBt];
     
+    LCBXtf.font = JZAZStf.font = QTBStf.font = FBNLtf.font;
+    LCBXtf.layer.borderColor = JZAZStf.layer.borderColor = QTBStf.layer.borderColor = FBNLtf.layer.borderColor;
+    LCBXtf.delegate = JZAZStf.delegate = QTBStf.delegate = self;
+    
     [self setTextFieldDelegate];
+    
 
 }
+
+- (void)didMoveToWindow
+{
+    [self orgnizitionRequest];
+}
+
+
 
 - (void)setTextFieldDelegate
 {
@@ -408,6 +425,12 @@
     return YES;
 }
 
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    currentTf_frame = [self convertRect:textView.frame toView:self.superview.superview];
+    return YES;
+}
+
 - (void) changeContentViewPoint:(NSNotification *)notification
 {
     NSDictionary *userInfo = [notification userInfo];
@@ -443,12 +466,123 @@
 
 - (void)UIComboBox:(UIComboBox *)comboBox didSelectRow:(NSIndexPath *)indexPath
 {
+    if (comboBox.tag == 100) {
+        [self doctorRequest:organization_id_Array[indexPath.row - 1]];
+        NSLog(@"%@",organization_id_Array[comboBox.selectId]);
+    }
+    
+    if (comboBox.tag == 101) {
+        NSLog(@"%@",doctor_id_Array[comboBox.selectId]);
+    }
+    
+    NSLog(@"%@",comboBox.selectString);
+    NSLog(@"%ld",(long)comboBox.selectId);
+    
     
 }
 
 - (void)singleSelecotr:(UISingleSelector *)singleSelector DidSelectAtSelectList:(NSString *)selectString
 {
     
+}
+
+- (void)orgnizitionRequest
+{
+    UIViewController *superController;
+    for (UIView *next = self.superview;next != nil;next = next.superview) {
+        UIResponder *nextresponder = [next nextResponder];
+        if ([nextresponder isKindOfClass:[UIViewController class]]) {
+            superController = (UIViewController *)nextresponder;
+            break;
+        }
+    }
+    
+    NSString *urlStr = [NSString stringWithFormat:@"%@?token=%@&product=%ld",ORGANIZATION_URL,_token,(long)_productId];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    
+        NSData *responseData = sendGETRequest(urlStr, nil);
+        dispatch_async(dispatch_get_main_queue(), ^{
+        
+            if (!responseData) {
+                alertMsgView(@"网络连接错误，请检查网络", superController);
+            }
+            NSDictionary *retunDic = parseJsonResponse(responseData);
+            if (!retunDic) {
+                alertMsgView(@"无法获取机构列表，返回数据有误", superController);
+                return;
+            }
+            NSNumber *resault = [retunDic objectForKey:@"err"];
+            if (!resault) {
+                alertMsgView(@"无法获取机构列表，返回数据有误", superController);
+                return;
+            }
+            NSInteger errmsg = [resault integerValue];
+            if (errmsg > 0) {
+                alertMsgView([retunDic objectForKey:@"errmsg"], superController);
+                return;
+            }
+            NSArray *organizationArray = [retunDic objectForKey:@"data"];
+            NSMutableArray *id_Array = [[NSMutableArray alloc] init];
+            NSMutableArray *name_Array = [[NSMutableArray alloc] init];
+            for (int i = 0; i<organizationArray.count; i++) {
+                NSDictionary *orDic = organizationArray[i];
+                [id_Array addObject:[orDic objectForKey:@"id"]];
+                [name_Array addObject:[orDic objectForKey:@"name"]];
+            }
+            organization_id_Array = [id_Array copy];
+            SJDWcb.comboList = [name_Array copy];
+        });
+    });
+}
+
+- (void)doctorRequest:(NSString *)doctor_id
+{
+    UIViewController *superController;
+    for (UIView *next = [self superview];next;next = next.superview) {
+        UIResponder *nextresponder = [next nextResponder];
+        if ([nextresponder isKindOfClass:[UIViewController class]]) {
+            superController = (UIViewController *)nextresponder;
+            break;
+        }
+    }
+    
+    NSString *urlStr = [NSString stringWithFormat:@"%@/%@?token=%@&product=%ld",ORGANIZATION_URL,doctor_id,_token,(long)_productId];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSData *responseData = sendGETRequest(urlStr, nil);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if (!responseData) {
+                alertMsgView(@"网络连接错误，无法获取医生列表，请检查网络", superController);
+            }
+            NSDictionary *retunDic = parseJsonResponse(responseData);
+            if (!retunDic) {
+                alertMsgView(@"无法获取医生列表，返回数据有误", superController);
+                return;
+            }
+            NSNumber *resault = [retunDic objectForKey:@"err"];
+            if (!resault) {
+                alertMsgView(@"无法获取医生列表，返回数据有误", superController);
+                return;
+            }
+            NSInteger errmsg = [resault integerValue];
+            if (errmsg > 0) {
+                alertMsgView([retunDic objectForKey:@"errmsg"], superController);
+                return;
+            }
+            NSArray *doctor_array = [retunDic objectForKey:@"data"];
+            NSMutableArray *id_array = [[NSMutableArray alloc] init];
+            NSMutableArray *name_array = [[NSMutableArray alloc] init];
+            for (int i=0; i<doctor_array.count; i++) {
+                NSDictionary *doc_dic = doctor_array[i];
+                [id_array addObject:[doc_dic objectForKey:@"id"]];
+                [name_array addObject:[NSString stringWithFormat:@"%@  %@",[doc_dic objectForKey:@"department"],[doc_dic objectForKey:@"name"]]];
+            }
+            doctor_id_Array = [id_array copy];
+            SJYScb.comboList = [name_array copy];
+
+        });
+    });
 }
 
 @end

@@ -42,6 +42,7 @@
     userView.image = [UIImage imageNamed:deviceImageSelect(@"用户名.png")];
     _username_TF.leftView = userView;
     _username_TF.text = _placeUserName;
+    _username_TF.clearButtonMode = UITextFieldViewModeWhileEditing;
     _username_TF.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:_username_TF];
 
@@ -54,6 +55,7 @@
     _password_TF.leftView = pasView;
     _password_TF.leftViewMode = UITextFieldViewModeAlways;
     _password_TF.secureTextEntry = YES;
+    _password_TF.clearButtonMode = UITextFieldViewModeWhileEditing;
     [self.view addSubview:_password_TF];
     
     _titleLable.textColor = MYBLUECOLOR;
@@ -69,12 +71,7 @@
     [_loginBt setTitle:@"登录" forState:UIControlStateNormal];
     [_loginBt addTarget:self action:@selector(loginBtClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_loginBt];
-    
-    
-//    _username_TF.text = @"现场1";
-//    _password_TF.text = @"123456";
-    
-    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

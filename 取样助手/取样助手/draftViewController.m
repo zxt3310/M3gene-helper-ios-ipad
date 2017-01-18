@@ -175,7 +175,7 @@
         name.text = [NSString stringWithFormat:@"客户：%@",[dic objectForKey:@"name"]];
         
         UILabel *number = (UILabel*)[cell.contentView viewWithTag:3];
-        number.text = [NSString stringWithFormat:@"订单:%@",[dic objectForKey:@"code_number"]];
+        number.text = [NSString stringWithFormat:@"订单:%@",[cacheDic objectForKey:@"code_number"]];
     }
     
     if ([typeName isEqualToString:@"CACHE_VIP"]) {

@@ -131,7 +131,7 @@
         imageViewCount = 10;
         isTakeMedicalPhoto = NO;
 
-        listView = [NSArray arrayWithObjects:productView,scanCodeView,orderPicView,registPageView,medicalPicView,diseseSelectView, nil];
+        listView = [NSArray arrayWithObjects:productView,scanCodeView,orderPicView,registPageView,medicalPicView,nil];//diseseSelectView, nil];
     }
     return self;
 }
@@ -710,6 +710,8 @@
     
     registViewNew *registview = [[registViewNew alloc] initWithFrame:CGRectMake(0, 0, diseseSelectView.frame.size.width, diseseSelectView.frame.size.height)];
     registview.delegate = self;
+    registview.token = self.token;
+    registview.productId = 1;
     [registview show];
     [diseseSelectView addSubview:registview];
     

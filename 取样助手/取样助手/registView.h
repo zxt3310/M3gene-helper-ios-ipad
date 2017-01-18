@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "publicMethod.h"
+#import "NetUtils.h"
 #import "UIComboBox.h"
 #import "UISingleSelector.h"
 
-@interface registViewNew : UIScrollView  <UIGestureRecognizerDelegate,UIComboBoxDelegate,UISingleSelectorDelegate,UITextFieldDelegate>
+@interface registViewNew : UIScrollView  <UIGestureRecognizerDelegate,UIComboBoxDelegate,UISingleSelectorDelegate,UITextFieldDelegate,UITextViewDelegate>
 
 @property NSString *SJYB;
 @property NSString *DDBH;
@@ -33,6 +34,9 @@
 @property NSString *JZAZS;
 @property NSString *GX;
 @property NSString *QTBS;
+
+@property NSString *token;
+@property NSInteger productId;
 
 @property (nonatomic)BOOL hidden;
 - (void)show;
