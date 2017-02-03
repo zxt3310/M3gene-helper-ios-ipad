@@ -131,7 +131,7 @@
         imageViewCount = 10;
         isTakeMedicalPhoto = NO;
 
-        listView = [NSArray arrayWithObjects:productView,scanCodeView,orderPicView,registPageView,medicalPicView,nil];//diseseSelectView, nil];
+        listView = [NSArray arrayWithObjects:productView,scanCodeView,orderPicView,registPageView,medicalPicView,diseseSelectView, nil];
     }
     return self;
 }
@@ -311,6 +311,8 @@
                         NSMutableArray *operateArray = [[NSMutableArray alloc]initWithArray:arry];
                         [operateArray removeObjectAtIndex:deleteIndex];
                         arry = [operateArray copy];
+                        [[NSUserDefaults standardUserDefaults] setObject:arry forKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
                         [self.refreshDelegate refresh:arry];
                     }
 
@@ -789,7 +791,7 @@
 #pragma mark 调用相机或图库
 - (void)selectImageFromCamera
 {
-    UIImagePickerController *_imagePickController = [[UIImagePickerController alloc] init];
+    UIImagePickerController *_imagePickController = [[UIImagePickerController alloc]init];
     _imagePickController.delegate = self;
     _imagePickController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     _imagePickController.allowsEditing = NO;
@@ -819,7 +821,7 @@
         
     }
     UIPopoverController *pop = [[UIPopoverController alloc] initWithContentViewController:_imagePickController];
-    [pop presentPopoverFromRect:CGRectMake(100, 200, 400, 400) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
+    [pop presentPopoverFromRect:CGRectMake(100, 250, 400, 400) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
     
 }
 

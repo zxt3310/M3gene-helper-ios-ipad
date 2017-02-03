@@ -41,6 +41,20 @@
     
     MainVc = (mainViewController *)_mainVc;
     
+    UILabel *versionLb = [[UILabel alloc] initWithFrame:CGRectMake(150, SCREEN_HEIGHT - 100, 200, 30)];
+    versionLb.textAlignment = NSTextAlignmentCenter;
+    NSDictionary *appInfoDic = [[NSBundle mainBundle] infoDictionary];
+    NSString *app_version = [appInfoDic objectForKey:@"CFBundleShortVersionString"];
+//    NSString *app_build = [appInfoDic objectForKey:@"CFBundleVersion"];
+//    app_version = [app_version stringByAppendingString:[NSString stringWithFormat:@" build%@",app_build]];
+    if ([longin_URL containsString:@"dev"]) {
+        app_version = [app_version stringByAppendingString:@" Beta"];
+    }
+    versionLb.text = [NSString stringWithFormat:@"版本%@",app_version];
+    versionLb.font = [UIFont fontWithName:@"STHeitiSC-Light" size:18];
+    versionLb.textColor = [UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1];
+    [self.view addSubview:versionLb];
+    
     lastUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
     lastToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
     
