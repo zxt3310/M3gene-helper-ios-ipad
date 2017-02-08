@@ -131,7 +131,7 @@
         imageViewCount = 10;
         isTakeMedicalPhoto = NO;
 
-        listView = [NSArray arrayWithObjects:productView,scanCodeView,orderPicView,registPageView,medicalPicView,diseseSelectView, nil];
+        listView = [NSArray arrayWithObjects:productView,scanCodeView,orderPicView,registPageView,medicalPicView,nil];//,diseseSelectView, nil];
     }
     return self;
 }

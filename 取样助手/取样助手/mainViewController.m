@@ -137,6 +137,13 @@
         lvc.leftdelegate = self.leftVc;
         [self presentViewController:unv animated:YES completion:nil];
     }
+    else
+    {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            [self checkUpdata];
+        });
+    }
 }
 
 - (void)setNewBar
@@ -799,6 +806,76 @@
             }];
         });
     });
+}
+
+- (void)checkUpdata
+{
+    NSString *urlStr = [NSString stringWithFormat:PGY_UPDATE_Check_VERSION_URL];
+    NSString *post = [NSString stringWithFormat:@"aId=%@&_api_key=%@",PGY_UPDATE_API_aId,PGY_UPDATE_API_apiKey];
+    
+   // dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
+        
+        NSData *responseData = sendRequestWithFullURL(urlStr, post);
+    
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if (!responseData) {
+                NSLog(@"netWork doesn't work");
+                return ;
+            }
+            
+            NSDictionary *returnDic = parseJsonResponse(responseData);
+            if (!returnDic) {
+                NSLog(@"return Wrong Data");
+                return;
+            }
+            
+            NSNumber *resault = JsonValue([returnDic objectForKey:@"code"],@"NSDictionary");
+            if (!resault) {
+                NSLog(@"return Wrong Data Check API");
+                return;
+            }
+            
+            NSInteger code = [resault integerValue];
+            if (code > 0) {
+                NSString *errmsg = JsonValue([returnDic objectForKey:@"message"], @"NSString");
+                NSLog(@"%@",errmsg);
+                return;
+            }
+        
+            NSArray *versionArray = JsonValue([JsonValue([returnDic objectForKey:@"data"],@"NSDictionary") objectForKey:@"list"], @"NSArray");
+            NSString *newVersion = [versionArray[0] objectForKey:@"appVersion"]; //新版本
+            NSDictionary *appInfoDic = [[NSBundle mainBundle] infoDictionary];
+            NSString *current_version = [appInfoDic objectForKey:@"CFBundleShortVersionString"]; //当前版本
+            NSArray *new_ver_arry = [newVersion componentsSeparatedByString:@"."];
+            NSArray *cur_ver_arry = [current_version componentsSeparatedByString:@"."];
+            
+            if ([new_ver_arry[0] integerValue] > [cur_ver_arry[0] integerValue] || [new_ver_arry[1] integerValue] > [cur_ver_arry[1] integerValue])
+            {
+                UIAlertController *alertCtr = [UIAlertController alertControllerWithTitle:@"消息" message:@"有重要版本需要更新，忽略会导致无法使用" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *agreeAction = [UIAlertAction actionWithTitle:@"前往更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.pgyer.com/helperIPAD"]];
+                    [self presentViewController:alertCtr animated:YES completion:nil];
+                }];
+                [alertCtr addAction:agreeAction];
+                //[self presentViewController:alertCtr animated:YES completion:nil];
+                UIViewController *viewC = [[UIApplication sharedApplication] keyWindow].rootViewController;
+                [viewC presentViewController:alertCtr animated:YES completion:nil];
+            }
+            else if ([new_ver_arry[2] integerValue] > [cur_ver_arry[2] integerValue])
+            {
+                UIAlertController *alertCtr = [UIAlertController alertControllerWithTitle:@"消息" message:@"有可用的新版本,建议更新" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *agreeAction = [UIAlertAction actionWithTitle:@"前往更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.pgyer.com/helperIPAD"]];
+                }];
+                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"忽略" style:UIAlertActionStyleCancel handler:nil];
+                [alertCtr addAction:agreeAction];
+                [alertCtr addAction:cancelAction];
+                [self presentViewController:alertCtr animated:YES completion:nil];
+            }
+        });
+    
+ //   });
 }
 
 @end

@@ -65,6 +65,7 @@
 //    }
     
     
+    
     return YES;
 }
 
@@ -132,5 +133,6 @@
 {
     return UIInterfaceOrientationMaskLandscape;
 }
+
 
 @end
