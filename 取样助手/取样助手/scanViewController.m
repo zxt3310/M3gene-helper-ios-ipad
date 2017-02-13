@@ -67,7 +67,7 @@
         _preview.connection.videoOrientation = AVCaptureVideoOrientationLandscapeLeft;
         [_output setRectOfInterest:CGRectMake(0.21, 0.48, 0.59, 0.33)];
     }
-    else
+    else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight)
     {
         _preview.connection.videoOrientation = AVCaptureVideoOrientationLandscapeRight;
         [_output setRectOfInterest:CGRectMake(0.21, 0.19, 0.59, 0.33)];
@@ -250,6 +250,8 @@
         _preview.connection.videoOrientation = UIInterfaceOrientationLandscapeRight;
         [_output setRectOfInterest:CGRectMake(0.21, 0.19, 0.59, 0.33)];
     }
+    else
+        return;
 }
 
 

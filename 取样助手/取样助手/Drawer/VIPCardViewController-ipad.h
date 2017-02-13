@@ -11,7 +11,7 @@
 #import "NetUtils.h"
 #import "UIComboBox.h"
 
-@interface VIPCardViewController : UIViewController <UITextFieldDelegate,UIComboBoxDelegate>
+@interface VIPCardViewControllerIpad : UIViewController <UITextFieldDelegate,UIComboBoxDelegate>
 
 @property NSString *token;
 @property NSString *userName;

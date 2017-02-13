@@ -19,9 +19,9 @@
 #import "CustomURLCache.h"
 #import "DataCenterWebViewController.h"
 #import "dataCenterViewController.h"
-#import "VIPCardViewController.h"
+#import "VIPCardViewController-ipad.h"
 
-@interface mainViewController :UFanBasicViewController  <loginUpdateToken>
+@interface mainViewControllerIpad :UFanBasicViewController  <loginUpdateToken>
 
 @property (nonatomic) UITableView *tableView;
 

@@ -6,8 +6,8 @@
 //  Copyright © 2016年 xxx. All rights reserved.
 //
 
-#import "AppDelegate.h"
-#import "mainViewController.h"
+#import "AppDelegate-ipad.h"
+#import "mainViewController-ipad.h"
 #import "oprateRecordVC.h"
 
 
@@ -15,22 +15,19 @@
 #define IOS8_10 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0 && [[UIDevice currentDevice].systemVersion doubleValue] < 10.0)
 #define IOS10 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 10.0)
 
-@interface AppDelegate ()
+@interface AppDelegateIpad ()
 
 
 @end
 
-
-
-@implementation AppDelegate
-
+@implementation AppDelegateIpad
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    mainViewController *mvc = [[mainViewController alloc] init];
+    mainViewControllerIpad *mvc = [[mainViewControllerIpad alloc] init];
     leftDrawerViewController *lvc = [[leftDrawerViewController alloc]init];
     lvc.mainVc = mvc;
     mvc.leftVc = lvc;
@@ -109,8 +106,7 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
 
     }
-    
-       NSLog(@"方式2：%@", deviceTokenString2);
+    NSLog(@"方式2：%@", deviceTokenString2);
 }
 
 
@@ -129,10 +125,10 @@
     NSLog(@"%@",userInfo);
 }
 
-//- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
-//{
-//    return UIInterfaceOrientationMaskLandscape;
-//}
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    return UIInterfaceOrientationMaskLandscape;
+}
 
 
 @end

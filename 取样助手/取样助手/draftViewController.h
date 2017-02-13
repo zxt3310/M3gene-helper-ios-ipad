@@ -10,7 +10,7 @@
 #import "publicMethod.h"
 #import "NetUtils.h"
 #import "uploadIpadViewController.h"
-#import "VIPCardViewController.h"
+#import "VIPCardViewController-ipad.h"
 
 
 

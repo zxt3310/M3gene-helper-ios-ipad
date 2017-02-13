@@ -40,6 +40,9 @@
 #define MYUIFONT [UIFont fontWithName:TEXTFONT size:22]
 #define MYBUTTONFONT [UIFont fontWithName:TEXTFONT size:16]
 
+#define iphone_size_W [[UIScreen mainScreen] bounds].size.width/375
+#define iphone_size_H [[UIScreen mainScreen] bounds].size.height/667
+
 void setIntObjectForKey(NSInteger value,NSString *key);
 
 void setStringObjectForKey(NSString *value,NSString *key);

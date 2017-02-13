@@ -10,7 +10,7 @@
 
 @interface leftDrawerViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
-    mainViewController *MainVc;
+    mainViewControllerIpad *MainVc;
 }
 //@property (nonatomic, strong) UITableView *tableView;
 
@@ -39,7 +39,7 @@
     self.itemsImageName =@[@"",WDDD_IMG,WDDD_IMG,CGX_IMG,CZJL_IMG/*,WDXX_IMG,WDKH_IMG*/,WDKH_IMG];
     // Do any additional setup after loading the view.
     
-    MainVc = (mainViewController *)_mainVc;
+    MainVc = (mainViewControllerIpad *)_mainVc;
     
     UILabel *versionLb = [[UILabel alloc] initWithFrame:CGRectMake(150, SCREEN_HEIGHT - 100, 200, 30)];
     versionLb.textAlignment = NSTextAlignmentCenter;
@@ -202,7 +202,7 @@
             }
             else if([self.itemsMenu[indexPath.row] isEqualToString:@"草稿箱"])
             {
-                mainViewController *mv = (mainViewController *)self.mainVc;
+                mainViewControllerIpad *mv = (mainViewControllerIpad *)self.mainVc;
                 
                 draftViewController *dvc = [[draftViewController alloc]init];
                 

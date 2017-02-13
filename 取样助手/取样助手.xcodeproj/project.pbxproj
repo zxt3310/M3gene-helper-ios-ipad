@@ -54,6 +54,11 @@
 		58427ABE1E0A8B2100118F7D /* ziliao copy 2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58427ABB1E0A8B2100118F7D /* ziliao copy 2@2x.png */; };
 		5858F9921E28871B003C3B49 /* passWordEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5858F9911E28871B003C3B49 /* passWordEditView.m */; };
 		586DD1931DEEB6120026E67E /* draftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 586DD1921DEEB6120026E67E /* draftViewController.m */; };
+		5884D7AE1E51620F00398C4F /* AppDelegate-iphone.m in Sources */ = {isa = PBXBuildFile; fileRef = 5884D7AC1E51620F00398C4F /* AppDelegate-iphone.m */; };
+		5884D7B11E51649200398C4F /* mainViewController-iphone.m in Sources */ = {isa = PBXBuildFile; fileRef = 5884D7B01E51649200398C4F /* mainViewController-iphone.m */; };
+		5884D7B41E517DF600398C4F /* uploadIphoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5884D7B31E517DF600398C4F /* uploadIphoneViewController.m */; };
+		5884D7B71E517FE700398C4F /* orderRegisteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5884D7B61E517FE700398C4F /* orderRegisteViewController.m */; };
+		5884D7C31E51B2E700398C4F /* VIPCardViewController-iphone.m in Sources */ = {isa = PBXBuildFile; fileRef = 5884D7C11E51B2E700398C4F /* VIPCardViewController-iphone.m */; };
 		5887AD381DE59AB900FA00B1 /* 喇叭@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5887AD351DE59AB800FA00B1 /* 喇叭@2x.png */; };
 		5887AD391DE59AB900FA00B1 /* 喇叭.png in Resources */ = {isa = PBXBuildFile; fileRef = 5887AD361DE59AB900FA00B1 /* 喇叭.png */; };
 		5887AD3A1DE59AB900FA00B1 /* 喇叭@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5887AD371DE59AB900FA00B1 /* 喇叭@3x.png */; };
@@ -61,8 +66,8 @@
 		5887AD3F1DE5A2A800FA00B1 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5887AD3C1DE5A2A800FA00B1 /* 2.png */; };
 		5887AD401DE5A2A800FA00B1 /* 2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5887AD3D1DE5A2A800FA00B1 /* 2@3x.png */; };
 		5889D8C11DC091620052C6D7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5889D8C01DC091620052C6D7 /* main.m */; };
-		5889D8C41DC091620052C6D7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5889D8C31DC091620052C6D7 /* AppDelegate.m */; };
-		5889D8C71DC091630052C6D7 /* mainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5889D8C61DC091630052C6D7 /* mainViewController.m */; };
+		5889D8C41DC091620052C6D7 /* AppDelegate-ipad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5889D8C31DC091620052C6D7 /* AppDelegate-ipad.m */; };
+		5889D8C71DC091630052C6D7 /* mainViewController-ipad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5889D8C61DC091630052C6D7 /* mainViewController-ipad.m */; };
 		5889D8CC1DC091630052C6D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5889D8CB1DC091630052C6D7 /* Assets.xcassets */; };
 		5889D8DA1DC091630052C6D7 /* ____Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5889D8D91DC091630052C6D7 /* ____Tests.m */; };
 		5889D8E51DC091630052C6D7 /* ____UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5889D8E41DC091630052C6D7 /* ____UITests.m */; };
@@ -103,7 +108,7 @@
 		58E50CE51E0A1EBF002B6AA3 /* iconBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 58E50CE21E0A1EBF002B6AA3 /* iconBack.png */; };
 		58E50CE61E0A1EBF002B6AA3 /* iconBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58E50CE31E0A1EBF002B6AA3 /* iconBack@2x.png */; };
 		58E50CE71E0A1EBF002B6AA3 /* iconBack@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58E50CE41E0A1EBF002B6AA3 /* iconBack@3x.png */; };
-		58E54C551E16366900A32CDA /* VIPCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E54C541E16366900A32CDA /* VIPCardViewController.m */; };
+		58E54C551E16366900A32CDA /* VIPCardViewController-ipad.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E54C541E16366900A32CDA /* VIPCardViewController-ipad.m */; };
 		58E741001DEFC8DE00D2927B /* POPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E740FF1DEFC8DE00D2927B /* POPViewController.m */; };
 		700A3E0F1DD0748000D507F1 /* 莲和logo 58.png in Resources */ = {isa = PBXBuildFile; fileRef = 700A3E0C1DD0748000D507F1 /* 莲和logo 58.png */; };
 		700A3E101DD0748000D507F1 /* 莲和logo 80.png in Resources */ = {isa = PBXBuildFile; fileRef = 700A3E0D1DD0748000D507F1 /* 莲和logo 80.png */; };
@@ -216,6 +221,16 @@
 		5858F9911E28871B003C3B49 /* passWordEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = passWordEditView.m; sourceTree = "<group>"; };
 		586DD1911DEEB6120026E67E /* draftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = draftViewController.h; sourceTree = "<group>"; };
 		586DD1921DEEB6120026E67E /* draftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = draftViewController.m; sourceTree = "<group>"; };
+		5884D7AC1E51620F00398C4F /* AppDelegate-iphone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate-iphone.m"; sourceTree = "<group>"; };
+		5884D7AD1E51620F00398C4F /* AppDelegate-iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate-iphone.h"; sourceTree = "<group>"; };
+		5884D7AF1E51649200398C4F /* mainViewController-iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "mainViewController-iphone.h"; sourceTree = "<group>"; };
+		5884D7B01E51649200398C4F /* mainViewController-iphone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "mainViewController-iphone.m"; sourceTree = "<group>"; };
+		5884D7B21E517DF600398C4F /* uploadIphoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uploadIphoneViewController.h; sourceTree = "<group>"; };
+		5884D7B31E517DF600398C4F /* uploadIphoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = uploadIphoneViewController.m; sourceTree = "<group>"; };
+		5884D7B51E517FE700398C4F /* orderRegisteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = orderRegisteViewController.h; sourceTree = "<group>"; };
+		5884D7B61E517FE700398C4F /* orderRegisteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = orderRegisteViewController.m; sourceTree = "<group>"; };
+		5884D7C11E51B2E700398C4F /* VIPCardViewController-iphone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "VIPCardViewController-iphone.m"; path = "Drawer/VIPCardViewController-iphone.m"; sourceTree = "<group>"; };
+		5884D7C21E51B2E700398C4F /* VIPCardViewController-iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VIPCardViewController-iphone.h"; path = "Drawer/VIPCardViewController-iphone.h"; sourceTree = "<group>"; };
 		5887AD351DE59AB800FA00B1 /* 喇叭@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "喇叭@2x.png"; path = "image/喇叭@2x.png"; sourceTree = "<group>"; };
 		5887AD361DE59AB900FA00B1 /* 喇叭.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "喇叭.png"; path = "image/喇叭.png"; sourceTree = "<group>"; };
 		5887AD371DE59AB900FA00B1 /* 喇叭@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "喇叭@3x.png"; path = "image/喇叭@3x.png"; sourceTree = "<group>"; };
@@ -224,10 +239,10 @@
 		5887AD3D1DE5A2A800FA00B1 /* 2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "2@3x.png"; path = "image/2@3x.png"; sourceTree = "<group>"; };
 		5889D8BC1DC091620052C6D7 /* 取样助手.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "取样助手.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5889D8C01DC091620052C6D7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		5889D8C21DC091620052C6D7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		5889D8C31DC091620052C6D7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		5889D8C51DC091620052C6D7 /* mainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mainViewController.h; sourceTree = "<group>"; };
-		5889D8C61DC091630052C6D7 /* mainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mainViewController.m; sourceTree = "<group>"; };
+		5889D8C21DC091620052C6D7 /* AppDelegate-ipad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppDelegate-ipad.h"; sourceTree = "<group>"; };
+		5889D8C31DC091620052C6D7 /* AppDelegate-ipad.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate-ipad.m"; sourceTree = "<group>"; };
+		5889D8C51DC091620052C6D7 /* mainViewController-ipad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "mainViewController-ipad.h"; sourceTree = "<group>"; };
+		5889D8C61DC091630052C6D7 /* mainViewController-ipad.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "mainViewController-ipad.m"; sourceTree = "<group>"; };
 		5889D8CB1DC091630052C6D7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5889D8D01DC091630052C6D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5889D8D51DC091630052C6D7 /* 取样助手Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "取样助手Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -284,8 +299,8 @@
 		58E50CE31E0A1EBF002B6AA3 /* iconBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconBack@2x.png"; path = "image/iconBack@2x.png"; sourceTree = "<group>"; };
 		58E50CE41E0A1EBF002B6AA3 /* iconBack@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconBack@3x.png"; path = "image/iconBack@3x.png"; sourceTree = "<group>"; };
 		58E50CE81E0A30F7002B6AA3 /* 取样助手.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "取样助手.entitlements"; sourceTree = "<group>"; };
-		58E54C531E16366900A32CDA /* VIPCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VIPCardViewController.h; path = Drawer/VIPCardViewController.h; sourceTree = "<group>"; };
-		58E54C541E16366900A32CDA /* VIPCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VIPCardViewController.m; path = Drawer/VIPCardViewController.m; sourceTree = "<group>"; };
+		58E54C531E16366900A32CDA /* VIPCardViewController-ipad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VIPCardViewController-ipad.h"; path = "Drawer/VIPCardViewController-ipad.h"; sourceTree = "<group>"; };
+		58E54C541E16366900A32CDA /* VIPCardViewController-ipad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "VIPCardViewController-ipad.m"; path = "Drawer/VIPCardViewController-ipad.m"; sourceTree = "<group>"; };
 		58E740FE1DEFC8DE00D2927B /* POPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POPViewController.h; sourceTree = "<group>"; };
 		58E740FF1DEFC8DE00D2927B /* POPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POPViewController.m; sourceTree = "<group>"; };
 		700A3E0C1DD0748000D507F1 /* 莲和logo 58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "莲和logo 58.png"; path = "image/莲和logo 58.png"; sourceTree = "<group>"; };
@@ -393,7 +408,6 @@
 				58C25FEC1DE5635900B8D88D /* firstItemViewController.m */,
 				58C25FED1DE5635900B8D88D /* leftDrawerViewController.h */,
 				58C25FEA1DE5635900B8D88D /* leftDrawerViewController.m */,
-				589540511DC1F18E00DDA5F8 /* 操作记录 */,
 				5858F9901E28871B003C3B49 /* passWordEditView.h */,
 				5858F9911E28871B003C3B49 /* passWordEditView.m */,
 			);
@@ -429,17 +443,87 @@
 		5884D7AB1E515E2D00398C4F /* controller */ = {
 			isa = PBXGroup;
 			children = (
-				581B24621E0B756700FEFBEE /* 侧边栏页 */,
-				589540551DC1F27900DDA5F8 /* loginViewController.h */,
-				589540561DC1F27900DDA5F8 /* loginViewController.m */,
-				5889D8C51DC091620052C6D7 /* mainViewController.h */,
-				5889D8C61DC091630052C6D7 /* mainViewController.m */,
+				5884D7C01E5186A400398C4F /* 登录（共用） */,
+				5895405B1DC1F76800DDA5F8 /* 样本寄送（共用） */,
+				589540511DC1F18E00DDA5F8 /* 操作记录（共用） */,
+				5884D7B91E5184A900398C4F /* iphone */,
+				5884D7BA1E5184B200398C4F /* ipad */,
 				5819DDC81E0D08C60010C88B /* dataCenterViewController.h */,
 				5819DDC91E0D08C60010C88B /* dataCenterViewController.m */,
-				58E54C531E16366900A32CDA /* VIPCardViewController.h */,
-				58E54C541E16366900A32CDA /* VIPCardViewController.m */,
 			);
 			name = controller;
+			sourceTree = "<group>";
+		};
+		5884D7B91E5184A900398C4F /* iphone */ = {
+			isa = PBXGroup;
+			children = (
+				5884D7BE1E51859400398C4F /* 主页 */,
+				5884D7BD1E51856C00398C4F /* 上传订单 */,
+			);
+			name = iphone;
+			sourceTree = "<group>";
+		};
+		5884D7BA1E5184B200398C4F /* ipad */ = {
+			isa = PBXGroup;
+			children = (
+				5884D7BF1E5185A400398C4F /* 主页 */,
+				5884D7BC1E51853100398C4F /* 上传订单 */,
+				581B24621E0B756700FEFBEE /* 侧边栏页 */,
+			);
+			name = ipad;
+			sourceTree = "<group>";
+		};
+		5884D7BC1E51853100398C4F /* 上传订单 */ = {
+			isa = PBXGroup;
+			children = (
+				58B4F9281DE7E95900527BFE /* uploadIpadViewController.h */,
+				58B4F9291DE7E95900527BFE /* uploadIpadViewController.m */,
+				58B099131DEE6E5200B87A4E /* registView.h */,
+				58B099141DEE6E5200B87A4E /* registView.m */,
+			);
+			name = "上传订单";
+			sourceTree = "<group>";
+		};
+		5884D7BD1E51856C00398C4F /* 上传订单 */ = {
+			isa = PBXGroup;
+			children = (
+				5884D7B51E517FE700398C4F /* orderRegisteViewController.h */,
+				5884D7B61E517FE700398C4F /* orderRegisteViewController.m */,
+				5884D7B21E517DF600398C4F /* uploadIphoneViewController.h */,
+				5884D7B31E517DF600398C4F /* uploadIphoneViewController.m */,
+			);
+			name = "上传订单";
+			sourceTree = "<group>";
+		};
+		5884D7BE1E51859400398C4F /* 主页 */ = {
+			isa = PBXGroup;
+			children = (
+				5884D7C21E51B2E700398C4F /* VIPCardViewController-iphone.h */,
+				5884D7C11E51B2E700398C4F /* VIPCardViewController-iphone.m */,
+				5884D7AF1E51649200398C4F /* mainViewController-iphone.h */,
+				5884D7B01E51649200398C4F /* mainViewController-iphone.m */,
+			);
+			name = "主页";
+			sourceTree = "<group>";
+		};
+		5884D7BF1E5185A400398C4F /* 主页 */ = {
+			isa = PBXGroup;
+			children = (
+				5889D8C51DC091620052C6D7 /* mainViewController-ipad.h */,
+				5889D8C61DC091630052C6D7 /* mainViewController-ipad.m */,
+				58E54C531E16366900A32CDA /* VIPCardViewController-ipad.h */,
+				58E54C541E16366900A32CDA /* VIPCardViewController-ipad.m */,
+			);
+			name = "主页";
+			sourceTree = "<group>";
+		};
+		5884D7C01E5186A400398C4F /* 登录（共用） */ = {
+			isa = PBXGroup;
+			children = (
+				589540551DC1F27900DDA5F8 /* loginViewController.h */,
+				589540561DC1F27900DDA5F8 /* loginViewController.m */,
+			);
+			name = "登录（共用）";
 			sourceTree = "<group>";
 		};
 		5889D8B31DC091620052C6D7 = {
@@ -471,11 +555,7 @@
 				5884D7AB1E515E2D00398C4F /* controller */,
 				58E50CE81E0A30F7002B6AA3 /* 取样助手.entitlements */,
 				58C25FE01DE5632400B8D88D /* Drawer */,
-				5895405B1DC1F76800DDA5F8 /* 样本寄送 */,
-				589540501DC1F15F00DDA5F8 /* 上传订单 */,
 				589540681DC1FDF000DDA5F8 /* image */,
-				5889D8C21DC091620052C6D7 /* AppDelegate.h */,
-				5889D8C31DC091620052C6D7 /* AppDelegate.m */,
 				5889D8CB1DC091630052C6D7 /* Assets.xcassets */,
 				5889D8D01DC091630052C6D7 /* Info.plist */,
 				5889D8BF1DC091620052C6D7 /* Supporting Files */,
@@ -486,6 +566,10 @@
 		5889D8BF1DC091620052C6D7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5884D7AD1E51620F00398C4F /* AppDelegate-iphone.h */,
+				5884D7AC1E51620F00398C4F /* AppDelegate-iphone.m */,
+				5889D8C21DC091620052C6D7 /* AppDelegate-ipad.h */,
+				5889D8C31DC091620052C6D7 /* AppDelegate-ipad.m */,
 				5889D8C01DC091620052C6D7 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -509,33 +593,22 @@
 			path = "取样助手UITests";
 			sourceTree = "<group>";
 		};
-		589540501DC1F15F00DDA5F8 /* 上传订单 */ = {
-			isa = PBXGroup;
-			children = (
-				58B4F9281DE7E95900527BFE /* uploadIpadViewController.h */,
-				58B4F9291DE7E95900527BFE /* uploadIpadViewController.m */,
-				58B099131DEE6E5200B87A4E /* registView.h */,
-				58B099141DEE6E5200B87A4E /* registView.m */,
-			);
-			name = "上传订单";
-			sourceTree = "<group>";
-		};
-		589540511DC1F18E00DDA5F8 /* 操作记录 */ = {
+		589540511DC1F18E00DDA5F8 /* 操作记录（共用） */ = {
 			isa = PBXGroup;
 			children = (
 				581D069B1DC0A2330050DFA0 /* oprateRecordVC.h */,
 				581D069C1DC0A2330050DFA0 /* oprateRecordVC.m */,
 			);
-			name = "操作记录";
+			name = "操作记录（共用）";
 			sourceTree = "<group>";
 		};
-		5895405B1DC1F76800DDA5F8 /* 样本寄送 */ = {
+		5895405B1DC1F76800DDA5F8 /* 样本寄送（共用） */ = {
 			isa = PBXGroup;
 			children = (
 				589540651DC1F80900DDA5F8 /* sendViewController.h */,
 				589540661DC1F80900DDA5F8 /* sendViewController.m */,
 			);
-			name = "样本寄送";
+			name = "样本寄送（共用）";
 			sourceTree = "<group>";
 		};
 		589540681DC1FDF000DDA5F8 /* image */ = {
@@ -909,28 +982,33 @@
 				58C25FE91DE5632500B8D88D /* UIViewController+UFanViewController.m in Sources */,
 				58C25FE81DE5632500B8D88D /* UFanViewController.m in Sources */,
 				703C29171DCA2BDE004FA090 /* publicMethod.m in Sources */,
+				5884D7C31E51B2E700398C4F /* VIPCardViewController-iphone.m in Sources */,
+				5884D7B71E517FE700398C4F /* orderRegisteViewController.m in Sources */,
 				58B099151DEE6E5200B87A4E /* registView.m in Sources */,
 				58C25FEF1DE5635900B8D88D /* firstItemViewController.m in Sources */,
 				589540571DC1F27900DDA5F8 /* loginViewController.m in Sources */,
 				58B4F92A1DE7E95900527BFE /* uploadIpadViewController.m in Sources */,
 				586DD1931DEEB6120026E67E /* draftViewController.m in Sources */,
 				705E33481DC9C17800024A25 /* CMCustomViews.m in Sources */,
-				58E54C551E16366900A32CDA /* VIPCardViewController.m in Sources */,
+				58E54C551E16366900A32CDA /* VIPCardViewController-ipad.m in Sources */,
 				58C25FEE1DE5635900B8D88D /* leftDrawerViewController.m in Sources */,
 				58E741001DEFC8DE00D2927B /* POPViewController.m in Sources */,
 				5828E4C81DFFA53E0040E2A2 /* UIComboBox.m in Sources */,
 				708FDEC91DC875080069E6C2 /* NetUtils.m in Sources */,
+				5884D7B11E51649200398C4F /* mainViewController-iphone.m in Sources */,
 				581B24651E0B7F4900FEFBEE /* DataCenterWebViewController.m in Sources */,
 				5858F9921E28871B003C3B49 /* passWordEditView.m in Sources */,
-				5889D8C71DC091630052C6D7 /* mainViewController.m in Sources */,
+				5889D8C71DC091630052C6D7 /* mainViewController-ipad.m in Sources */,
 				581B245F1E0B753400FEFBEE /* CustomURLCache.m in Sources */,
 				5895404F1DC1A6AF00DDA5F8 /* scanViewController.m in Sources */,
+				5884D7B41E517DF600398C4F /* uploadIphoneViewController.m in Sources */,
 				581B24601E0B753400FEFBEE /* Reachability.m in Sources */,
-				5889D8C41DC091620052C6D7 /* AppDelegate.m in Sources */,
+				5889D8C41DC091620052C6D7 /* AppDelegate-ipad.m in Sources */,
 				58C25FE71DE5632500B8D88D /* UFanBasicViewController.m in Sources */,
 				581D069D1DC0A2330050DFA0 /* oprateRecordVC.m in Sources */,
 				581BF5C71DF90C6200C24ADD /* UISingleSelector.m in Sources */,
 				5889D8C11DC091620052C6D7 /* main.m in Sources */,
+				5884D7AE1E51620F00398C4F /* AppDelegate-iphone.m in Sources */,
 				581B24611E0B753400FEFBEE /* Util.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1074,7 +1152,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1095,7 +1173,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

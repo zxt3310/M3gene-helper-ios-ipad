@@ -19,7 +19,7 @@
 #define Origin_TAG 100
 
 
-#import "VIPCardViewController.h"
+#import "VIPCardViewController-ipad.h"
 
 @interface contentView : UIView
 @property (nonatomic) NSString *titleStr;
@@ -106,9 +106,9 @@
 
 
 
-@interface VIPCardViewController ()
+@interface VIPCardViewControllerIpad ()
 @end
-@implementation VIPCardViewController
+@implementation VIPCardViewControllerIpad
 {
     UIDatePicker *datepicker;
     contentTextField *birthTf;

@@ -10,7 +10,7 @@
 #import "firstItemViewController.h"
 #import "UIViewController+UFanViewController.h"
 #import "loginViewController.h"
-#import "mainViewController.h"
+#import "mainViewController-ipad.h"
 #import "draftViewController.h"
 #import "oprateRecordVC.h"
 #import "passWordEditView.h"

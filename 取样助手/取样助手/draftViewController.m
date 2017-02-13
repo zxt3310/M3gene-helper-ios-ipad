@@ -248,7 +248,7 @@
     else if ([[dic objectForKey:@"cacheType"] isEqualToString:@"CACHE_VIP"])
     {
         NSDictionary *contentDic = [dic objectForKey:@"registStr"];
-        VIPCardViewController *vip = [[VIPCardViewController alloc] init];
+        VIPCardViewControllerIpad *vip = [[VIPCardViewControllerIpad alloc] init];
         vip.userName = user;
         for(NSString *key in contentDic.allKeys)
         {

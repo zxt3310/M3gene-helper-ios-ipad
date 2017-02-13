@@ -128,7 +128,7 @@
     fivc.title = [dataDic objectForKey:@"name"];
     [self.navigationController pushViewController:fivc animated:YES];
 }
-
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 - (void)dataListRequest
 {
     NSString *urlStr = [NSString stringWithFormat:@"%@/m/api/disk",dataCenter_URL];   // @"http://gzh.gentest.ranknowcn.com/m/api/disk";
@@ -189,9 +189,6 @@
             
         });
     });
-    
-
-    
 }
 
 - (void)updateData

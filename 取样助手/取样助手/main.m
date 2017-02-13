@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AppDelegate.h"
+#import "AppDelegate-ipad.h"
+#import "AppDelegate-iphone.h"
 #import "NetUtils.h"
 
 int main(int argc, char * argv[]) {
     @autoreleasepool {
         NSString* deviceType = devicePlatForm();
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([deviceType isEqualToString:@"ipad" ]?[AppDelegateIpad class]:[AppDelegateIphone class]));
     }
 }
