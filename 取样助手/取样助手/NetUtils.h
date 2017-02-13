@@ -6,6 +6,7 @@
 //  Copyright (c) 2012年 Tim. All rights reserved.
 //
 
+#import <sys/utsname.h>
 #import <Foundation/Foundation.h>
 #import "CustomURLCache.h"
 
@@ -66,7 +67,11 @@
 #define VIPCARD_UPLOAD_URL     @"http://mapi.lhgene.cn/mobi-cms/card/bind"
 #define VIPCARD_productList_URL @"http://mapi.lhgene.cn/mobi-cms/card/get_sales_cards"
 
-//蒲公英更新api参数
+//获取store最新版本
+#define appStore_Version_POST_URL @"http://itunes.apple.com/cn/lookup"
+//苹果提供的应用唯一id（检测更新用）
+#define app_Id @"1203188094"
+//蒲公英更新api参数(暂不使用)
 #define PGY_UPDATE_Check_VERSION_URL @"http://www.pgyer.com/apiv1/app/builds"
 #define PGY_UPDATE_API_aId     @"bbd5c1b921fb7cfc84ae6c79819f3bf3"
 #define PGY_UPDATE_API_apiKey  @"766057af41e8975d6bfa93d276b024db"
@@ -144,3 +149,4 @@ NSData* loadRequestWithImg(NSDictionary *params,NSString *url);
 
 @end
 
+NSString* devicePlatForm();

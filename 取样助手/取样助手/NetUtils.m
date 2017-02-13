@@ -801,3 +801,18 @@ NSData* loadRequestWithImg(NSDictionary *params,NSString *url)
 
 @end
 
+
+NSString* devicePlatForm()
+{
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    NSString *platform = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+    if ([platform containsString:@"iPhone"]) {
+        platform = @"iphone";
+    }
+    else if ([platform containsString:@"iPad"])
+    {
+        platform = @"ipad";
+    }
+    return platform;
+}

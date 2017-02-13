@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
+#import "NetUtils.h"
 
 int main(int argc, char * argv[]) {
     @autoreleasepool {
+        NSString* deviceType = devicePlatForm();
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
 }

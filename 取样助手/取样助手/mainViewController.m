@@ -390,14 +390,14 @@
         QRcodeForApple.image = [UIImage imageNamed:@"iphone03"];
         [cell.contentView addSubview:QRcodeForApple];
         
-        UILabel *QRcodeAndriodLb = [[UILabel alloc] initWithFrame:CGRectMake(195,169*SCREEN_HEIGHT/768, 114, 18)];
-        QRcodeAndriodLb.text = @"AndriodApp";
-        QRcodeAndriodLb.font = [UIFont fontWithName:@"STHeitiSC-Light" size:18];
-        [cell.contentView addSubview:QRcodeAndriodLb];
-        
-        UIImageView *QRcodeForAndriod = [[UIImageView alloc] initWithFrame:CGRectMake(196*SCREEN_WEIGHT/1024, 63*SCREEN_HEIGHT/768, 100*SCREEN_WEIGHT/1024, 100*SCREEN_WEIGHT/1024)];
-        QRcodeForAndriod.image = [UIImage imageNamed:@"android05"];
-        [cell.contentView addSubview:QRcodeForAndriod];
+//        UILabel *QRcodeAndriodLb = [[UILabel alloc] initWithFrame:CGRectMake(195,169*SCREEN_HEIGHT/768, 114, 18)];
+//        QRcodeAndriodLb.text = @"AndriodApp";
+//        QRcodeAndriodLb.font = [UIFont fontWithName:@"STHeitiSC-Light" size:18];
+//        [cell.contentView addSubview:QRcodeAndriodLb];
+//        
+//        UIImageView *QRcodeForAndriod = [[UIImageView alloc] initWithFrame:CGRectMake(196*SCREEN_WEIGHT/1024, 63*SCREEN_HEIGHT/768, 100*SCREEN_WEIGHT/1024, 100*SCREEN_WEIGHT/1024)];
+//        QRcodeForAndriod.image = [UIImage imageNamed:@"android05"];
+//        [cell.contentView addSubview:QRcodeForAndriod];
         
         UILabel *lineLb = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/2-1, 26, 2, 161*SCREEN_HEIGHT/768)];
         lineLb.layer.borderWidth = 1;
@@ -810,12 +810,15 @@
 
 - (void)checkUpdata
 {
-    NSString *urlStr = [NSString stringWithFormat:PGY_UPDATE_Check_VERSION_URL];
-    NSString *post = [NSString stringWithFormat:@"aId=%@&_api_key=%@",PGY_UPDATE_API_aId,PGY_UPDATE_API_apiKey];
+    //蒲公英
+    //NSString *urlStr = [NSString stringWithFormat:PGY_UPDATE_Check_VERSION_URL];
+    //NSString *post = [NSString stringWithFormat:@"aId=%@&_api_key=%@",PGY_UPDATE_API_aId,PGY_UPDATE_API_apiKey];
     
+    //改用苹果官方store接口判断版本
+    NSString *urlStr = [NSString stringWithFormat:@"%@?id=%@",appStore_Version_POST_URL,app_Id];// @"http://itunes.apple.com/cn/lookup?id=1203188094";
    // dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
         
-        NSData *responseData = sendRequestWithFullURL(urlStr, post);
+        NSData *responseData = sendRequestWithFullURL(urlStr, nil);
     
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -830,21 +833,28 @@
                 return;
             }
             
-            NSNumber *resault = JsonValue([returnDic objectForKey:@"code"],@"NSDictionary");
+            NSNumber *resault = JsonValue([returnDic objectForKey:@"resultCount"],@"NSDictionary");
             if (!resault) {
                 NSLog(@"return Wrong Data Check API");
                 return;
             }
             
             NSInteger code = [resault integerValue];
-            if (code > 0) {
-                NSString *errmsg = JsonValue([returnDic objectForKey:@"message"], @"NSString");
+            if (code == 0) {
+                NSString *errmsg = @"fail to check version";//JsonValue([returnDic objectForKey:@"message"], @"NSString");
                 NSLog(@"%@",errmsg);
                 return;
             }
         
-            NSArray *versionArray = JsonValue([JsonValue([returnDic objectForKey:@"data"],@"NSDictionary") objectForKey:@"list"], @"NSArray");
-            NSString *newVersion = [versionArray[0] objectForKey:@"appVersion"]; //新版本
+            //NSArray *versionArray = JsonValue([JsonValue([returnDic objectForKey:@"data"],@"NSDictionary") objectForKey:@"list"], @"NSArray");
+            // NSString *newVersion = [versionArray[0] objectForKey:@"appVersion"]; //新版本
+            NSArray *stroeInfoDic = JsonValue([returnDic objectForKey:@"results"],@"NSDictionary");
+            if (stroeInfoDic.count == 0) {
+                NSLog(@"this app is not exist in appstore");
+                return;
+            }
+            NSString *newVersion = [stroeInfoDic[0] objectForKey:@"version"];
+            NSString *updateUrl = [stroeInfoDic[0] objectForKey:@"trackViewUrl"];
             NSDictionary *appInfoDic = [[NSBundle mainBundle] infoDictionary];
             NSString *current_version = [appInfoDic objectForKey:@"CFBundleShortVersionString"]; //当前版本
             NSArray *new_ver_arry = [newVersion componentsSeparatedByString:@"."];
@@ -854,7 +864,7 @@
             {
                 UIAlertController *alertCtr = [UIAlertController alertControllerWithTitle:@"消息" message:@"有重要版本需要更新，忽略会导致无法使用" preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *agreeAction = [UIAlertAction actionWithTitle:@"前往更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.pgyer.com/helperIPAD"]];
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[updateUrl stringByReplacingOccurrencesOfString:@"https" withString:@"itms-apps"]]];
                     [self presentViewController:alertCtr animated:YES completion:nil];
                 }];
                 [alertCtr addAction:agreeAction];
@@ -866,7 +876,7 @@
             {
                 UIAlertController *alertCtr = [UIAlertController alertControllerWithTitle:@"消息" message:@"有可用的新版本,建议更新" preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *agreeAction = [UIAlertAction actionWithTitle:@"前往更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.pgyer.com/helperIPAD"]];
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[updateUrl stringByReplacingOccurrencesOfString:@"https" withString:@"itms-apps"]]];
                 }];
                 UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"忽略" style:UIAlertActionStyleCancel handler:nil];
                 [alertCtr addAction:agreeAction];

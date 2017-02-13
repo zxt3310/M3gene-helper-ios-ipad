@@ -129,10 +129,10 @@
     NSLog(@"%@",userInfo);
 }
 
-- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
-{
-    return UIInterfaceOrientationMaskLandscape;
-}
+//- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+//{
+//    return UIInterfaceOrientationMaskLandscape;
+//}
 
 
 @end

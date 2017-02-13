@@ -1,48 +1,58 @@
 {
   "images" : [
     {
-      "idiom" : "iphone",
       "size" : "20x20",
+      "idiom" : "ipad",
+      "filename" : "莲和logo20.png",
+      "scale" : "1x"
+    },
+    {
+      "size" : "20x20",
+      "idiom" : "ipad",
+      "filename" : "莲和logo 40.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "iphone",
-      "size" : "20x20",
-      "scale" : "3x"
+      "size" : "29x29",
+      "idiom" : "ipad",
+      "filename" : "莲和logo 29 copy.png",
+      "scale" : "1x"
     },
     {
       "size" : "29x29",
-      "idiom" : "iphone",
+      "idiom" : "ipad",
       "filename" : "莲和logo 58.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "iphone",
-      "size" : "29x29",
-      "scale" : "3x"
+      "size" : "40x40",
+      "idiom" : "ipad",
+      "filename" : "莲和logo 40-1.png",
+      "scale" : "1x"
     },
     {
       "size" : "40x40",
-      "idiom" : "iphone",
-      "filename" : "莲和logo 80.png",
+      "idiom" : "ipad",
+      "filename" : "莲和logo 80-1.png",
       "scale" : "2x"
     },
     {
-      "size" : "40x40",
-      "idiom" : "iphone",
-      "filename" : "莲和logo120-1.png",
-      "scale" : "3x"
+      "size" : "76x76",
+      "idiom" : "ipad",
+      "filename" : "莲和logo 76.png",
+      "scale" : "1x"
     },
     {
-      "size" : "60x60",
-      "idiom" : "iphone",
-      "filename" : "莲和logo120.png",
+      "size" : "76x76",
+      "idiom" : "ipad",
+      "filename" : "莲和logo152.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "iphone",
-      "size" : "60x60",
-      "scale" : "3x"
+      "size" : "83.5x83.5",
+      "idiom" : "ipad",
+      "filename" : "莲和logo167.png",
+      "scale" : "2x"
     }
   ],
   "info" : {

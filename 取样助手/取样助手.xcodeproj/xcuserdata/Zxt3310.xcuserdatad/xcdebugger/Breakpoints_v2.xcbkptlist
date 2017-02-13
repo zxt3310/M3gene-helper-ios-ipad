@@ -3833,11 +3833,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/mainViewController.m"
-            timestampString = "508233141.033499"
+            timestampString = "508412224.285945"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "818"
-            endingLineNumber = "818"
+            startingLineNumber = "821"
+            endingLineNumber = "821"
             landmarkName = "-checkUpdata"
             landmarkType = "7">
          </BreakpointContent>
@@ -3849,11 +3849,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/mainViewController.m"
-            timestampString = "508233141.033499"
+            timestampString = "508412224.285945"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "848"
-            endingLineNumber = "848"
+            startingLineNumber = "852"
+            endingLineNumber = "852"
             landmarkName = "-checkUpdata"
             landmarkType = "7">
          </BreakpointContent>
@@ -3865,11 +3865,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/mainViewController.m"
-            timestampString = "508233141.033499"
+            timestampString = "508412224.285945"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "827"
-            endingLineNumber = "827"
+            startingLineNumber = "830"
+            endingLineNumber = "830"
             landmarkName = "-checkUpdata"
             landmarkType = "7">
          </BreakpointContent>
@@ -3881,11 +3881,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/mainViewController.m"
-            timestampString = "508233141.033499"
+            timestampString = "508412224.285945"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "813"
-            endingLineNumber = "813"
+            startingLineNumber = "814"
+            endingLineNumber = "814"
             landmarkName = "-checkUpdata"
             landmarkType = "7">
          </BreakpointContent>
@@ -3897,11 +3897,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/mainViewController.m"
-            timestampString = "508233141.033499"
+            timestampString = "508412224.285945"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "822"
-            endingLineNumber = "822"
+            startingLineNumber = "825"
+            endingLineNumber = "825"
             landmarkName = "-checkUpdata"
             landmarkType = "7">
          </BreakpointContent>
@@ -4048,6 +4048,54 @@
                   offsetFromSymbolStart = "24">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/mainViewController.m"
+            timestampString = "508412224.285945"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "857"
+            endingLineNumber = "857"
+            landmarkName = "-checkUpdata"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/mainViewController.m"
+            timestampString = "508412224.285945"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "842"
+            endingLineNumber = "842"
+            landmarkName = "-checkUpdata"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/main.m"
+            timestampString = "508648410.721942"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
+            landmarkName = "main()"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
