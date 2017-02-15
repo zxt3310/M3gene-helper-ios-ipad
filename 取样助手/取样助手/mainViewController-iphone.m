@@ -89,6 +89,11 @@
     //loadingView.hidden = YES;
     [self.view addSubview:loadingView];
     
+    UIButton *userBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    userBtn.frame = CGRectMake(0, 0, 21, 21);
+    [userBtn setBackgroundImage:[UIImage imageNamed:@"用户名ip"] forState:UIControlStateNormal];
+    [userBtn addTarget:self action:@selector(userBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:userBtn];
     
 }
 
@@ -837,6 +842,14 @@
     });
     
     //   });
+}
+
+- (void)userBtnAction
+{
+    memberCenterViewController *mcvc = [[memberCenterViewController alloc] init];
+    mcvc.userName = self.userName;
+    mcvc.token = self.token;
+    [self.navigationController pushViewController:mcvc animated:YES];
 }
 
 @end

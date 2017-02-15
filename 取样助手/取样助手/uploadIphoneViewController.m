@@ -164,7 +164,7 @@
         //标签 tag 1
         UILabel *nameLable = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/13.89, SCREEN_HEIGHT/26.68,SCREEN_WEIGHT/2.37,SCREEN_HEIGHT/47.64)];
         nameLable.tag = 1;
-        nameLable.font = MYUIFONT;
+        nameLable.font = [UIFont fontWithName:TEXTFONT size:14];
         nameLable.hidden = YES;
         [cell.contentView addSubview:nameLable];
         

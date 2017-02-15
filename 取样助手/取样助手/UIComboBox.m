@@ -275,7 +275,7 @@
     do {
         superView = superView.superview;
         
-    } while ([superView.superview isMemberOfClass:[UIView class]]);
+    } while ([superView.superview isKindOfClass:[UIView class]]);
     
     tableview.frame = [self.superview convertRect:tableview.frame toView:superView];
 }

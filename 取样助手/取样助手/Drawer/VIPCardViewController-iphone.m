@@ -7,9 +7,9 @@
 //
 
 #define CUSTOM_FONT [UIFont fontWithName:@"STHeitiSC-Light" size:14]
-#define TEXT_FONT [UIFont fontWithName:@"STHeitiSC-Light" size:13]
+#define TEXT_FONT [UIFont fontWithName:@"STHeitiSC-Light" size:14]
 #define CUSTOM_COLOR [UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1]
-#define LB_Origin_Left_X   0
+#define LB_Origin_Left_X   17 * iphone_size_W
 #define LB_Origin_Middle_X 347*SCREEN_WEIGHT/1024
 #define LB_Origin_Right_X  700*SCREEN_WEIGHT/1024
 #define TF_Origin_Left_X   127*SCREEN_WEIGHT/1024
@@ -74,7 +74,6 @@
         self.font = CUSTOM_FONT;
         self.textColor = CUSTOM_COLOR;
         self.textAlignment = NSTextAlignmentRight;
-        
     }
     return self;
 }
@@ -88,10 +87,6 @@
     self = [super initWithFrame:frame];
     if(self)
     {
-        CGRect temp = self.frame;
-        temp.size.width = 185*SCREEN_WEIGHT/1024;
-        temp.size.height = 40;
-        self.frame = temp;
         self.layer.borderWidth = 1;
         self.layer.borderColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1].CGColor;
         self.font = TEXT_FONT;
@@ -138,6 +133,29 @@
     [super viewDidLoad];
     
     self.title = @"贵宾卡录入";
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    UIScrollView *scorolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WEIGHT, SCREEN_HEIGHT)];
+    scorolView.contentSize = CGSizeMake(SCREEN_WEIGHT, 730*iphone_size_H);
+    scorolView.autoresizesSubviews = NO;
+    scorolView.delegate = self;
+    self.view = scorolView;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];
+    tap.delegate = self;//initWithTarget:self action:@selector(scoreTapAction:)];
+    [tap setNumberOfTapsRequired:1];
+    [tap setNumberOfTouchesRequired:1];
+    [scorolView addGestureRecognizer:tap];
+    
+    UIButton *cacheBt = [UIButton buttonWithType:UIButtonTypeCustom];
+    [cacheBt setTitle:@"暂存草稿" forState:UIControlStateNormal];
+    cacheBt.titleLabel.textColor = [UIColor whiteColor];
+    cacheBt.titleLabel.font = [UIFont systemFontOfSize:14];
+    cacheBt.frame = CGRectMake(0,0,70,20);
+    cacheBt.backgroundColor = [UIColor colorWithMyNeed:88 green:207 blue:225 alpha:1];
+    cacheBt.layer.cornerRadius = 8;
+    [cacheBt addTarget:self action:@selector(cacheBtClick) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cacheBt];
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeContentViewPoint:) name:UIKeyboardWillShowNotification object:nil];
     
@@ -149,11 +167,11 @@
     cardInfoView.titleStr = @"卡片信息";
     [self.view addSubview:cardInfoView];
     
-    contentLbPhone *productLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 79*SCREEN_HEIGHT/768, 110, 22)];
+    contentLbPhone *productLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 53*iphone_size_H, 58*iphone_size_W, 14)];
     productLb.text = @"产品选择";
     [cardInfoView addSubview:productLb];
     
-    productCbo = [[UIComboBox alloc] initWithFrame:CGRectMake(TF_Origin_Left_X, productLb.frame.origin.y - 10, 218, 40)];
+    productCbo = [[UIComboBox alloc] initWithFrame:CGRectMake(85*iphone_size_W, 50*iphone_size_H, 270*iphone_size_W, 26)];
     productCbo.delegate = self;
     productCbo.comboList = @[@"和普安",@"和家安",@"和家欢",@"和美安",@"爱无忧"];
     productCbo.placeColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1];
@@ -163,11 +181,11 @@
     productCbo.selectId = _card_type;
     [cardInfoView addSubview:productCbo];
     
-    contentLbPhone *cardIdLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(600*SCREEN_WEIGHT/1024, productLb.frame.origin.y, 110*SCREEN_HEIGHT/768, 22)];
+    contentLbPhone *cardIdLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 93*iphone_size_H, 46*iphone_size_W, 14)];
     cardIdLb.text = @"*卡号";
     [cardInfoView addSubview:cardIdLb];
     
-    cardCbo = [[UIComboBox alloc] initWithFrame:CGRectMake(721*SCREEN_WEIGHT/1024, productLb.frame.origin.y - 10, 218,40)];
+    cardCbo = [[UIComboBox alloc] initWithFrame:CGRectMake(productCbo.frame.origin.x, 88*iphone_size_H, 270,24)];
     cardCbo.tag = Origin_TAG;
     cardCbo.placeColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1];
     cardCbo.textColor = [UIColor colorWithMyNeed:117 green:117 blue:117 alpha:1];
@@ -185,21 +203,21 @@
     userInfoView.titleStr = @"用户资料";
     [self.view addSubview:userInfoView];
     
-    contentLbPhone *userNameLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 74 *SCREEN_HEIGHT/768, 110, 22)];
+    contentLbPhone *userNameLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 54*iphone_size_H, 46*iphone_size_W, 14)];
     userNameLb.text = @"*姓名";
     [userInfoView addSubview:userNameLb];
     
-    contentTextFieldPhone *userNameTf = [[contentTextFieldPhone alloc] initWithFrame:CGRectMake(TF_Origin_Left_X, userNameLb.frame.origin.y - 10, 0, 0)];
+    contentTextFieldPhone *userNameTf = [[contentTextFieldPhone alloc] initWithFrame:CGRectMake(69*iphone_size_W,51*iphone_size_H, 110*iphone_size_W, 24*iphone_size_H)];
     userNameTf.tag = Origin_TAG + 2;
     userNameTf.delegate = self;
     userNameTf.text = _name;
     [userInfoView addSubview:userNameTf];
     
-    contentLbPhone *genderLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Middle_X, userNameLb.frame.origin.y, 110, 22)];
+    contentLbPhone *genderLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(181*iphone_size_W, userNameLb.frame.origin.y, 46, 14)];
     genderLb.text = @"*性别";
     [userInfoView addSubview:genderLb];
     
-    UIComboBox *genderCbo = [[UIComboBox alloc] initWithFrame:CGRectMake(TF_Origin_Middle_X, userNameTf.frame.origin.y, 185*SCREEN_WEIGHT/1024, 40*SCREEN_HEIGHT/768)];
+    UIComboBox *genderCbo = [[UIComboBox alloc] initWithFrame:CGRectMake(235*iphone_size_W, 50*iphone_size_H, 120*iphone_size_W, 26*iphone_size_H)];
     genderCbo.comboList = @[@"男",@"女"];
     genderCbo.placeColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1];
     genderCbo.textColor = [UIColor colorWithMyNeed:117 green:117 blue:117 alpha:1];
@@ -208,61 +226,61 @@
     genderCbo.selectId = _gender;
     [userInfoView addSubview:genderCbo];
     
-    contentLbPhone *telLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Right_X, userNameLb.frame.origin.y, 110, 20)];
+    contentLbPhone *telLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 95*iphone_size_H, 73*iphone_size_W, 14)];
     telLb.text = @"*联系方式";
     [userInfoView addSubview:telLb];
     
-    contentTextFieldPhone *telTf = [[contentTextFieldPhone alloc] initWithFrame:CGRectMake(TF_Origin_Right_X, userNameTf.frame.origin.y, 0, 0)];
+    contentTextFieldPhone *telTf = [[contentTextFieldPhone alloc] initWithFrame:CGRectMake(101*iphone_size_W,91*iphone_size_H, 255*iphone_size_W, 24*iphone_size_H)];
     telTf.tag = Origin_TAG + 4;
     telTf.delegate = self;
     telTf.text = _phone;
     [userInfoView addSubview:telTf];
     
-    contentLbPhone *birthLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 130 * SCREEN_HEIGHT/768, 110, 22)];
-    birthLb.text = @"出生年月";
+    contentLbPhone *birthLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 138*iphone_size_H, 73*iphone_size_W, 14)];
+    birthLb.text = @"*出生年月";
     [userInfoView addSubview:birthLb];
     
-    birthTf = [[contentTextFieldPhone alloc] initWithFrame:CGRectMake(TF_Origin_Left_X, birthLb.frame.origin.y - 10, 0, 0)];
+    birthTf = [[contentTextFieldPhone alloc] initWithFrame:CGRectMake(101*iphone_size_W,132*iphone_size_H, 255*iphone_size_W, 26*iphone_size_H)];
     birthTf.tag = Origin_TAG + 5;
     birthTf.delegate = self;
     birthTf.text = _birthday;
     [userInfoView addSubview:birthTf];
     
-    contentLbPhone *occupationLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Middle_X, birthLb.frame.origin.y, 110, 22)];
-    occupationLb.text = @"职业";
+    contentLbPhone *occupationLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Left_X,180*iphone_size_H,46*iphone_size_W,14)];
+    occupationLb.text = @"*职业";
     [userInfoView addSubview:occupationLb];
     
-    contentTextFieldPhone *occupationTf = [[contentTextFieldPhone alloc] initWithFrame:CGRectMake(TF_Origin_Middle_X, birthTf.frame.origin.y, 0, 0)];
+    contentTextFieldPhone *occupationTf = [[contentTextFieldPhone alloc] initWithFrame:CGRectMake(78*iphone_size_W,176*iphone_size_H,110*iphone_size_W,24*iphone_size_H)];
     occupationTf.tag = Origin_TAG + 6;
     occupationTf.delegate = self;
     occupationTf.text = _career;
     [userInfoView addSubview:occupationTf];
     
-    contentLbPhone *carLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Right_X, birthLb.frame.origin.y, 110, 22)];
-    carLb.text = @"车型";
+    contentLbPhone *carLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(192*iphone_size_W, 180*iphone_size_H, 46*iphone_size_W, 14)];
+    carLb.text = @"*车型";
     [userInfoView addSubview:carLb];
     
-    contentTextFieldPhone *carTf = [[contentTextFieldPhone alloc] initWithFrame:CGRectMake(TF_Origin_Right_X, birthTf.frame.origin.y, 0, 0)];
+    contentTextFieldPhone *carTf = [[contentTextFieldPhone alloc] initWithFrame:CGRectMake(245*iphone_size_W, 176*iphone_size_H, 110*iphone_size_W, 24*iphone_size_H)];
     carTf.tag = Origin_TAG + 7;
     carTf.delegate = self;
     carTf.text = _motor_type;
     [userInfoView addSubview:carTf];
     
-    contentLbPhone *hobbyLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 185 *SCREEN_HEIGHT/768, 110, 22)];
-    hobbyLb.text = @"爱好";
+    contentLbPhone *hobbyLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 220*iphone_size_H, 46*iphone_size_W, 14)];
+    hobbyLb.text = @"*爱好";
     [userInfoView addSubview:hobbyLb];
     
-    contentTextFieldPhone *hobbyTf = [[contentTextFieldPhone alloc] initWithFrame:CGRectMake(TF_Origin_Left_X, hobbyLb.frame.origin.y - 10, 0, 0)];
+    contentTextFieldPhone *hobbyTf = [[contentTextFieldPhone alloc] initWithFrame:CGRectMake(79*iphone_size_W,217*iphone_size_H,110*iphone_size_W,24*iphone_size_H)];
     hobbyTf.tag = Origin_TAG + 8;
     hobbyTf.delegate = self;
     hobbyTf.text = _interest;
     [userInfoView addSubview:hobbyTf];
     
-    contentLbPhone *additionLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Middle_X, hobbyLb.frame.origin.y, 110, 22)];
+    contentLbPhone *additionLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(206*iphone_size_W, 220*iphone_size_H, 32*iphone_size_W, 14)];
     additionLb.text = @"备注";
     [userInfoView addSubview:additionLb];
     
-    contentTextFieldPhone *additionTf = [[contentTextFieldPhone alloc] initWithFrame:CGRectMake(TF_Origin_Middle_X, hobbyTf.frame.origin.y, 0, 0)];
+    contentTextFieldPhone *additionTf = [[contentTextFieldPhone alloc] initWithFrame:CGRectMake(246*iphone_size_W, 217*iphone_size_H, 110*iphone_size_W, 24*iphone_size_H)];
     additionTf.tag = Origin_TAG + 9;
     additionTf.delegate = self;
     additionTf.text = _remark;
@@ -270,25 +288,25 @@
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     
-    contentViewPhone *payInfoView = [[contentViewPhone alloc] initWithFrame:CGRectMake(0, userInfoView.frame.origin.y + userInfoView.frame.size.height + 10, SCREEN_WEIGHT, 203 * iphone_size_H)];
+    contentViewPhone *payInfoView = [[contentViewPhone alloc] initWithFrame:CGRectMake(0, userInfoView.frame.origin.y + userInfoView.frame.size.height + 10, SCREEN_WEIGHT, 253 * iphone_size_H)];
     payInfoView.titleStr = @"付款信息";
     [self.view addSubview:payInfoView];
     
-    contentLbPhone *payNumberLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Left_X + 80,79*SCREEN_HEIGHT/768, 150 *SCREEN_WEIGHT/1024, 22)];
-    payNumberLb.text = @"*付款金额";
+    contentLbPhone *payNumberLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Left_X ,51*iphone_size_H, 56 *iphone_size_W, 14)];
+    payNumberLb.text = @"付款金额";
     [payInfoView addSubview:payNumberLb];
     
-    contentTextFieldPhone *payNumberTf = [[contentTextFieldPhone alloc] initWithFrame:CGRectMake(158*SCREEN_WEIGHT/1024 + 80, 69*SCREEN_HEIGHT/768,0,0)];
+    contentTextFieldPhone *payNumberTf = [[contentTextFieldPhone alloc] initWithFrame:CGRectMake(101*iphone_size_W,48*iphone_size_H,254*iphone_size_W,24*iphone_size_H)];
     payNumberTf.tag = Origin_TAG + 10;
     payNumberTf.delegate = self;
     payNumberTf.text = _payment_amount;
     [payInfoView addSubview:payNumberTf];
     
-    contentLbPhone *payType = [[contentLbPhone alloc] initWithFrame:CGRectMake(347*SCREEN_WEIGHT/1024 + 250, payNumberLb.frame.origin.y, 110*SCREEN_WEIGHT/1024, 22)];
-    payType.text = @"*付款方式";
+    contentLbPhone *payType = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 90*iphone_size_H, 56*iphone_size_W,14)];
+    payType.text = @"付款方式";
     [payInfoView addSubview:payType];
     
-    UIComboBox *payTypeCbo = [[UIComboBox alloc] initWithFrame:CGRectMake(TF_Origin_Middle_X + 250, payNumberTf.frame.origin.y, 185*SCREEN_WEIGHT/1024, 40*SCREEN_HEIGHT/768)];
+    UIComboBox *payTypeCbo = [[UIComboBox alloc] initWithFrame:CGRectMake(102*iphone_size_W ,87*iphone_size_H, 254*iphone_size_W,24*iphone_size_H)];
     payTypeCbo.comboList = @[@"刷卡",@"微信",@"支付宝"];
     payTypeCbo.placeColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1];
     payTypeCbo.textColor = [UIColor colorWithMyNeed:117 green:117 blue:117 alpha:1];
@@ -297,38 +315,39 @@
     payTypeCbo.selectId = _payment_type;
     [payInfoView addSubview:payTypeCbo];
     
-    contentLbPhone *payDateLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Right_X, payNumberLb.frame.origin.y, 110*SCREEN_WEIGHT/1024, 22)];
+    contentLbPhone *payDateLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 168*iphone_size_H,56*iphone_size_W,14)];
     payDateLb.text = @"使用次数";
     [payInfoView addSubview:payDateLb];
     
-    contentTextFieldPhone *payDateTf = [[contentTextFieldPhone alloc] initWithFrame:CGRectMake(TF_Origin_Right_X, payNumberTf.frame.origin.y, 0, 0)];
+    contentTextFieldPhone *payDateTf = [[contentTextFieldPhone alloc] initWithFrame:CGRectMake(102*iphone_size_W,165*iphone_size_H, 254*iphone_size_W, 24*iphone_size_H)];
     payDateTf.tag = Origin_TAG + 12;
     payDateTf.delegate = self;
     payDateTf.text = _pay_time;
     [payInfoView addSubview:payDateTf];
     
-    contentLbPhone *payTypeDitailLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Left_X + 80, 130*SCREEN_HEIGHT/768, 150 *SCREEN_WEIGHT/1024, 22)];
-    payTypeDitailLb.text = @"*付款方式信息";
+    contentLbPhone *payTypeDitailLb = [[contentLbPhone alloc] initWithFrame:CGRectMake(LB_Origin_Left_X,129*iphone_size_H,70*iphone_size_W,14)];
+    payTypeDitailLb.text = @"付款方信息";
     [payInfoView addSubview:payTypeDitailLb];
     
-    contentTextFieldPhone *payTypeDitailTf = [[contentTextFieldPhone alloc] initWithFrame:CGRectMake(payNumberTf.frame.origin.x, 124*SCREEN_HEIGHT/768, 0, 0)];
+    contentTextFieldPhone *payTypeDitailTf = [[contentTextFieldPhone alloc] initWithFrame:CGRectMake(102*iphone_size_W,126*iphone_size_H,254*iphone_size_W,24*iphone_size_H)];
     payTypeDitailTf.tag = Origin_TAG + 13;
     payTypeDitailTf.delegate = self;
     payTypeDitailTf.text = _pay_info;
+    payTypeDitailTf.placeholder = @"卡后4位或支付宝名、微信号";
     [payInfoView addSubview:payTypeDitailTf];
     
-    contentLbPhone *payAddition = [[contentLbPhone alloc] initWithFrame:CGRectMake(351*SCREEN_WEIGHT/1024 + 80, 136*SCREEN_HEIGHT/768, 500, 16)];
-    payAddition.textAlignment = NSTextAlignmentLeft;
-    payAddition.text = @"（刷卡－填写卡后4位，支付宝－填写支付宝名称,微信－填写微信号）";
-    payAddition.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
-    payAddition.textColor = [UIColor colorWithMyNeed:74 green:144 blue:226 alpha:1];
-    [payInfoView addSubview:payAddition];
+//    contentLbPhone *payAddition = [[contentLbPhone alloc] initWithFrame:CGRectMake(351*SCREEN_WEIGHT/1024 + 80, 136*SCREEN_HEIGHT/768, 500, 16)];
+//    payAddition.textAlignment = NSTextAlignmentLeft;
+//    payAddition.text = @"（刷卡－填写卡后4位，支付宝－填写支付宝名称,微信－填写微信号）";
+//    payAddition.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
+//    payAddition.textColor = [UIColor colorWithMyNeed:74 green:144 blue:226 alpha:1];
+//    [payInfoView addSubview:payAddition];
     
     
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     UIButton *saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    saveBtn.frame = CGRectMake(425, 697, 174, 52);
+    saveBtn.frame = CGRectMake(SCREEN_WEIGHT/2-40, 680, 80, 35);
     saveBtn.layer.cornerRadius = 10;
     [saveBtn setTitle:@"保存" forState:UIControlStateNormal];
     [saveBtn setBackgroundColor:[UIColor colorWithMyNeed:74 green:144 blue:226 alpha:1]];
@@ -352,8 +371,8 @@
     
     [self productRequest];
     
-    payDateLb.hidden = YES;
-    payDateTf.hidden = YES;
+//    payDateLb.hidden = YES;
+//    payDateTf.hidden = YES;
 }
 
 - (void)switchDateAction
@@ -587,7 +606,6 @@
             [self.refreshDelegate refresh:arry];
         }];
     }
-
 }
 
 - (void)backAction
@@ -595,10 +613,18 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+- (void)scoreTapAction:(UITapGestureRecognizer *)tap
+{
+    if ([NSStringFromClass([tap.view class])isEqualToString:@"UITableViewCellContentView"]) {
+        return;
+    }
+    
+    [self endEditing];
+}
+
+- (void)endEditing
 {
     [self.view endEditing:YES];
-    
     for (id object in self.view.subviews) {
         if ([object isKindOfClass:[contentViewPhone class]]) {
             contentViewPhone *subView = (contentViewPhone *)object;
@@ -610,6 +636,16 @@
             }
         }
     }
+
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if ([NSStringFromClass([touch.view class])isEqualToString:@"UITableViewCellContentView"]) {
+        return NO;
+    }
+    [self endEditing];
+    return YES;
 }
 
 - (void)clearAll
@@ -665,7 +701,7 @@
         }
         else
         {
-            self.view.center = CGPointMake(self.view.center.x, self.view.bounds.size.height/2.0 - currentTf_originY + keyBoardEndY - 50);
+            self.view.center = CGPointMake(self.view.center.x, self.view.bounds.size.height/2.0 - currentTf_originY + keyBoardEndY - 30);
         }
     }];
 }
@@ -693,4 +729,9 @@
     cardCbo.comboList = [cardArray copy];
 }
 
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self endEditing];
+}
 @end

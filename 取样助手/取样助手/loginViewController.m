@@ -39,7 +39,7 @@
     _username_TF.layer.borderColor = MYBLUECOLOR.CGColor;
     _username_TF.layer.borderWidth = 1.0f;
     UIImageView *userView = [[UIImageView alloc]initWithFrame:CGRectMake(13, 11, 26, 26)];
-    userView.image = [UIImage imageNamed:deviceImageSelect(@"用户名.png")];
+    userView.image = [UIImage imageNamed:(@"用户名")];
     _username_TF.leftView = userView;
     _username_TF.text = _placeUserName;
     _username_TF.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -51,7 +51,7 @@
     _password_TF.layer.borderColor = MYBLUECOLOR.CGColor;
     _password_TF.layer.borderWidth = 1.0f;
     UIImageView *pasView = [[UIImageView alloc]initWithFrame:CGRectMake(13, 11, 26, 26)];
-    pasView.image = [UIImage imageNamed:deviceImageSelect(@"密码.png")];
+    pasView.image = [UIImage imageNamed:(@"密码")];
     _password_TF.leftView = pasView;
     _password_TF.leftViewMode = UITextFieldViewModeAlways;
     _password_TF.secureTextEntry = YES;
