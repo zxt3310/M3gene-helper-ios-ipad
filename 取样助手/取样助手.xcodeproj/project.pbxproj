@@ -52,6 +52,9 @@
 		58427ABC1E0A8B2100118F7D /* ziliao copy 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 58427AB91E0A8B2100118F7D /* ziliao copy 2.png */; };
 		58427ABD1E0A8B2100118F7D /* ziliao copy 2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58427ABA1E0A8B2100118F7D /* ziliao copy 2@3x.png */; };
 		58427ABE1E0A8B2100118F7D /* ziliao copy 2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58427ABB1E0A8B2100118F7D /* ziliao copy 2@2x.png */; };
+		58480C4A1E555725007A0973 /* draftViewController-iphone.m in Sources */ = {isa = PBXBuildFile; fileRef = 58480C481E555725007A0973 /* draftViewController-iphone.m */; };
+		58480C4D1E557CDC007A0973 /* passwdChangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58480C4C1E557CDC007A0973 /* passwdChangeViewController.m */; };
+		58480C511E55AAAF007A0973 /* sendViewController-iphone.m in Sources */ = {isa = PBXBuildFile; fileRef = 58480C501E55AAAF007A0973 /* sendViewController-iphone.m */; };
 		5858F9921E28871B003C3B49 /* passWordEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5858F9911E28871B003C3B49 /* passWordEditView.m */; };
 		586DD1931DEEB6120026E67E /* draftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 586DD1921DEEB6120026E67E /* draftViewController.m */; };
 		5880BEC01E5443FE0077033C /* 用户名ip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5880BEBD1E5443FE0077033C /* 用户名ip@2x.png */; };
@@ -221,6 +224,12 @@
 		58427AB91E0A8B2100118F7D /* ziliao copy 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ziliao copy 2.png"; sourceTree = "<group>"; };
 		58427ABA1E0A8B2100118F7D /* ziliao copy 2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ziliao copy 2@3x.png"; sourceTree = "<group>"; };
 		58427ABB1E0A8B2100118F7D /* ziliao copy 2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ziliao copy 2@2x.png"; sourceTree = "<group>"; };
+		58480C481E555725007A0973 /* draftViewController-iphone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "draftViewController-iphone.m"; sourceTree = "<group>"; };
+		58480C491E555725007A0973 /* draftViewController-iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "draftViewController-iphone.h"; sourceTree = "<group>"; };
+		58480C4B1E557CDC007A0973 /* passwdChangeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = passwdChangeViewController.h; sourceTree = "<group>"; };
+		58480C4C1E557CDC007A0973 /* passwdChangeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = passwdChangeViewController.m; sourceTree = "<group>"; };
+		58480C4F1E55AAAF007A0973 /* sendViewController-iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "sendViewController-iphone.h"; sourceTree = "<group>"; };
+		58480C501E55AAAF007A0973 /* sendViewController-iphone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "sendViewController-iphone.m"; sourceTree = "<group>"; };
 		5858F9901E28871B003C3B49 /* passWordEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = passWordEditView.h; sourceTree = "<group>"; };
 		5858F9911E28871B003C3B49 /* passWordEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = passWordEditView.m; sourceTree = "<group>"; };
 		586DD1911DEEB6120026E67E /* draftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = draftViewController.h; sourceTree = "<group>"; };
@@ -449,16 +458,32 @@
 			path = "image/侧栏";
 			sourceTree = "<group>";
 		};
+		58480C4E1E55A377007A0973 /* 资料中心 */ = {
+			isa = PBXGroup;
+			children = (
+				5819DDC81E0D08C60010C88B /* dataCenterViewController.h */,
+				5819DDC91E0D08C60010C88B /* dataCenterViewController.m */,
+			);
+			name = "资料中心";
+			sourceTree = "<group>";
+		};
+		58480C521E55AAB5007A0973 /* 样本寄送 */ = {
+			isa = PBXGroup;
+			children = (
+				58480C4F1E55AAAF007A0973 /* sendViewController-iphone.h */,
+				58480C501E55AAAF007A0973 /* sendViewController-iphone.m */,
+			);
+			name = "样本寄送";
+			sourceTree = "<group>";
+		};
 		5884D7AB1E515E2D00398C4F /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				58480C4E1E55A377007A0973 /* 资料中心 */,
 				5884D7C01E5186A400398C4F /* 登录（共用） */,
-				5895405B1DC1F76800DDA5F8 /* 样本寄送（共用） */,
 				589540511DC1F18E00DDA5F8 /* 操作记录（共用） */,
 				5884D7B91E5184A900398C4F /* iphone */,
 				5884D7BA1E5184B200398C4F /* ipad */,
-				5819DDC81E0D08C60010C88B /* dataCenterViewController.h */,
-				5819DDC91E0D08C60010C88B /* dataCenterViewController.m */,
 			);
 			name = controller;
 			sourceTree = "<group>";
@@ -466,8 +491,13 @@
 		5884D7B91E5184A900398C4F /* iphone */ = {
 			isa = PBXGroup;
 			children = (
+				58480C491E555725007A0973 /* draftViewController-iphone.h */,
+				58480C481E555725007A0973 /* draftViewController-iphone.m */,
+				58480C4B1E557CDC007A0973 /* passwdChangeViewController.h */,
+				58480C4C1E557CDC007A0973 /* passwdChangeViewController.m */,
 				5884D7BE1E51859400398C4F /* 主页 */,
 				5884D7BD1E51856C00398C4F /* 上传订单 */,
+				58480C521E55AAB5007A0973 /* 样本寄送 */,
 			);
 			name = iphone;
 			sourceTree = "<group>";
@@ -475,6 +505,7 @@
 		5884D7BA1E5184B200398C4F /* ipad */ = {
 			isa = PBXGroup;
 			children = (
+				5895405B1DC1F76800DDA5F8 /* 样本寄送 */,
 				5884D7BF1E5185A400398C4F /* 主页 */,
 				5884D7BC1E51853100398C4F /* 上传订单 */,
 				581B24621E0B756700FEFBEE /* 侧边栏页 */,
@@ -613,13 +644,13 @@
 			name = "操作记录（共用）";
 			sourceTree = "<group>";
 		};
-		5895405B1DC1F76800DDA5F8 /* 样本寄送（共用） */ = {
+		5895405B1DC1F76800DDA5F8 /* 样本寄送 */ = {
 			isa = PBXGroup;
 			children = (
 				589540651DC1F80900DDA5F8 /* sendViewController.h */,
 				589540661DC1F80900DDA5F8 /* sendViewController.m */,
 			);
-			name = "样本寄送（共用）";
+			name = "样本寄送";
 			sourceTree = "<group>";
 		};
 		589540681DC1FDF000DDA5F8 /* image */ = {
@@ -1007,6 +1038,7 @@
 				589540571DC1F27900DDA5F8 /* loginViewController.m in Sources */,
 				58B4F92A1DE7E95900527BFE /* uploadIpadViewController.m in Sources */,
 				586DD1931DEEB6120026E67E /* draftViewController.m in Sources */,
+				58480C4A1E555725007A0973 /* draftViewController-iphone.m in Sources */,
 				705E33481DC9C17800024A25 /* CMCustomViews.m in Sources */,
 				58E54C551E16366900A32CDA /* VIPCardViewController-ipad.m in Sources */,
 				58C25FEE1DE5635900B8D88D /* leftDrawerViewController.m in Sources */,
@@ -1018,11 +1050,13 @@
 				5858F9921E28871B003C3B49 /* passWordEditView.m in Sources */,
 				5889D8C71DC091630052C6D7 /* mainViewController-ipad.m in Sources */,
 				581B245F1E0B753400FEFBEE /* CustomURLCache.m in Sources */,
+				58480C511E55AAAF007A0973 /* sendViewController-iphone.m in Sources */,
 				5895404F1DC1A6AF00DDA5F8 /* scanViewController.m in Sources */,
 				5884D7B41E517DF600398C4F /* uploadIphoneViewController.m in Sources */,
 				581B24601E0B753400FEFBEE /* Reachability.m in Sources */,
 				5889D8C41DC091620052C6D7 /* AppDelegate-ipad.m in Sources */,
 				58C25FE71DE5632500B8D88D /* UFanBasicViewController.m in Sources */,
+				58480C4D1E557CDC007A0973 /* passwdChangeViewController.m in Sources */,
 				581D069D1DC0A2330050DFA0 /* oprateRecordVC.m in Sources */,
 				581BF5C71DF90C6200C24ADD /* UISingleSelector.m in Sources */,
 				5889D8C11DC091620052C6D7 /* main.m in Sources */,

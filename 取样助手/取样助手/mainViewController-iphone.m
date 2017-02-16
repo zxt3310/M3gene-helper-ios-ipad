@@ -496,7 +496,7 @@
     {
         if(allowSendReport)
         {
-            _svc = [[sendViewController alloc] init];
+            _svc = [[sendViewControllerIphone alloc] init];
             _svc.title = @"报告寄送";
             _svc.isSendExpress = NO;
             [self.navigationController pushViewController:_svc animated:YES];
@@ -512,7 +512,7 @@
         if(allowSendEx)
             
         {
-            _svc = [[sendViewController alloc] init];
+            _svc = [[sendViewControllerIphone alloc] init];
             _svc.title = @"样本寄送";
             _svc.isSendExpress = YES;
             

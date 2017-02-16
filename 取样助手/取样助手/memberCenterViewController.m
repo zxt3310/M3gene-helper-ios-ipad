@@ -41,9 +41,9 @@
         [cell.contentView addSubview:listLb];
         
         UIButton *logoutBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [logoutBtn setTitle:@"退出" forState:UIControlStateNormal];
+        [logoutBtn setTitle:@"登出" forState:UIControlStateNormal];
         [logoutBtn addTarget:self action:@selector(logOutBtnClickAction) forControlEvents:UIControlEventTouchUpInside];
-        logoutBtn.frame = CGRectMake(136 * iphone_size_W, 208 * iphone_size_H, 104 * iphone_size_W, 30 * iphone_size_H);
+        logoutBtn.frame = CGRectMake(136 * iphone_size_W, 178 * iphone_size_H, 104 * iphone_size_W, 30 * iphone_size_H);
         [logoutBtn setBackgroundColor:[UIColor colorWithMyNeed:74 green:114 blue:226 alpha:1]];
         logoutBtn.layer.cornerRadius = 10;
         logoutBtn.hidden = YES;
@@ -96,6 +96,33 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch (indexPath.row) {
+        case 1:{
+            draftViewControllerIphone *draftView = [[draftViewControllerIphone alloc] init];
+            [self.navigationController pushViewController:draftView animated:YES];
+        }
+            break;
+        
+        case 2:{
+            oprateRecordVC *orvc = [[oprateRecordVC alloc]init];
+            orvc.token = _token;
+            [self.navigationController pushViewController:orvc animated:YES];
+        }
+            break;
+        case 3:{
+            passwdChangeViewController *pcvc = [[passwdChangeViewController alloc] init];
+            pcvc.token = _token;
+            [self.navigationController pushViewController:pcvc animated:YES];
+            
+        }
+            break;
+        default:
+            break;
+    }
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 5;
@@ -113,7 +140,7 @@
             height = 65 * iphone_size_H;
             break;
         case 2:
-            height = 47 * iphone_size_H;;
+            height = 47 * iphone_size_H;
             break;
         case 3:
             height = 47 * iphone_size_H;
@@ -123,6 +150,12 @@
             break;
     }
     return height;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.hidden = NO;
 }
 
 - (void)didReceiveMemoryWarning {

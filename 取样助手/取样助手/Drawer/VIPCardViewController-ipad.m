@@ -136,11 +136,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeContentViewPoint:) name:UIKeyboardWillShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeContentViewPoint:) name:UIKeyboardWillHideNotification object:nil];
-    
+
     self.view.backgroundColor = [UIColor colorWithMyNeed:216 green:216 blue:216 alpha:1];
     
     contentView *cardInfoView = [[contentView alloc] initWithFrame:CGRectMake(0, 101, SCREEN_WEIGHT, 137*SCREEN_HEIGHT/768)];
@@ -500,6 +496,10 @@
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeContentViewPoint:) name:UIKeyboardWillShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeContentViewPoint:) name:UIKeyboardWillHideNotification object:nil];
+
 }
 
 - (void)setNewBar
@@ -638,11 +638,12 @@
     }
 }
 
-- (void)dealloc
+- (void)viewWillDisappear:(BOOL)animated
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
+
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {

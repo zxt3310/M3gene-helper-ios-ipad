@@ -6,13 +6,13 @@
 //  Copyright © 2016年 xxx. All rights reserved.
 //
 
-#import "sendViewController.h"
+#import "sendViewController-iphone.h"
 #define ScreenHigh [UIScreen mainScreen].bounds.size.height
 #define ScreenWidth [UIScreen mainScreen].bounds.size.width
 #define navigationBarFrame self.navigationController.navigationBar.frame.size.height
 #define toolBar [UIApplication sharedApplication].statusBarFrame.size.height
 
-@interface sendViewController ()<UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate>
+@interface sendViewControllerIphone ()<UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate>
 {
     NSString *token;
     NSString *expressID;
@@ -27,7 +27,7 @@
 
 @end
 
-@implementation sendViewController
+@implementation sendViewControllerIphone
 
 
 - (instancetype)init
@@ -98,22 +98,22 @@
     
     
     //选择快递
-    UILabel *expressNamelable = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_HEIGHT/37 + 50,SCREEN_HEIGHT/37 ,SCREEN_WEIGHT/6.69,SCREEN_HEIGHT/26.76)];
+    UILabel *expressNamelable = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_HEIGHT/37 ,SCREEN_HEIGHT/37 ,SCREEN_WEIGHT/6.69,SCREEN_HEIGHT/26.76)];
     expressNamelable.text = @"快递公司";
-    expressNamelable.font = MYUIFONT;
+    expressNamelable.font = MYUIFONT_IP;
     [expressView addSubview:expressNamelable];
     
     //标签
-    UILabel *nameLable = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_HEIGHT/37 + 50,SCREEN_HEIGHT/37 + expressNamelable.frame.size.height + 13, SCREEN_WEIGHT/6.69, SCREEN_WEIGHT/26.79)];
+    UILabel *nameLable = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_HEIGHT/37 ,SCREEN_HEIGHT/37 + expressNamelable.frame.size.height + 25, SCREEN_WEIGHT/6.69, SCREEN_WEIGHT/26.79)];
     nameLable.text = @"快递单号";
-    nameLable.font = MYUIFONT;
+    nameLable.font = MYUIFONT_IP;
     [expressView addSubview:nameLable];
 
     
     //选择快递 内容lable
     expressSelectLb = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/3.947,SCREEN_HEIGHT/44.47 +3 ,SCREEN_WEIGHT/1.99,SCREEN_HEIGHT/26.68)];
     expressSelectLb.layer.borderWidth = 1;
-    expressSelectLb.font = MYUIFONT;
+    expressSelectLb.font = MYUIFONT_IP;
     [expressView addSubview:expressSelectLb];
     
     
@@ -122,7 +122,7 @@
     expressNumberTF.layer.borderColor = [UIColor blackColor].CGColor;
     expressNumberTF.layer.borderWidth = 1;
     expressNumberTF.delegate = self;
-    expressNumberTF.font = MYUIFONT;
+    expressNumberTF.font = MYUIFONT_IP;
     [expressView addSubview:expressNumberTF];
 
     
@@ -148,9 +148,9 @@
 
     
     //快递价格
-    UILabel *priceLable = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_HEIGHT/37 + 50,nameLable.frame.origin.y + nameLable.frame.size.height + 6 + 7,SCREEN_WEIGHT/6.69,SCREEN_HEIGHT/26.76)];
+    UILabel *priceLable = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_HEIGHT/37,nameLable.frame.origin.y + nameLable.frame.size.height + 25,SCREEN_WEIGHT/6.69,SCREEN_HEIGHT/26.76)];
     priceLable.text = @"快递价格";
-    priceLable.font = MYUIFONT;
+    priceLable.font = MYUIFONT_IP;
     [expressView addSubview:priceLable];
     
     //价格lable
@@ -158,7 +158,7 @@
     priceTF.placeholder = @"请输入价格";
     priceTF.delegate = self;
     priceTF.layer.borderWidth = 1;
-    priceTF.font = MYUIFONT;
+    priceTF.font = MYUIFONT_IP;
     [expressView addSubview:priceTF];
     
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -174,7 +174,7 @@
     
     UILabel *codeNumberLb = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WEIGHT/17.86, SCREEN_WEIGHT/17.86, SCREEN_WEIGHT/4.26, SCREEN_HEIGHT/47.64)];
     codeNumberLb.text = @"检验单条形码";
-    codeNumberLb.font = MYUIFONT;
+    codeNumberLb.font = MYUIFONT_IP;
     [Scrollview addSubview:codeNumberLb];
     
     //扫码按钮
@@ -452,8 +452,10 @@
                 }
                 [self clearBtClick];
                 alertMsgView(@"上传成功", self);
+                
         });
     });
+    
 }
 
 //获取列表请求

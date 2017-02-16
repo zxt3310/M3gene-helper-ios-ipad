@@ -11,7 +11,7 @@
 #import "UIViewController+UFanViewController.h"
 #import "scanViewController.h"
 #import "uploadIphoneViewController.h"
-#import "sendViewController.h"
+#import "sendViewController-iphone.h"
 #import "loginViewController.h"
 #import "publicMethod.h"
 #import "uploadIpadViewController.h"
@@ -26,7 +26,7 @@
 
 @property (nonatomic) UITableView *tableView;
 
-@property sendViewController *svc;
+@property sendViewControllerIphone *svc;
 @property NSArray *productList;
 
 @property NSString *userName;

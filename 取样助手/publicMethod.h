@@ -38,6 +38,7 @@
 
 #define TEXTFONT @"STHeitiSC-Light"
 #define MYUIFONT [UIFont fontWithName:TEXTFONT size:22]
+#define MYUIFONT_IP [UIFont fontWithName:TEXTFONT size:14]
 #define MYBUTTONFONT [UIFont fontWithName:TEXTFONT size:16]
 
 #define iphone_size_W [[UIScreen mainScreen] bounds].size.width/375

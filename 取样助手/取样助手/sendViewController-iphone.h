@@ -12,7 +12,7 @@
 #import "NetUtils.h"
 #import "publicMethod.h"
 
-@interface sendViewController : UIViewController <refreshCellNuber>
+@interface sendViewControllerIphone : UIViewController <refreshCellNuber>
 
 @property scanViewController *svc;
 

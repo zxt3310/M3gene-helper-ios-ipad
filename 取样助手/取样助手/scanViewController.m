@@ -20,13 +20,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBar.hidden = NO;
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleDeviceOrientationDidChange:)
-                                                 name:UIDeviceOrientationDidChangeNotification
-                                               object:nil
-     ];
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
     // Device
@@ -40,8 +33,8 @@
     _output = [[AVCaptureMetadataOutput alloc]init];
     [_output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
 
-    //[_output setRectOfInterest:CGRectMake(0.19, 0.21, 0.33, 0.59)];
-    [_output setRectOfInterest:CGRectMake(0.21, 0.19, 0.59, 0.33)];
+    [_output setRectOfInterest:CGRectMake(0.19, 0.21, 0.33, 0.59)];
+    //[_output setRectOfInterest:CGRectMake(0.21, 0.19, 0.59, 0.33)];
     
     // Session
     _session = [[AVCaptureSession alloc]init];
@@ -236,6 +229,35 @@
             [device unlockForConfiguration];
         }
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleDeviceOrientationDidChange:)
+                                                 name:UIDeviceOrientationDidChangeNotification
+                                               object:nil
+     ];
+
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIDeviceOrientationDidChangeNotification
+                                                  object:nil
+     ];
+
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
+
 }
 
 - (void)handleDeviceOrientationDidChange:(UIInterfaceOrientation *)sender

@@ -6,9 +6,9 @@
 //  Copyright © 2016年 xxx. All rights reserved.
 //
 
-#import "draftViewController.h"
+#import "draftViewController-iphone.h"
 
-@interface draftViewController () <UITableViewDelegate,UITableViewDataSource>
+@interface draftViewControllerIphone () <UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *tableview;
     NSArray *cacheList;
@@ -17,7 +17,7 @@
 }
 @end
 
-@implementation draftViewController
+@implementation draftViewControllerIphone
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -83,7 +83,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.hidden = YES;
+   // self.navigationController.navigationBar.hidden = YES;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -108,7 +108,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         
         CGFloat y = 30 * SCREEN_HEIGHT/768;
-        UIFont *font = [UIFont fontWithName:@"STHeitiSC-Light" size:22];
+        UIFont *font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
         //操作类型  tag 1
         UILabel *typeLable = [[UILabel alloc] initWithFrame:CGRectMake(65*SCREEN_WEIGHT/1024, y, 200*SCREEN_WEIGHT/1024, 20)];
         typeLable.font = font;
@@ -248,7 +248,7 @@
     else if ([[dic objectForKey:@"cacheType"] isEqualToString:@"CACHE_VIP"])
     {
         NSDictionary *contentDic = [dic objectForKey:@"registStr"];
-        VIPCardViewControllerIpad *vip = [[VIPCardViewControllerIpad alloc] init];
+        VIPCardViewControllerIphone *vip = [[VIPCardViewControllerIphone alloc] init];
         vip.userName = user;
         for(NSString *key in contentDic.allKeys)
         {

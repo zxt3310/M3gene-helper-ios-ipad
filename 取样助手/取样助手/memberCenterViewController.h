@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "publicMethod.h"
+#import "draftViewController-iphone.h"
+#import "oprateRecordVC.h"
+#import "passwdChangeViewController.h"
 
 @interface memberCenterViewController : UIViewController <UITableViewDelegate,UITableViewDataSource>
 @property NSString *userName;
