@@ -61,6 +61,8 @@
 #define SINGLE_PAY_URL         @"http://mapi.lhgene.cn/app/mindex.html#/mobile/salefinance"
 #define CHANGE_PASSWORD_URL    @"http://mapi.lhgene.cn/mobi-cms/change_password"
 
+#define Tex_check_URL          @"http://mapi.lhgene.cn/app/index.html#/invoice"
+
 
 #define dataCenter_URL         @"http://mapi.lhgene.cn"
 #define dataCenter_GET_URL     @"http://mapi.lhgene.cn/m/api/disk"

@@ -10,17 +10,18 @@
 #import "mainViewController-ipad.h"
 #import "mainViewController-iphone.h"
 #import "oprateRecordVC.h"
+
 @interface AppDelegateIphone ()
 
 
 @end
 
 
-
 @implementation AppDelegateIphone
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self.allowLandScape = NO;
     // Override point for customization after application launch.
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -34,6 +35,8 @@
     
     unc.navigationBar.barTintColor = [UIColor whiteColor];
     unc.navigationBar.tintColor = [UIColor blackColor];
+    
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0,-60) forBarMetrics:UIBarMetricsDefault];
     
     [self.window setRootViewController:unc];
     [self.window makeKeyAndVisible];
@@ -70,6 +73,9 @@
 
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
+    if (self.allowLandScape) {
+        return UIInterfaceOrientationMaskLandscape;
+    }
     return UIInterfaceOrientationMaskPortrait;
 }
 

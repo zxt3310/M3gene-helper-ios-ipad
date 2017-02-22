@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface orderRegisteViewController : UIViewController
+@protocol registTranslaterProtocol <NSObject>
+- (void)transRegistString:(NSString *)registStr;
+@end
 
+@interface orderRegisteViewController : UIViewController <UIWebViewDelegate>
+@property id <registTranslaterProtocol> transDelegate;
 @property NSString *orderUrl;
+@property NSString *registStr;
 @end

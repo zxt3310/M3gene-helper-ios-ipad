@@ -32,7 +32,7 @@
                                     WKWebsiteDataTypeMemoryCache,
 //                                    WKWebsiteDataTypeLocalStorage,
 //                                    WKWebsiteDataTypeCookies,
-//                                    WKWebsiteDataTypeSessionStorage,
+  //                                  WKWebsiteDataTypeSessionStorage,
 //                                    WKWebsiteDataTypeIndexedDBDatabases,
 //                                    WKWebsiteDataTypeWebSQLDatabases
                                     ]];
@@ -51,7 +51,6 @@
 //            NSString *cookiesFolderPath = [libraryPath stringByAppendingString:@"/Cookies"];
 //            NSError *errors;
 //            [[NSFileManager defaultManager] removeItemAtPath:cookiesFolderPath error:&errors];
-            
         }
     }
 
@@ -73,31 +72,24 @@
         //[request addValue:_token forHTTPHeaderField:@"token"];
         NSLog(@"%@",request.allHTTPHeaderFields);
     }
-
-
-    [webViewHtml5 loadRequest:[request copy]];
     
-    }
-
-
+    [webViewHtml5 loadRequest:[request copy]];
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
-
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
     decisionHandler(WKNavigationActionPolicyAllow);
-    
 }
 
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler

@@ -15,6 +15,7 @@
 @interface memberCenterViewController : UIViewController <UITableViewDelegate,UITableViewDataSource>
 @property NSString *userName;
 @property NSString *token;
+@property NSArray *productList;
 
 
 @end

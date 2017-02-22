@@ -250,7 +250,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIDeviceOrientationDidChangeNotification
                                                   object:nil
-     ];
+    ];
 
 }
 
@@ -262,6 +262,10 @@
 
 - (void)handleDeviceOrientationDidChange:(UIInterfaceOrientation *)sender
 {
+    NSString *devStr = devicePlatForm();
+    if ([devStr isEqualToString:@"iphone"]) {
+        return;
+    }
     UIDevice *device = [UIDevice currentDevice];
     if (device.orientation == UIInterfaceOrientationLandscapeLeft) {
         _preview.connection.videoOrientation = UIInterfaceOrientationLandscapeLeft;

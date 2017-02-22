@@ -38,10 +38,6 @@
   //  [self dataListRequest];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    self.navigationController.navigationBar.hidden = NO;
-}
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -66,7 +62,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         
         
-        UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(100, cell.frame.origin.y + cell.frame.size.height/2 - 8, SCREEN_WEIGHT/3, 16)];
+        UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(100 *SCREEN_WEIGHT/1024, cell.frame.origin.y + cell.frame.size.height/2 - 8, SCREEN_WEIGHT/3, 16)];
         titleLb.font = font;
         titleLb.tag = 10;
         [cell.contentView addSubview:titleLb];
@@ -81,7 +77,7 @@
         timeLb.tag = 30;
         [cell.contentView addSubview:timeLb];
         
-        UIImageView *pdfImg = [[UIImageView alloc] initWithFrame:CGRectMake(70, titleLb.frame.origin.y - 2, 20, 20)];
+        UIImageView *pdfImg = [[UIImageView alloc] initWithFrame:CGRectMake(40*SCREEN_WEIGHT/1024, titleLb.frame.origin.y - 2, 20, 20)];
         pdfImg.image = [UIImage imageNamed:@"pdf"];
         [cell.contentView addSubview:pdfImg];
         
@@ -308,6 +304,29 @@
         
     });
 }
+
+//- (BOOL)shouldAutorotate
+//{
+//    return  YES;
+//}
+//
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.hidden = NO;
+//    AppDelegateIphone *delegate = (AppDelegateIphone*)[UIApplication sharedApplication].delegate;
+//    delegate.allowLandScape = YES;
+    
+}
+//
+//- (void)viewWillDisappear:(BOOL)animated
+//{
+//    [super viewWillDisappear:animated];
+//    AppDelegateIphone *delegate = (AppDelegateIphone*)[UIApplication sharedApplication].delegate;
+//    delegate.allowLandScape = NO;
+//}
+
+
 
 
 @end

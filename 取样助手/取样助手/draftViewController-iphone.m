@@ -21,18 +21,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"草稿箱";
     self.automaticallyAdjustsScrollViewInsets = NO;
     user = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
     token = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
     cacheList = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"CACHE_%@",user]];
     
-    tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 101, SCREEN_WEIGHT, SCREEN_HEIGHT-101) style:UITableViewStylePlain];
+    tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, SCREEN_WEIGHT, SCREEN_HEIGHT) style:UITableViewStylePlain];
     tableview.tableFooterView = [[UITableView alloc]initWithFrame:CGRectZero];
     
     tableview.delegate = self;
     tableview.dataSource = self;
     [self.view addSubview:tableview];
-    [self setNewBar];
+//    [self setNewBar];
 }
 
 - (void)setNewBar
@@ -107,35 +108,36 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         
-        CGFloat y = 30 * SCREEN_HEIGHT/768;
+        CGFloat y = 30 * iphone_size_H;
         UIFont *font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
         //操作类型  tag 1
-        UILabel *typeLable = [[UILabel alloc] initWithFrame:CGRectMake(65*SCREEN_WEIGHT/1024, y, 200*SCREEN_WEIGHT/1024, 20)];
+        UILabel *typeLable = [[UILabel alloc] initWithFrame:CGRectMake(10*iphone_size_W, y, 100*iphone_size_H, 15)];
         typeLable.font = font;
         typeLable.tag = 1;
         [cell.contentView addSubview:typeLable];
         //客户名 tag 2
-        UILabel *nameLable = [[UILabel alloc]initWithFrame:CGRectMake(272*SCREEN_WEIGHT/1024, y, 180*SCREEN_WEIGHT/1024, 20)];
+        UILabel *nameLable = [[UILabel alloc]initWithFrame:CGRectMake(120 * iphone_size_W, y, 90 * iphone_size_W, 15)];
         nameLable.font = font;
         nameLable.tag = 2;
         [cell.contentView addSubview:nameLable];
         //订单号  tag 3
-        UILabel *numberLable = [[UILabel alloc]initWithFrame:CGRectMake(484*SCREEN_WEIGHT/1024, y, 220*SCREEN_WEIGHT/1024, 20)];
+        UILabel *numberLable = [[UILabel alloc]initWithFrame:CGRectMake(220*iphone_size_W, y, 150 * iphone_size_W, 15)];
         numberLable.font = font;
         numberLable.tag = 3;
         [cell.contentView addSubview:numberLable];
         //操作时间 tag 4
-        UILabel *operateTimeLb = [[UILabel alloc]initWithFrame:CGRectMake(811, y + 3, 220*SCREEN_WEIGHT/1024, 20)];
-        operateTimeLb.font = [UIFont fontWithName:@"STHeitiSC-Light" size:18];
+        UILabel *operateTimeLb = [[UILabel alloc]initWithFrame:CGRectMake(220 * iphone_size_W, y + 60, 150*iphone_size_W, 15)];
+        operateTimeLb.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
         operateTimeLb.tag = 4;
         [cell.contentView addSubview:operateTimeLb];
         
         //按钮
         UIButton *reSendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        reSendBtn.frame = CGRectMake(277*SCREEN_WEIGHT/1024, 95*SCREEN_HEIGHT/768, 120*SCREEN_WEIGHT/1024, 40*SCREEN_HEIGHT/768);
+        reSendBtn.frame = CGRectMake(277*SCREEN_WEIGHT/1024, 95*SCREEN_HEIGHT/768, 240*SCREEN_WEIGHT/1024, 40*SCREEN_HEIGHT/768);
         [reSendBtn setTitle:@"编辑上传" forState:UIControlStateNormal];
         reSendBtn.backgroundColor = [UIColor colorWithMyNeed:74 green:144 blue:226 alpha:1];
         reSendBtn.titleLabel.textColor = [UIColor whiteColor];
+        reSendBtn.titleLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:16];
         [reSendBtn addTarget:self action:@selector(resendBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [cell.contentView addSubview:reSendBtn];
         
@@ -230,7 +232,7 @@
     NSIndexPath *index = [tableview indexPathForCell:(UITableViewCell *)sender.superview.superview];
     NSDictionary *dic = cacheList[index.row];
     if ([[dic objectForKey:@"cacheType"]isEqualToString:@"CACHE_ORDER"]) {
-        uploadIpadViewController *upLoadView = [[uploadIpadViewController alloc]init];
+        uploadIphoneViewController *upLoadView = [[uploadIphoneViewController alloc]init];
         upLoadView.userName = user;
         upLoadView.productName = [dic objectForKey:@"productName"];
         upLoadView.productId = [dic objectForKey:@"productId"];
@@ -239,7 +241,7 @@
         upLoadView.token = token;
         NSData *imgData = [dic objectForKey:@"orderPic"];
         upLoadView.upOrderImg = [UIImage imageWithData:imgData];
-        upLoadView.refreshDelegate = self;
+        upLoadView.refreshDeletage = self;
         upLoadView.productList = self.productList;
         upLoadView.deleteIndex = index.row;
         upLoadView.isReEditOperate = YES;

@@ -20,13 +20,13 @@
     BOOL isTakeMedicalPhoto; //是否拍病例
     NSString *imageId;
     NSMutableArray *imageIdArray; //图片 id 串
-    NSString *token;
     UITableViewCell *cell4; //客户病例行
     NSString *index;
     UIImage *upimage; //处理后的上传图片 病例图
-    UIImage *upOrderImg; //压缩后上传的检验单图片
+   
     UIView *background; //放大图片view
     BOOL allowRigest; //是否允许录入
+    UITextField *productTF;
     
     float x;
     float y;
@@ -40,6 +40,7 @@
 @synthesize cell = cell;
 @synthesize productPicker = productPick;
 @synthesize animateLoadView = animateLoadView;
+@synthesize token = token;
 
 - (instancetype)init
 {
@@ -110,8 +111,7 @@
     productPick.showsSelectionIndicator = YES;
     productPick.hidden = YES;
     [self.view addSubview:productPick];
-    
-    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -198,6 +198,7 @@
         numberLable.font = [UIFont fontWithName:@"Arial-BoldMT" size:22];
         numberLable.tag = 3;
         numberLable.hidden = YES;
+        numberLable.text = _number;
         [cell.contentView addSubview:numberLable];
         
         
@@ -208,10 +209,11 @@
         imageView.userInteractionEnabled = YES;
         imageView.tag = 4;
         imageView.hidden = YES;
+        imageView.image = _upOrderImg;
         [cell.contentView addSubview:imageView];
         
         //产品选择 tag 5
-        UITextField *productTF = [[UITextField alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/3.61, SCREEN_HEIGHT/30.32, SCREEN_WEIGHT/1.99, SCREEN_HEIGHT/26.68)];
+        productTF = [[UITextField alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/3.61, SCREEN_HEIGHT/30.32, SCREEN_WEIGHT/1.99, SCREEN_HEIGHT/26.68)];
         productTF.borderStyle = UITextBorderStyleLine;
         productTF.textAlignment = NSTextAlignmentCenter;
         productTF.layer.borderColor = [UIColor blackColor].CGColor;
@@ -219,6 +221,7 @@
         productTF.placeholder = @"点击选择";
         productTF.delegate = self;
         productTF.inputView = productPick;
+        productTF.text = _productName;
         productTF.tag = 5;
         productTF.hidden = YES;
         [cell.contentView addSubview:productTF];
@@ -230,11 +233,9 @@
         clearBt.tintColor = [UIColor whiteColor];
         clearBt.titleLabel.font = MYBUTTONFONT;
         clearBt.tag = 7;
-        [clearBt addTarget:self action:@selector(clearBtClick:) forControlEvents:UIControlEventTouchUpInside];
+        [clearBt addTarget:self action:@selector(clearBtClick) forControlEvents:UIControlEventTouchUpInside];
         clearBt.hidden = YES;
         [cell.contentView addSubview:clearBt];
-
-    
     }
     
     //产品选择
@@ -283,7 +284,7 @@
     {
         UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:4];
         imageView.hidden = NO;
-        imageView.image = _image;
+        imageView.image = _upOrderImg;
         
         UILabel *nameLable = (UILabel *)[cell.contentView viewWithTag:1];
         nameLable.text = @"检验单图片";
@@ -308,14 +309,12 @@
         [photo removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
         [photo addTarget:self action:@selector(medicalPhotoClick) forControlEvents:UIControlEventTouchUpInside];
         photo.hidden = NO;
-
-  
     }
 
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
-    
 }
+
 #pragma mark Cell 按钮事件
 - (void)medicalPhotoClick
 {
@@ -368,14 +367,30 @@
     }
     
     orderRegisteViewController *orvc = [[orderRegisteViewController alloc] init];
+    orvc.transDelegate = self;
+    orvc.registStr = _registString;
     
-    //orvc.orderUrl = @"http://www.baidu.com";
-    orvc.orderUrl = [NSString stringWithFormat:@"%@/%@/%@?token=%@",orderComplate_URL,_number,_productId,token];
+    //orvc.orderUrl = [NSString stringWithFormat:@"%@/%@/%@?token=%@",orderComplate_URL,_number,_productId,token];
+    
+    NSString *isblank;
+    if (_registString.length >0) {
+        isblank = @"0";
+    }
+    else
+        isblank = @"1";
+    
+    orvc.orderUrl = [NSString stringWithFormat:@"%@/%@/%@?token=%@&search=%@",orderComplate_URL,_number,_productId,token,isblank];
+
     [self.navigationController pushViewController:orvc animated:YES];
 }
 
+- (void)transRegistString:(NSString *)registStr
+{
+    _registString = registStr;
+}
+
 //清除按钮点击事件
-- (void)clearBtClick:(UIButton *)sender;
+- (void)clearBtClick
 {
     if(!_medicalImage)
     {
@@ -483,7 +498,7 @@
             [upImageId appendFormat:@"%@,",imageIdArray[i]];
         }
         
-        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",_productId,@"product",_number,@"order_code",upOrderImg,@"pic",upImageId,@"medical_pics", nil];
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",_productId,@"product",_number,@"order_code",_upOrderImg,@"pic",upImageId,@"medical_pics", nil];
         
         NSData *responsData = [self loadRequestWithImg:dic urlstring:uploadUrl];
         
@@ -509,17 +524,75 @@
             }
             else
             {
-                [self.switchDelegate tabBarSwitch];
-                [self.navigationController popToRootViewControllerAnimated:YES];
-
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"消息" message:@"上传成功" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *ula = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+                
+                [alert addAction:ula];
+                [self presentViewController:alert animated:YES completion:^{
+                    
+                    if(_isReEditOperate)
+                    {
+                        NSArray *arry = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
+                        NSMutableArray *operateArray = [[NSMutableArray alloc]initWithArray:arry];
+                        [operateArray removeObjectAtIndex:_deleteIndex];
+                        arry = [operateArray copy];
+                        [[NSUserDefaults standardUserDefaults] setObject:arry forKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
+                        [self.refreshDeletage refresh:arry];
+                    }
+                    
+                    [self clearText];
+                }];
             }
+            
         });
     });
 }
 
 - (void)cancelBtClick
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    dateFormat.locale = [[NSLocale alloc]initWithLocaleIdentifier:@"zh_CN"];
+    [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *timeStr = [dateFormat stringFromDate:[NSDate date]];
+    
+    //处理图片数据
+    NSData *imgData = UIImagePNGRepresentation(_upOrderImg);
+    if(!imgData)
+    {
+        imgData = [[NSData alloc]init];
+    }
+    NSArray *cacheArray = @[@"cacheType",@"operateTime",@"productName",@"productId",@"code_number",@"orderPic",@"registStr"];
+    NSArray *cacheData = @[@"CACHE_ORDER",timeStr,productTF.text,_productId,_number,imgData,_registString];
+    NSDictionary *cacheDic = [NSDictionary dictionaryWithObjects:cacheData forKeys:cacheArray];
+    
+    //存入数组
+    
+    NSArray *arry = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
+    NSMutableArray *operateArray = [[NSMutableArray alloc]initWithArray:arry];
+    if(_isReEditOperate)
+    {
+        [operateArray removeObjectAtIndex:_deleteIndex];
+    }
+    [operateArray addObject:cacheDic];
+    arry = [operateArray copy];
+    
+    @try
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:arry forKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    } @catch (NSException *exception) {
+        NSLog(@"%@",exception);
+    } @finally {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"消息" message:@"保存成功" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *ula = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        
+        [alert addAction:ula];
+        [self presentViewController:alert animated:YES completion:^{
+            [self clearText];
+            [self.refreshDeletage refresh:arry];
+        }];
+    }
 }
 
 
@@ -585,7 +658,7 @@
     if(!isTakeMedicalPhoto)
     {
         _image = image;
-        upOrderImg = upimage;
+        _upOrderImg = upimage;
         
         NSString *alert = [self isAllowSend];
         if(!alert)
@@ -967,6 +1040,15 @@
     }
 
     return alertMsg;
+}
+
+- (void)clearText{
+    _upOrderImg = [UIImage new];
+    _number = @"";
+    _productName = @"";
+    _registString = @"";
+    [self clearBtClick];
+    [_tableView reloadData];
 }
 
 @end

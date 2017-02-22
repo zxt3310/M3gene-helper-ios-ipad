@@ -10,7 +10,9 @@
 #import "publicMethod.h"
 
 @interface orderRegisteViewController ()
-
+{
+    UIWebView *webView;
+}
 @end
 
 @implementation orderRegisteViewController
@@ -27,8 +29,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIWebView *webView = [[UIWebView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    webView = [[UIWebView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     self.view = webView;
+    webView.delegate = self;
     
     NSURL *url = [NSURL URLWithString:_orderUrl];
     
@@ -52,7 +55,6 @@
     [backBt setHidden:NO];
     [backBt addTarget:self action:@selector(backBtClick) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBt];
-    
 }
 
 
@@ -62,6 +64,8 @@
     UIAlertAction *ula = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
     UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
     
+        NSString *registStr = [webView stringByEvaluatingJavaScriptFromString:@"app_fetch_form();"];
+        [_transDelegate transRegistString:registStr];
         [self.navigationController popViewControllerAnimated:YES];
         
     }];
@@ -79,6 +83,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    if (_registStr.length > 0) {
+        [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"app_fill_form('%@');",_registStr]];
+    }
+}
 /*
 #pragma mark - Navigation
 
@@ -87,6 +97,5 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-*/
-
+ */
 @end

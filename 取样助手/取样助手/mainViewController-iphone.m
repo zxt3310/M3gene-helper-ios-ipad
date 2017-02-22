@@ -12,6 +12,7 @@
 #define VIP_TAG 101
 #define PAY_TAG 102
 #define PROCES_TAG 103
+#define TEX_TAG 104
 
 @interface mainViewControllerIphone ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -351,7 +352,7 @@
         [cell.contentView addSubview:processImgView];
         
         UILabel *ziLiaoLb = [[UILabel alloc] initWithFrame:CGRectMake(24*iphone_size_W,211*iphone_size_H,56*iphone_size_W,15*iphone_size_H)];
-        ziLiaoLb.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];;
+        ziLiaoLb.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
         ziLiaoLb.text = @"资料中心";
         [cell.contentView addSubview:ziLiaoLb];
         
@@ -362,6 +363,18 @@
         [ziliaoImg addGestureRecognizer:ziliaoTap];
         [cell.contentView addSubview:ziliaoImg];
         
+        UILabel *fapiaoLb = [[UILabel alloc] initWithFrame:CGRectMake(107 *iphone_size_W, 211*iphone_size_H, 56*iphone_size_W, 15 *iphone_size_H)];
+        fapiaoLb.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
+        fapiaoLb.text = @"发票管理";
+        [cell.contentView addSubview:fapiaoLb];
+        
+        UIImageView *fapiaoImg = [[UIImageView alloc] initWithFrame:CGRectMake(117 * iphone_size_W , 162 *iphone_size_H, 41 *iphone_size_W, 36*iphone_size_H)];
+        fapiaoImg.image = [UIImage imageNamed:@"发票-2"];
+        fapiaoImg.userInteractionEnabled = YES;
+        fapiaoImg.tag = TEX_TAG;
+        UITapGestureRecognizer *fapiaoTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(myOrderTapAction:)];
+        [fapiaoImg addGestureRecognizer:fapiaoTap];
+        [cell.contentView addSubview:fapiaoImg];
     }
     else
     {
@@ -410,6 +423,9 @@
             urlStr = orderProcess_URL;
             titleName = @"进度管理";
             break;
+        case TEX_TAG:
+            urlStr = Tex_check_URL;
+            titleName = @"发票管理";
         default:
             break;
     }
@@ -849,6 +865,7 @@
     memberCenterViewController *mcvc = [[memberCenterViewController alloc] init];
     mcvc.userName = self.userName;
     mcvc.token = self.token;
+    mcvc.productList = productList;
     [self.navigationController pushViewController:mcvc animated:YES];
 }
 

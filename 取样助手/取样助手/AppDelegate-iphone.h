@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+
 @interface AppDelegateIphone : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property UINavigationController *rootNavigationController;
+@property BOOL allowLandScape;
 
 @end

@@ -16,6 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"个人中心";
     UITableView *table = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
     table.tableFooterView = [[UITableView alloc] initWithFrame:CGRectZero];
     table.delegate = self;
@@ -101,6 +102,7 @@
     switch (indexPath.row) {
         case 1:{
             draftViewControllerIphone *draftView = [[draftViewControllerIphone alloc] init];
+            
             [self.navigationController pushViewController:draftView animated:YES];
         }
             break;

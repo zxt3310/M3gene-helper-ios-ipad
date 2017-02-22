@@ -12,6 +12,7 @@
 #import "DataCenterWebViewController.h"
 #import "Reachability.h"
 #import "CustomURLCache.h"
+#import "AppDelegate-iphone.h"
 
 @interface dataCenterViewController : UIViewController <UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate>
 

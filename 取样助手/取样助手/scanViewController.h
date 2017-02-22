@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import "NetUtils.h"
 @protocol refreshCellNuber <NSObject>
 @optional
 - (void) refreshCellNumber : (NSString *) code;

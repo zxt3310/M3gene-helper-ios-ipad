@@ -14,10 +14,12 @@
 #import "publicMethod.h"
 #import "orderRegisteViewController.h"
 
-@interface uploadIphoneViewController : UIViewController <refreshCellNuber>
+
+
+@interface uploadIphoneViewController : UIViewController <refreshCellNuber,registTranslaterProtocol>
 
 @property id <tabBarSwitchDelegate> switchDelegate;
-
+@property id <cacheListRefresh> refreshDeletage;
 @property scanViewController *svc;
 @property (nonatomic) UITableView *tableView;
 
@@ -44,4 +46,9 @@
 @property UIImageView *animateLoadView;
 @property NSString *token;
 @property NSString *userName;
+
+@property BOOL isReEditOperate;
+@property NSString *registString;
+@property NSInteger deleteIndex;
+@property UIImage *upOrderImg; //压缩后上传的检验单图片
 @end

@@ -347,7 +347,7 @@
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     UIButton *saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    saveBtn.frame = CGRectMake(SCREEN_WEIGHT/2-40, 680, 80, 35);
+    saveBtn.frame = CGRectMake(SCREEN_WEIGHT/2-40, 680 * iphone_size_H, 80*iphone_size_W, 35 *iphone_size_H);
     saveBtn.layer.cornerRadius = 10;
     [saveBtn setTitle:@"保存" forState:UIControlStateNormal];
     [saveBtn setBackgroundColor:[UIColor colorWithMyNeed:74 green:144 blue:226 alpha:1]];

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "publicMethod.h"
 #import "NetUtils.h"
-#import "uploadIpadViewController.h"
+#import "uploadIphoneViewController.h"
 #import "VIPCardViewController-iphone.h"
 
 

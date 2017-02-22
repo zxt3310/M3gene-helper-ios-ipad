@@ -178,7 +178,7 @@
                 firstItemViewController *fivc = [[firstItemViewController alloc]init];
                 fivc.token = lastToken;
                 fivc.title = @"订单管理";
-                fivc.urlStr = myOrderPage_URL;
+                fivc.urlStr = SINGLE_ORDER_URL;
                 if(cookieArray.count>0)
                 {
                    fivc.cookie = cookieArray[0];

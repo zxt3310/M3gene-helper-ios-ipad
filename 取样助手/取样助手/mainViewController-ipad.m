@@ -10,6 +10,7 @@
 #define VIP_TAG 101
 #define PAY_TAG 102
 #define PROCES_TAG 103
+#define TEX_TAG_PAD 104
 
 #import "mainViewController-ipad.h"
 
@@ -307,7 +308,7 @@
         title.text = @"我的服务";
         
         UIScrollView *scorll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 46, SCREEN_WEIGHT, 159)];
-        scorll.contentSize = CGSizeMake(1100, scorll.frame.size.height);
+        scorll.contentSize = CGSizeMake(1300, scorll.frame.size.height);
         [cell.contentView addSubview:scorll];
         
         UILabel *orderLb = [[UILabel alloc] initWithFrame:CGRectMake(50*SCREEN_WEIGHT/1024, 118*SCREEN_HEIGHT/768, 88, 22)];
@@ -374,6 +375,20 @@
         UITapGestureRecognizer *ziliaoTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ziliaoTapAction)];
         [ziliaoImg addGestureRecognizer:ziliaoTap];
         [scorll addSubview:ziliaoImg];
+        
+        UILabel *fapiaoLb = [[UILabel alloc] initWithFrame:CGRectMake(1180 * SCREEN_WEIGHT/1024,118*SCREEN_HEIGHT/768, 88,22)];
+        fapiaoLb.font = [UIFont fontWithName:@"STHeitiSC-Light" size:22];
+        fapiaoLb.text = @"发票管理";
+        [scorll addSubview:fapiaoLb];
+        
+        UIImageView *fapiaoImg = [[UIImageView alloc] initWithFrame:CGRectMake(1185 * SCREEN_WEIGHT/1024 , 35 *SCREEN_HEIGHT/768, 76 *SCREEN_WEIGHT/1024, 71*SCREEN_HEIGHT/768)];
+        fapiaoImg.image = [UIImage imageNamed:@"发票-2"];
+        fapiaoImg.userInteractionEnabled = YES;
+        fapiaoImg.tag = TEX_TAG_PAD;
+        UITapGestureRecognizer *fapiaoTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(myOrderTapAction:)];
+        [fapiaoImg addGestureRecognizer:fapiaoTap];
+        [scorll addSubview:fapiaoImg];
+
         
     }
     else
@@ -454,6 +469,9 @@
             urlStr = orderProcess_URL;
             titleName = @"进度管理";
             break;
+        case TEX_TAG_PAD:
+            urlStr = Tex_check_URL;
+            titleName = @"发票管理";
         default:
             break;
     }

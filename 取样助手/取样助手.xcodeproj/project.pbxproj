@@ -81,6 +81,9 @@
 		5895404F1DC1A6AF00DDA5F8 /* scanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5895404E1DC1A6AF00DDA5F8 /* scanViewController.m */; };
 		589540571DC1F27900DDA5F8 /* loginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 589540561DC1F27900DDA5F8 /* loginViewController.m */; };
 		589540671DC1F80900DDA5F8 /* sendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 589540661DC1F80900DDA5F8 /* sendViewController.m */; };
+		589543821E5C3C1B003DDD5D /* 发票-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5895437F1E5C3C1B003DDD5D /* 发票-2.png */; };
+		589543831E5C3C1B003DDD5D /* 发票-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 589543801E5C3C1B003DDD5D /* 发票-2@2x.png */; };
+		589543841E5C3C1B003DDD5D /* 发票-2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 589543811E5C3C1B003DDD5D /* 发票-2@3x.png */; };
 		58B06DCC1DE6D01700F19DA0 /* dingdanluruCopy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B06DC91DE6D01700F19DA0 /* dingdanluruCopy@2x.png */; };
 		58B06DCD1DE6D01800F19DA0 /* dingdanluruCopy.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B06DCA1DE6D01700F19DA0 /* dingdanluruCopy.png */; };
 		58B06DCE1DE6D01800F19DA0 /* dingdanluruCopy@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B06DCB1DE6D01700F19DA0 /* dingdanluruCopy@3x.png */; };
@@ -275,6 +278,9 @@
 		589540561DC1F27900DDA5F8 /* loginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = loginViewController.m; sourceTree = "<group>"; };
 		589540651DC1F80900DDA5F8 /* sendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sendViewController.h; sourceTree = "<group>"; };
 		589540661DC1F80900DDA5F8 /* sendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sendViewController.m; sourceTree = "<group>"; };
+		5895437F1E5C3C1B003DDD5D /* 发票-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发票-2.png"; sourceTree = "<group>"; };
+		589543801E5C3C1B003DDD5D /* 发票-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发票-2@2x.png"; sourceTree = "<group>"; };
+		589543811E5C3C1B003DDD5D /* 发票-2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发票-2@3x.png"; sourceTree = "<group>"; };
 		58B06DC91DE6D01700F19DA0 /* dingdanluruCopy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dingdanluruCopy@2x.png"; path = "image/dingdanluruCopy@2x.png"; sourceTree = "<group>"; };
 		58B06DCA1DE6D01700F19DA0 /* dingdanluruCopy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dingdanluruCopy.png; path = image/dingdanluruCopy.png; sourceTree = "<group>"; };
 		58B06DCB1DE6D01700F19DA0 /* dingdanluruCopy@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dingdanluruCopy@3x.png"; path = "image/dingdanluruCopy@3x.png"; sourceTree = "<group>"; };
@@ -743,6 +749,9 @@
 		58E50CD51E0A0C98002B6AA3 /* 首页 */ = {
 			isa = PBXGroup;
 			children = (
+				5895437F1E5C3C1B003DDD5D /* 发票-2.png */,
+				589543801E5C3C1B003DDD5D /* 发票-2@2x.png */,
+				589543811E5C3C1B003DDD5D /* 发票-2@3x.png */,
 				5880BEBD1E5443FE0077033C /* 用户名ip@2x.png */,
 				5880BEBE1E5443FE0077033C /* 用户名ip.png */,
 				5880BEBF1E5443FE0077033C /* 用户名ip@3x.png */,
@@ -915,10 +924,12 @@
 				706B00D71DCB2DB9003953DD /* 用户名.png in Resources */,
 				58E50CD91E0A0C98002B6AA3 /* 订单.png in Resources */,
 				58427ABD1E0A8B2100118F7D /* ziliao copy 2@3x.png in Resources */,
+				589543821E5C3C1B003DDD5D /* 发票-2.png in Resources */,
 				5837EC301DE6D81E009921E8 /* 草稿箱@2x.png in Resources */,
 				58B0991F1DEE74B600B87A4E /* nv@3x.png in Resources */,
 				58B488ED1E2338BE00757B7A /* dingdan@2x.png in Resources */,
 				5880BEC11E5443FE0077033C /* 用户名ip.png in Resources */,
+				589543831E5C3C1B003DDD5D /* 发票-2@2x.png in Resources */,
 				58B06DCC1DE6D01700F19DA0 /* dingdanluruCopy@2x.png in Resources */,
 				5835B83C1E27303E006C00AE /* 待收付款项预测@2x.png in Resources */,
 				58B099221DEE74B600B87A4E /* oval107@3x.png in Resources */,
@@ -987,6 +998,7 @@
 				58B0991D1DEE74B600B87A4E /* nv.png in Resources */,
 				706B00DF1DCB34A7003953DD /* jisongbaogao@3x.png in Resources */,
 				5837EC2F1DE6D81E009921E8 /* 草稿箱.png in Resources */,
+				589543841E5C3C1B003DDD5D /* 发票-2@3x.png in Resources */,
 				700A3E101DD0748000D507F1 /* 莲和logo 80.png in Resources */,
 				5887AD401DE5A2A800FA00B1 /* 2@3x.png in Resources */,
 				703C292E1DCA41D2004FA090 /* unoperate@2x.png in Resources */,
