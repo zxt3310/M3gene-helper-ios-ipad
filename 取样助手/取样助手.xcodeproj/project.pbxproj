@@ -49,6 +49,9 @@
 		5837EC381DE6DFC0009921E8 /* touxiang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5837EC351DE6DFC0009921E8 /* touxiang@2x.png */; };
 		5837EC391DE6DFC0009921E8 /* touxiang.png in Resources */ = {isa = PBXBuildFile; fileRef = 5837EC361DE6DFC0009921E8 /* touxiang.png */; };
 		5837EC3A1DE6DFC0009921E8 /* touxiang@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5837EC371DE6DFC0009921E8 /* touxiang@3x.png */; };
+		583F1E451E5E8C17005AA677 /* gg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 583F1E421E5E8C17005AA677 /* gg@2x.png */; };
+		583F1E461E5E8C17005AA677 /* gg.png in Resources */ = {isa = PBXBuildFile; fileRef = 583F1E431E5E8C17005AA677 /* gg.png */; };
+		583F1E471E5E8C17005AA677 /* gg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 583F1E441E5E8C17005AA677 /* gg@3x.png */; };
 		58427ABC1E0A8B2100118F7D /* ziliao copy 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 58427AB91E0A8B2100118F7D /* ziliao copy 2.png */; };
 		58427ABD1E0A8B2100118F7D /* ziliao copy 2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58427ABA1E0A8B2100118F7D /* ziliao copy 2@3x.png */; };
 		58427ABE1E0A8B2100118F7D /* ziliao copy 2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58427ABB1E0A8B2100118F7D /* ziliao copy 2@2x.png */; };
@@ -224,6 +227,9 @@
 		5837EC351DE6DFC0009921E8 /* touxiang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "touxiang@2x.png"; sourceTree = "<group>"; };
 		5837EC361DE6DFC0009921E8 /* touxiang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = touxiang.png; sourceTree = "<group>"; };
 		5837EC371DE6DFC0009921E8 /* touxiang@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "touxiang@3x.png"; sourceTree = "<group>"; };
+		583F1E421E5E8C17005AA677 /* gg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gg@2x.png"; sourceTree = "<group>"; };
+		583F1E431E5E8C17005AA677 /* gg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gg.png; sourceTree = "<group>"; };
+		583F1E441E5E8C17005AA677 /* gg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gg@3x.png"; sourceTree = "<group>"; };
 		58427AB91E0A8B2100118F7D /* ziliao copy 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ziliao copy 2.png"; sourceTree = "<group>"; };
 		58427ABA1E0A8B2100118F7D /* ziliao copy 2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ziliao copy 2@3x.png"; sourceTree = "<group>"; };
 		58427ABB1E0A8B2100118F7D /* ziliao copy 2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ziliao copy 2@2x.png"; sourceTree = "<group>"; };
@@ -441,6 +447,9 @@
 		5837EC161DE6D81E009921E8 /* 侧栏 */ = {
 			isa = PBXGroup;
 			children = (
+				583F1E421E5E8C17005AA677 /* gg@2x.png */,
+				583F1E431E5E8C17005AA677 /* gg.png */,
+				583F1E441E5E8C17005AA677 /* gg@3x.png */,
 				5837EC351DE6DFC0009921E8 /* touxiang@2x.png */,
 				5837EC361DE6DFC0009921E8 /* touxiang.png */,
 				5837EC371DE6DFC0009921E8 /* touxiang@3x.png */,
@@ -917,8 +926,10 @@
 				703C29281DCA41D2004FA090 /* copy2@2x.png in Resources */,
 				58B488EA1E2338BE00757B7A /* yanbben@2x.png in Resources */,
 				5819DDD01E0D2E9E0010C88B /* pdf@3x.png in Resources */,
+				583F1E451E5E8C17005AA677 /* gg@2x.png in Resources */,
 				58B488F11E2338BE00757B7A /* guibinka.png in Resources */,
 				58E50CE51E0A1EBF002B6AA3 /* iconBack.png in Resources */,
+				583F1E461E5E8C17005AA677 /* gg.png in Resources */,
 				703C29141DCA286A004FA090 /* jisongyangben@3x.png in Resources */,
 				703C292D1DCA41D2004FA090 /* unoperate.png in Resources */,
 				706B00D71DCB2DB9003953DD /* 用户名.png in Resources */,
@@ -1003,6 +1014,7 @@
 				5887AD401DE5A2A800FA00B1 /* 2@3x.png in Resources */,
 				703C292E1DCA41D2004FA090 /* unoperate@2x.png in Resources */,
 				703C29251DCA41D2004FA090 /* copy@2x.png in Resources */,
+				583F1E471E5E8C17005AA677 /* gg@3x.png in Resources */,
 				703C29261DCA41D2004FA090 /* copy@3x.png in Resources */,
 				703C292B1DCA41D2004FA090 /* operate@2x.png in Resources */,
 				703C29271DCA41D2004FA090 /* copy2.png in Resources */,

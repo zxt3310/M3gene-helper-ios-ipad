@@ -92,7 +92,7 @@ void alertMsgView(NSString *alertMsg ,UIViewController *uvc)
     if(alertMsg)
     {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"消息" message:alertMsg preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *ula = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *ula = [UIAlertAction actionWithTitle:@"关闭" style:UIAlertActionStyleCancel handler:nil];
         
         [alert addAction:ula];
         [uvc presentViewController:alert animated:YES completion:nil];

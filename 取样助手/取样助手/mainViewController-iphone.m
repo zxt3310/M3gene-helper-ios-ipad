@@ -242,48 +242,64 @@
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(ImgtapAction:)];
         
-        UIImage *gbkImage = [UIImage imageNamed:@"guibinka"];
-        UIImageView *gbkImageView = [[UIImageView alloc] initWithFrame:CGRectMake(17*iphone_size_W,65*iphone_size_H, 54*iphone_size_W, 54*iphone_size_H)];
-        gbkImageView.image = gbkImage;
-        [cell.contentView addSubview:gbkImageView];
         
-        UILabel *gbkLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 127*iphone_size_H, SCREEN_WEIGHT/4, 16)];
+        
+        
+        
+        UIImage *gbkImage = [UIImage imageNamed:@"guibinka"];
+        UIImageView *gbkImageView = [[UIImageView alloc] initWithFrame:CGRectMake(301 *iphone_size_W, 65*iphone_size_H, 54*iphone_size_W, 54*iphone_size_H)];
+        gbkImageView.image = gbkImage;
+        [cell.contentView addSubview:gbkImageView]; //
+        
+        UILabel *gbkLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT*3/4, 127*iphone_size_H, SCREEN_WEIGHT/4, 16)];
         gbkLabel.text = @"贵宾卡录入";
         gbkLabel.textColor = [UIColor colorWithRed:74.0/255 green:74.0/255 blue:74.0/255 alpha:1.0];
         gbkLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
         gbkLabel.textAlignment = NSTextAlignmentCenter;
         [cell.contentView addSubview:gbkLabel];
         
+        
+        
+        
+        
         UIImage *ddImage = [UIImage imageNamed:@"dingdan"];
-        UIImageView *ddImageView = [[UIImageView alloc] initWithFrame:CGRectMake(114*iphone_size_W,65*iphone_size_H, 54*iphone_size_W, 54*iphone_size_H)];
+        UIImageView *ddImageView = [[UIImageView alloc] initWithFrame:CGRectMake(17*iphone_size_W,65*iphone_size_H, 54*iphone_size_W, 54*iphone_size_H)];
         ddImageView.image = ddImage;
         [cell.contentView addSubview:ddImageView];
         
-        UILabel *ddLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/4, 127*iphone_size_H, SCREEN_WEIGHT/4, 16)];
+        UILabel *ddLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 127*iphone_size_H, SCREEN_WEIGHT/4, 16)];
         ddLabel.text = @"订单录入";
         ddLabel.textColor = [UIColor colorWithRed:74.0/255 green:74.0/255 blue:74.0/255 alpha:1.0];
         ddLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
         ddLabel.textAlignment = NSTextAlignmentCenter;
         [cell.contentView addSubview:ddLabel];
         
+        
+        
+        
+        
         UIImage *ybImage = [UIImage imageNamed:@"yanbben"];
-        UIImageView *ybImageView = [[UIImageView alloc] initWithFrame:CGRectMake(208 *iphone_size_W, 65*iphone_size_H, 54*iphone_size_W, 54*iphone_size_H)];
+        UIImageView *ybImageView = [[UIImageView alloc] initWithFrame:CGRectMake(114*iphone_size_W,65*iphone_size_H, 54*iphone_size_W, 54*iphone_size_H)];
         ybImageView.image = ybImage;
         [cell.contentView addSubview:ybImageView];
         
-        UILabel *ybLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT*2/4, 127*iphone_size_H, SCREEN_WEIGHT/4, 16)];
+        UILabel *ybLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/4, 127*iphone_size_H, SCREEN_WEIGHT/4, 16)];
         ybLabel.text = @"样本寄送";
         ybLabel.textColor = [UIColor colorWithRed:74.0/255 green:74.0/255 blue:74.0/255 alpha:1.0];
         ybLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
         ybLabel.textAlignment = NSTextAlignmentCenter;
         [cell.contentView addSubview:ybLabel];
         
+        
+        
+        
+        
         UIImage *bgImage = [UIImage imageNamed:@"jisong"];
-        UIImageView *bgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(301 *iphone_size_W, 65*iphone_size_H, 54*iphone_size_W, 54*iphone_size_H)];
+        UIImageView *bgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(208 *iphone_size_W, 65*iphone_size_H, 54*iphone_size_W, 54*iphone_size_H)];
         bgImageView.image = bgImage;
         [cell.contentView addSubview:bgImageView];
         
-        UILabel *bgLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT*3/4, 127*iphone_size_H, SCREEN_WEIGHT/4, 16)];
+        UILabel *bgLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT*2/4, 127*iphone_size_H, SCREEN_WEIGHT/4, 16)];
         bgLabel.text = @"报告寄送";
         bgLabel.textColor = [UIColor colorWithRed:74.0/255 green:74.0/255 blue:74.0/255 alpha:1.0];
         bgLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
@@ -479,21 +495,6 @@
     CGPoint point = [sender locationInView:self.view];
     if(point.x <= sender.view.frame.size.width/4)
     {
-        if(allowInputGBK)
-        {
-            VIPCardViewControllerIphone *vip = [[VIPCardViewControllerIphone alloc] init];
-            vip.token = token;
-            vip.userName = userName;
-            [self.navigationController pushViewController:vip animated:YES];
-        }
-        else
-        {
-            alertMsgView(@"没有相关权限请联系管理员", self);
-            return;
-        }
-    }
-    else if(point.x <= sender.view.frame.size.width*2/4)
-    {
         if(allowRegist)
         {
             uploadIphoneViewController *uivc = [[uploadIphoneViewController alloc]init];
@@ -507,23 +508,9 @@
             alertMsgView(@"没有相关权限请联系管理员", self);
             return;
         }
+        
     }
-    else if(point.x > sender.view.frame.size.width*3/4)
-    {
-        if(allowSendReport)
-        {
-            _svc = [[sendViewControllerIphone alloc] init];
-            _svc.title = @"报告寄送";
-            _svc.isSendExpress = NO;
-            [self.navigationController pushViewController:_svc animated:YES];
-        }
-        else
-        {
-            alertMsgView(@"没有相关权限请联系管理员", self);
-            return;
-        }
-    }
-    else
+    else if(point.x <= sender.view.frame.size.width*2/4)
     {
         if(allowSendEx)
             
@@ -540,6 +527,37 @@
             return;
         }
         
+    }
+    else if(point.x > sender.view.frame.size.width*3/4)
+    {
+        if(allowInputGBK)
+        {
+            VIPCardViewControllerIphone *vip = [[VIPCardViewControllerIphone alloc] init];
+            vip.token = token;
+            vip.userName = userName;
+            [self.navigationController pushViewController:vip animated:YES];
+        }
+        else
+        {
+            alertMsgView(@"没有相关权限请联系管理员", self);
+            return;
+        }
+        
+    }
+    else
+    {
+        if(allowSendReport)
+        {
+            _svc = [[sendViewControllerIphone alloc] init];
+            _svc.title = @"报告寄送";
+            _svc.isSendExpress = NO;
+            [self.navigationController pushViewController:_svc animated:YES];
+        }
+        else
+        {
+            alertMsgView(@"没有相关权限请联系管理员", self);
+            return;
+        }
     }
 }
 

@@ -27,13 +27,14 @@
     token = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
     cacheList = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"CACHE_%@",user]];
     
-    tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, SCREEN_WEIGHT, SCREEN_HEIGHT) style:UITableViewStylePlain];
+    tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, SCREEN_WEIGHT, SCREEN_HEIGHT - 64) style:UITableViewStylePlain];
     tableview.tableFooterView = [[UITableView alloc]initWithFrame:CGRectZero];
     
     tableview.delegate = self;
     tableview.dataSource = self;
     [self.view addSubview:tableview];
-//    [self setNewBar];
+
+    //  [self setNewBar];
 }
 
 - (void)setNewBar

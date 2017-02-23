@@ -34,9 +34,9 @@
     [super viewDidLoad];  
     
     self.view.backgroundColor = [UIColor whiteColor];
-    self.items = @[@"",@"",@"",@"",@"",@""];
-    self.itemsMenu = @[@"",@"我的订单",@"订单进度",@"草稿箱",@"操作记录",@"注销"];
-    self.itemsImageName =@[@"",WDDD_IMG,WDDD_IMG,CGX_IMG,CZJL_IMG/*,WDXX_IMG,WDKH_IMG*/,WDKH_IMG];
+    self.items = @[@"",@"",@"",@"",@"",@"",@""];
+    self.itemsMenu = @[@"",@"我的订单",@"订单进度",@"草稿箱",@"操作记录",@"公告",@"注销"];
+    self.itemsImageName =@[@"",WDDD_IMG,WDDD_IMG,CGX_IMG,CZJL_IMG,GONGGAO_IMG/*,WDXX_IMG,WDKH_IMG*/,WDKH_IMG];
     // Do any additional setup after loading the view.
     
     MainVc = (mainViewControllerIpad *)_mainVc;

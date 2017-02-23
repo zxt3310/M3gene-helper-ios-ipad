@@ -44,7 +44,7 @@
         UIButton *logoutBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [logoutBtn setTitle:@"登出" forState:UIControlStateNormal];
         [logoutBtn addTarget:self action:@selector(logOutBtnClickAction) forControlEvents:UIControlEventTouchUpInside];
-        logoutBtn.frame = CGRectMake(136 * iphone_size_W, 178 * iphone_size_H, 104 * iphone_size_W, 30 * iphone_size_H);
+        logoutBtn.frame = CGRectMake(136 * iphone_size_W, 131 * iphone_size_H, 104 * iphone_size_W, 30 * iphone_size_H);
         [logoutBtn setBackgroundColor:[UIColor colorWithMyNeed:74 green:114 blue:226 alpha:1]];
         logoutBtn.layer.cornerRadius = 10;
         logoutBtn.hidden = YES;
@@ -82,6 +82,11 @@
     }
     else if (indexPath.row == 3)
     {
+        view.image = [UIImage imageNamed:@"gg"];
+        lable.text = @"公告";
+    }
+    else if (indexPath.row == 4)
+    {
         view.image = [UIImage imageNamed:@"copy2"];
         lable.text = @"修改密码";
     }
@@ -102,6 +107,7 @@
     switch (indexPath.row) {
         case 1:{
             draftViewControllerIphone *draftView = [[draftViewControllerIphone alloc] init];
+            draftView.productList = _productList;
             
             [self.navigationController pushViewController:draftView animated:YES];
         }
@@ -114,10 +120,13 @@
         }
             break;
         case 3:{
+            
+        }
+            break;
+        case 4:{
             passwdChangeViewController *pcvc = [[passwdChangeViewController alloc] init];
             pcvc.token = _token;
             [self.navigationController pushViewController:pcvc animated:YES];
-            
         }
             break;
         default:
@@ -127,7 +136,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 6;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -147,8 +156,11 @@
         case 3:
             height = 47 * iphone_size_H;
             break;
+        case 4:
+            height = 47 * iphone_size_H;
+            break;
         default:
-            height = 275 * iphone_size_H;
+            height = 228 * iphone_size_H;
             break;
     }
     return height;

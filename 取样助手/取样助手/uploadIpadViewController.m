@@ -104,7 +104,7 @@
     self = [super init];
     if(self)
     {
-        listItem = @[@"产品选择",@"扫描检验单条形码",@"检验单图片",@"检验单录入",@"客户病例",@"疾病选择"];
+        listItem = @[@"产品选择",@"扫描检验单条形码",@"检验单录入",@"检验单图片",@"客户病例",@"疾病选择"];
         
         CGRect frame = CGRectMake(280 *SCREEN_WEIGHT/1024,101, 744*SCREEN_WEIGHT /1024,SCREEN_HEIGHT - 101);
         productView = [[detailView alloc]initWithFrame:frame];
@@ -131,7 +131,7 @@
         imageViewCount = 10;
         isTakeMedicalPhoto = NO;
 
-        listView = [NSArray arrayWithObjects:productView,scanCodeView,orderPicView,registPageView,medicalPicView,nil];//,diseseSelectView, nil];
+        listView = [NSArray arrayWithObjects:productView,scanCodeView,registPageView,orderPicView,medicalPicView,nil];//,diseseSelectView, nil];
     }
     return self;
 }
@@ -317,6 +317,7 @@
                     }
 
                     [self clearUItext];
+                    [self checkUpLoad];
                 }];
             }
         });
@@ -375,6 +376,7 @@
             [self presentViewController:alert animated:YES completion:^{
                 [self clearUItext];
                 [self.refreshDelegate refresh:arry];
+                [self checkUpLoad];
             }];
         }
     }];
@@ -418,7 +420,7 @@
         detailView *view = (detailView *)listView[i];
         if(indexPath.row == i)
         {
-            if(i == 3)
+            if(i == 2)
             {
                 if(productTF.text.length == 0 || numberLable.text.length == 0)
                 {
@@ -588,6 +590,8 @@
 - (void) refreshCellNumber:(NSString *)code
 {
     numberLable.text = code;
+    
+    self.registString = @"";
     
     [self checkUpLoad];
     //[self checkOrderRequest];

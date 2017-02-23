@@ -268,21 +268,21 @@
     payInfoView.titleStr = @"付款信息";
     [self.view addSubview:payInfoView];
     
-    contentLb *payNumberLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X + 80,79*SCREEN_HEIGHT/768, 150 *SCREEN_WEIGHT/1024, 22)];
+    contentLb *payNumberLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X,79*SCREEN_HEIGHT/768, 150 *SCREEN_WEIGHT/1024, 22)];
     payNumberLb.text = @"*付款金额";
     [payInfoView addSubview:payNumberLb];
     
-    contentTextField *payNumberTf = [[contentTextField alloc] initWithFrame:CGRectMake(158*SCREEN_WEIGHT/1024 + 80, 69*SCREEN_HEIGHT/768,0,0)];
+    contentTextField *payNumberTf = [[contentTextField alloc] initWithFrame:CGRectMake(158*SCREEN_WEIGHT/1024, 69*SCREEN_HEIGHT/768,0,0)];
     payNumberTf.tag = Origin_TAG + 10;
     payNumberTf.delegate = self;
     payNumberTf.text = _payment_amount;
     [payInfoView addSubview:payNumberTf];
     
-    contentLb *payType = [[contentLb alloc] initWithFrame:CGRectMake(347*SCREEN_WEIGHT/1024 + 250, payNumberLb.frame.origin.y, 110*SCREEN_WEIGHT/1024, 22)];
+    contentLb *payType = [[contentLb alloc] initWithFrame:CGRectMake(347*SCREEN_WEIGHT/1024, payNumberLb.frame.origin.y, 110*SCREEN_WEIGHT/1024, 22)];
     payType.text = @"*付款方式";
     [payInfoView addSubview:payType];
     
-    UIComboBox *payTypeCbo = [[UIComboBox alloc] initWithFrame:CGRectMake(TF_Origin_Middle_X + 250, payNumberTf.frame.origin.y, 185*SCREEN_WEIGHT/1024, 40*SCREEN_HEIGHT/768)];
+    UIComboBox *payTypeCbo = [[UIComboBox alloc] initWithFrame:CGRectMake(TF_Origin_Middle_X, payNumberTf.frame.origin.y, 185*SCREEN_WEIGHT/1024, 40*SCREEN_HEIGHT/768)];
     payTypeCbo.comboList = @[@"刷卡",@"微信",@"支付宝"];
     payTypeCbo.placeColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1];
     payTypeCbo.textColor = [UIColor colorWithMyNeed:117 green:117 blue:117 alpha:1];
@@ -299,9 +299,10 @@
     payDateTf.tag = Origin_TAG + 12;
     payDateTf.delegate = self;
     payDateTf.text = _pay_time;
+    payDateTf.placeholder = @"1";
     [payInfoView addSubview:payDateTf];
     
-    contentLb *payTypeDitailLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X + 80, 130*SCREEN_HEIGHT/768, 150 *SCREEN_WEIGHT/1024, 22)];
+    contentLb *payTypeDitailLb = [[contentLb alloc] initWithFrame:CGRectMake(LB_Origin_Left_X, 130*SCREEN_HEIGHT/768, 150 *SCREEN_WEIGHT/1024, 22)];
     payTypeDitailLb.text = @"*付款方式信息";
     [payInfoView addSubview:payTypeDitailLb];
     
@@ -311,7 +312,7 @@
     payTypeDitailTf.text = _pay_info;
     [payInfoView addSubview:payTypeDitailTf];
     
-    contentLb *payAddition = [[contentLb alloc] initWithFrame:CGRectMake(351*SCREEN_WEIGHT/1024 + 80, 136*SCREEN_HEIGHT/768, 500, 16)];
+    contentLb *payAddition = [[contentLb alloc] initWithFrame:CGRectMake(351*SCREEN_WEIGHT/1024, 136*SCREEN_HEIGHT/768, 500, 16)];
     payAddition.textAlignment = NSTextAlignmentLeft;
     payAddition.text = @"（刷卡－填写卡后4位，支付宝－填写支付宝名称,微信－填写微信号）";
     payAddition.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
@@ -347,9 +348,6 @@
     birthTf.inputAccessoryView = bar;
     
     [self productRequest];
-    
-    payDateLb.hidden = YES;
-    payDateTf.hidden = YES;
 }
 
 - (void)switchDateAction

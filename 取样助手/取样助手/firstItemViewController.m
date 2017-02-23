@@ -32,7 +32,7 @@
                                     WKWebsiteDataTypeMemoryCache,
 //                                    WKWebsiteDataTypeLocalStorage,
 //                                    WKWebsiteDataTypeCookies,
-  //                                  WKWebsiteDataTypeSessionStorage,
+//                                    WKWebsiteDataTypeSessionStorage,
 //                                    WKWebsiteDataTypeIndexedDBDatabases,
 //                                    WKWebsiteDataTypeWebSQLDatabases
                                     ]];
@@ -68,7 +68,7 @@
     
     if(!_isOperatePage)
     {
-        [request addValue:_cookie forHTTPHeaderField:@"Set-Cookie"];
+        [request addValue:_cookie forHTTPHeaderField:@"Cookie"];
         //[request addValue:_token forHTTPHeaderField:@"token"];
         NSLog(@"%@",request.allHTTPHeaderFields);
     }

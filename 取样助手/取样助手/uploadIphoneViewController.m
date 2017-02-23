@@ -55,6 +55,11 @@
         allowRigest = YES;
         x = 0;
         y = 0;
+        
+        _productId = @"";
+        _number = @"";
+        _registString = @"";
+        _productName = @"";
   
         imageViewCount = 10;  //从10开始
     }
@@ -64,6 +69,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
+    self.title = @"订单录入";
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WEIGHT,SCREEN_HEIGHT - SCREEN_HEIGHT/12.35) style:UITableViewStylePlain];
     [self.tableView setDelegate:self];
@@ -91,8 +97,8 @@
     
     //取消按钮
     UIButton *cancelBt = [[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth/2, SCREEN_HEIGHT - SCREEN_HEIGHT/12.35, SCREEN_WEIGHT/2,SCREEN_HEIGHT/12.35)];
-    [cancelBt setTitle:@"取消" forState:UIControlStateNormal];
-    [cancelBt setBackgroundColor:[UIColor colorWithRed:117.0/255 green:117.0/255 blue:117.0/255 alpha:1]];
+    [cancelBt setTitle:@"暂存到草稿箱" forState:UIControlStateNormal];
+    [cancelBt setBackgroundColor:[UIColor colorWithRed:88.0/255 green:207.0/255 blue:225.0/255 alpha:1]];
     [cancelBt addTarget:self action:@selector(cancelBtClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:cancelBt];
 
@@ -111,6 +117,8 @@
     productPick.showsSelectionIndicator = YES;
     productPick.hidden = YES;
     [self.view addSubview:productPick];
+    
+    [self checkUpLoad];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -137,7 +145,7 @@
     if (indexPath.row == 0) {
         height = SCREEN_HEIGHT/10.42;
     }
-    else if (indexPath.row == 2)
+    else if (indexPath.row == 3)
     {
         height = SCREEN_HEIGHT/3.39;
     }
@@ -265,7 +273,7 @@
     }
     
     //检验单照片
-    else if(indexPath.row == 3)
+    else if(indexPath.row == 2)
     {
         
         UILabel *nameLable = (UILabel *)[cell.contentView viewWithTag:1];
@@ -280,7 +288,7 @@
     }
     
     //检验单录入
-    else if (indexPath.row == 2)
+    else if (indexPath.row == 3)
     {
         UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:4];
         imageView.hidden = NO;
@@ -356,7 +364,7 @@
 //录入按钮点击
 - (void)registe{
     
-    if(!_productName || !_number)
+    if(_productName.length==0 || _number.length==0)
     {
         alertMsgView(@"请扫码或选择产品名称", self);
         return;
@@ -368,12 +376,12 @@
     
     orderRegisteViewController *orvc = [[orderRegisteViewController alloc] init];
     orvc.transDelegate = self;
-    orvc.registStr = _registString;
     
     //orvc.orderUrl = [NSString stringWithFormat:@"%@/%@/%@?token=%@",orderComplate_URL,_number,_productId,token];
     
     NSString *isblank;
     if (_registString.length >0) {
+        orvc.registStr = _registString;
         isblank = @"0";
     }
     else
@@ -410,16 +418,6 @@
 //    _sendBt.enabled = NO;
 //    _sendBt.backgroundColor = [UIColor colorWithRed:205.0/255 green:205.0/255 blue:205.0/255 alpha:1];
 }
-
-
-//图片长点击事件
-//- (void)imageViewClick
-//{
-//    // UIImageView *view = (UIImageView *)[cell.contentView viewWithTag:4];
-//    // view.image = nil;
-//    _imageView.image = nil;
-//  //  [self.tableView reloadData];
-//}
 
 #pragma mark PickView部分
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -542,6 +540,7 @@
                     }
                     
                     [self clearText];
+                    [self checkUpLoad];
                 }];
             }
             
@@ -591,6 +590,7 @@
         [self presentViewController:alert animated:YES completion:^{
             [self clearText];
             [self.refreshDeletage refresh:arry];
+            [self checkUpLoad];
         }];
     }
 }
@@ -600,6 +600,7 @@
 - (void) refreshCellNumber:(NSString *)code
 {
     _number = code;
+    _registString = @""; //清空jason字符串防止订单内容串号
     
     NSString *alert = [self isAllowSend];
     [self checkOrderRequest];
@@ -667,7 +668,7 @@
             _sendBt.backgroundColor = [UIColor colorWithRed:74.0/255 green:144.0/255 blue:226.0/255 alpha:1];
         }
         
-        NSIndexPath *indexPath2=[NSIndexPath indexPathForRow:2 inSection:0];
+        NSIndexPath *indexPath2=[NSIndexPath indexPathForRow:3 inSection:0];
         [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath2,nil] withRowAnimation:UITableViewRowAnimationNone];
     }
    
@@ -764,7 +765,23 @@
 }
 
 
-#pragma mark 图库回调
+#pragma mark 上传检查
+
+- (void)checkUpLoad
+{
+    CFDataRef bitmapData = CGDataProviderCopyData(CGImageGetDataProvider(_upOrderImg.CGImage));
+    if(_productName.length>0 && _productId.length>0 && _number.length > 0 && bitmapData>0)
+    {
+        _sendBt.enabled = YES;
+        _sendBt.backgroundColor = [UIColor colorWithMyNeed:74 green:144 blue:226 alpha:1];
+    }
+    else
+    {
+        _sendBt.enabled = NO;
+        _sendBt.backgroundColor = [UIColor colorWithMyNeed:171 green:171 blue:171 alpha:1];
+    }
+}
+
 
 
 #pragma mark 图片压缩
