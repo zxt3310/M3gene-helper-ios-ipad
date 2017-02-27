@@ -806,76 +806,76 @@
     
     //改用苹果官方store接口判断版本
     NSString *urlStr = [NSString stringWithFormat:@"%@?id=%@",appStore_Version_POST_URL,app_Id];// @"http://itunes.apple.com/cn/lookup?id=1203188094";
-    // dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
     
-    NSData *responseData = sendRequestWithFullURL(urlStr, nil);
+        NSData *responseData = sendRequestWithFullURL(urlStr, nil);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if (!responseData) {
+                NSLog(@"netWork doesn't work");
+                return ;
+            }
+            
+            NSDictionary *returnDic = parseJsonResponse(responseData);
+            if (!returnDic) {
+                NSLog(@"return Wrong Data");
+                return;
+            }
+            
+            NSNumber *resault = JsonValue([returnDic objectForKey:@"resultCount"],@"NSDictionary");
+            if (!resault) {
+                NSLog(@"return Wrong Data Check API");
+                return;
+            }
+            
+            NSInteger code = [resault integerValue];
+            if (code == 0) {
+                NSString *errmsg = @"fail to check version";//JsonValue([returnDic objectForKey:@"message"], @"NSString");
+                NSLog(@"%@",errmsg);
+                return;
+            }
+            
+            //NSArray *versionArray = JsonValue([JsonValue([returnDic objectForKey:@"data"],@"NSDictionary") objectForKey:@"list"], @"NSArray");
+            // NSString *newVersion = [versionArray[0] objectForKey:@"appVersion"]; //新版本
+            NSArray *stroeInfoDic = JsonValue([returnDic objectForKey:@"results"],@"NSDictionary");
+            if (stroeInfoDic.count == 0) {
+                NSLog(@"this app is not exist in appstore");
+                return;
+            }
+            NSString *newVersion = [stroeInfoDic[0] objectForKey:@"version"];
+            NSString *updateUrl = [stroeInfoDic[0] objectForKey:@"trackViewUrl"];
+            NSDictionary *appInfoDic = [[NSBundle mainBundle] infoDictionary];
+            NSString *current_version = [appInfoDic objectForKey:@"CFBundleShortVersionString"]; //当前版本
+            NSArray *new_ver_arry = [newVersion componentsSeparatedByString:@"."];
+            NSArray *cur_ver_arry = [current_version componentsSeparatedByString:@"."];
+            
+            if ([new_ver_arry[0] integerValue] > [cur_ver_arry[0] integerValue] || [new_ver_arry[1] integerValue] > [cur_ver_arry[1] integerValue])
+            {
+                UIAlertController *alertCtr = [UIAlertController alertControllerWithTitle:@"消息" message:@"有重要版本需要更新，忽略会导致无法使用" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *agreeAction = [UIAlertAction actionWithTitle:@"前往更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[updateUrl stringByReplacingOccurrencesOfString:@"https" withString:@"itms-apps"]]];
+                    [self presentViewController:alertCtr animated:YES completion:nil];
+                }];
+                [alertCtr addAction:agreeAction];
+                //[self presentViewController:alertCtr animated:YES completion:nil];
+                UIViewController *viewC = [[UIApplication sharedApplication] keyWindow].rootViewController;
+                [viewC presentViewController:alertCtr animated:YES completion:nil];
+            }
+            else if ([new_ver_arry[2] integerValue] > [cur_ver_arry[2] integerValue])
+            {
+                UIAlertController *alertCtr = [UIAlertController alertControllerWithTitle:@"消息" message:@"有可用的新版本,建议更新" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *agreeAction = [UIAlertAction actionWithTitle:@"前往更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[updateUrl stringByReplacingOccurrencesOfString:@"https" withString:@"itms-apps"]]];
+                }];
+                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"忽略" style:UIAlertActionStyleCancel handler:nil];
+                [alertCtr addAction:agreeAction];
+                [alertCtr addAction:cancelAction];
+                [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:alertCtr animated:YES completion:nil];
+            }
+        });
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        if (!responseData) {
-            NSLog(@"netWork doesn't work");
-            return ;
-        }
-        
-        NSDictionary *returnDic = parseJsonResponse(responseData);
-        if (!returnDic) {
-            NSLog(@"return Wrong Data");
-            return;
-        }
-        
-        NSNumber *resault = JsonValue([returnDic objectForKey:@"resultCount"],@"NSDictionary");
-        if (!resault) {
-            NSLog(@"return Wrong Data Check API");
-            return;
-        }
-        
-        NSInteger code = [resault integerValue];
-        if (code == 0) {
-            NSString *errmsg = @"fail to check version";//JsonValue([returnDic objectForKey:@"message"], @"NSString");
-            NSLog(@"%@",errmsg);
-            return;
-        }
-        
-        //NSArray *versionArray = JsonValue([JsonValue([returnDic objectForKey:@"data"],@"NSDictionary") objectForKey:@"list"], @"NSArray");
-        // NSString *newVersion = [versionArray[0] objectForKey:@"appVersion"]; //新版本
-        NSArray *stroeInfoDic = JsonValue([returnDic objectForKey:@"results"],@"NSDictionary");
-        if (stroeInfoDic.count == 0) {
-            NSLog(@"this app is not exist in appstore");
-            return;
-        }
-        NSString *newVersion = [stroeInfoDic[0] objectForKey:@"version"];
-        NSString *updateUrl = [stroeInfoDic[0] objectForKey:@"trackViewUrl"];
-        NSDictionary *appInfoDic = [[NSBundle mainBundle] infoDictionary];
-        NSString *current_version = [appInfoDic objectForKey:@"CFBundleShortVersionString"]; //当前版本
-        NSArray *new_ver_arry = [newVersion componentsSeparatedByString:@"."];
-        NSArray *cur_ver_arry = [current_version componentsSeparatedByString:@"."];
-        
-        if ([new_ver_arry[0] integerValue] > [cur_ver_arry[0] integerValue] || [new_ver_arry[1] integerValue] > [cur_ver_arry[1] integerValue])
-        {
-            UIAlertController *alertCtr = [UIAlertController alertControllerWithTitle:@"消息" message:@"有重要版本需要更新，忽略会导致无法使用" preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *agreeAction = [UIAlertAction actionWithTitle:@"前往更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[updateUrl stringByReplacingOccurrencesOfString:@"https" withString:@"itms-apps"]]];
-                [self presentViewController:alertCtr animated:YES completion:nil];
-            }];
-            [alertCtr addAction:agreeAction];
-            //[self presentViewController:alertCtr animated:YES completion:nil];
-            UIViewController *viewC = [[UIApplication sharedApplication] keyWindow].rootViewController;
-            [viewC presentViewController:alertCtr animated:YES completion:nil];
-        }
-        else if ([new_ver_arry[2] integerValue] > [cur_ver_arry[2] integerValue])
-        {
-            UIAlertController *alertCtr = [UIAlertController alertControllerWithTitle:@"消息" message:@"有可用的新版本,建议更新" preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *agreeAction = [UIAlertAction actionWithTitle:@"前往更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[updateUrl stringByReplacingOccurrencesOfString:@"https" withString:@"itms-apps"]]];
-            }];
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"忽略" style:UIAlertActionStyleCancel handler:nil];
-            [alertCtr addAction:agreeAction];
-            [alertCtr addAction:cancelAction];
-            [self presentViewController:alertCtr animated:YES completion:nil];
-        }
     });
-    
-    //   });
 }
 
 - (void)userBtnAction

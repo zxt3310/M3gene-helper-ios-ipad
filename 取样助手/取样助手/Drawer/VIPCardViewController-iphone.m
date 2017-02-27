@@ -185,14 +185,14 @@
     cardIdLb.text = @"*卡号";
     [cardInfoView addSubview:cardIdLb];
     
-    cardCbo = [[UIComboBox alloc] initWithFrame:CGRectMake(productCbo.frame.origin.x, 88*iphone_size_H, 270,24)];
+    cardCbo = [[UIComboBox alloc] initWithFrame:CGRectMake(productCbo.frame.origin.x, 88*iphone_size_H, 270*iphone_size_W,24)];
     cardCbo.tag = Origin_TAG;
     cardCbo.placeColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1];
     cardCbo.textColor = [UIColor colorWithMyNeed:117 green:117 blue:117 alpha:1];
     cardCbo.textFont = TEXT_FONT;
     cardCbo.comboList = cardList;
     if (_code) {
-        [cardCbo setValue:[NSString stringWithFormat:@"LH%@",_code] forKey:@"selectString"];
+        [cardCbo setValue:[NSString stringWithFormat:@"LH-%@",_code] forKey:@"selectString"];
     }
     [cardInfoView addSubview:cardCbo];
 
@@ -404,7 +404,7 @@
                     UIComboBox *tempCbo = (UIComboBox *)control;
                     if(tempCbo.tag == Origin_TAG)
                     {
-                        [postDic setValue:[tempCbo.selectString stringByReplacingOccurrencesOfString:@"LH" withString:@""] forKey:jsonKeyArray[tempCbo.tag - 100]];
+                        [postDic setValue:tempCbo.selectString forKey:jsonKeyArray[tempCbo.tag - 100]];
                     }
                     else
                     {
@@ -714,7 +714,7 @@
         NSNumber *cardType = JsonValue([cardDic objectForKey:@"card_type"],@"NSNumber");
         NSInteger type = [cardType integerValue];
         if (type == indexPath.row - 1) {
-            NSString *cardId = [NSString stringWithFormat:@"LH%@",JsonValue([cardDic objectForKey:@"code"],@"NSString")];
+            NSString *cardId = [NSString stringWithFormat:@"LH-%@",JsonValue([cardDic objectForKey:@"code"],@"NSString")];
             [cardArray addObject:cardId];
         }
     }

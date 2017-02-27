@@ -1225,11 +1225,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/leftDrawerViewController.m"
-            timestampString = "506487071.866091"
+            timestampString = "509871274.428695"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "273"
-            endingLineNumber = "273"
+            startingLineNumber = "281"
+            endingLineNumber = "281"
             landmarkName = "-updateToken:name:role:"
             landmarkType = "7">
          </BreakpointContent>
@@ -4511,6 +4511,22 @@
             startingLineNumber = "886"
             endingLineNumber = "886"
             landmarkName = "-userBtnAction"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/mainViewController-iphone.m"
+            timestampString = "509595833.655174"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "815"
+            endingLineNumber = "815"
+            landmarkName = "-checkUpdata"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

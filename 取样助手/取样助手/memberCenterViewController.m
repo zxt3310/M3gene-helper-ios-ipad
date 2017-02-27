@@ -120,7 +120,12 @@
         }
             break;
         case 3:{
-            
+            firstItemViewController *fivc = [[firstItemViewController alloc] init];
+            fivc.token = _token;
+            fivc.title = @"公告";
+            fivc.urlStr = news_URL;
+            [self.navigationController pushViewController:fivc animated:YES];
+
         }
             break;
         case 4:{

@@ -216,6 +216,14 @@
                 orvc.token = lastToken;
                 [self.navigationController pushViewController:orvc animated:YES];
             }
+            else if([self.itemsMenu[indexPath.row] isEqualToString:@"公告"])
+            {
+                firstItemViewController *fivc = [[firstItemViewController alloc] init];
+                fivc.token = lastToken;
+                fivc.title = @"公告";
+                fivc.urlStr = news_URL;
+                [self.UF_ViewController.navigationController pushViewController:fivc animated:YES];
+            }
             else if([self.itemsMenu[indexPath.row] isEqualToString:@"注销"])
             {
                 @try {
