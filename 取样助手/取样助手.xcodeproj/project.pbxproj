@@ -866,7 +866,7 @@
 				TargetAttributes = {
 					5889D8BB1DC091620052C6D7 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 429WZWZX68;
+						DevelopmentTeam = S2B89SD35E;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -1220,7 +1220,7 @@
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
-				DEVELOPMENT_TEAM = 429WZWZX68;
+				DEVELOPMENT_TEAM = S2B89SD35E;
 				INFOPLIST_FILE = "取样助手/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1240,7 +1240,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Life Healthcare(Beijing) Co.,Ltd. (S2B89SD35E)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
-				DEVELOPMENT_TEAM = 429WZWZX68;
+				DEVELOPMENT_TEAM = S2B89SD35E;
 				INFOPLIST_FILE = "取样助手/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -24,6 +24,7 @@
 @property NSString *LXDH;
 @property NSString *JSDZ;
 @property NSString *CSRQ;
+@property NSString *SYJG;
 @property NSInteger SEX;
 @property NSString *MZ;
 @property NSString *JG;

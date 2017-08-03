@@ -60,6 +60,7 @@
     detailView *registPageView;
     detailView *medicalPicView;
     detailView *diseseSelectView;
+    registViewNew *registNewView;
 
     
     NSArray *listView;
@@ -113,6 +114,7 @@
         registPageView = [[detailView alloc]initWithFrame:frame];
         medicalPicView = [[detailView alloc]initWithFrame:frame];
         diseseSelectView = [[detailView alloc]initWithFrame:frame];
+        //registNewView = [[registViewNew alloc] initWithFrame:frame];
         
         isReEditOperate = NO;
         
@@ -131,7 +133,7 @@
         imageViewCount = 10;
         isTakeMedicalPhoto = NO;
 
-        listView = [NSArray arrayWithObjects:productView,scanCodeView,registPageView,orderPicView,medicalPicView,nil];//,diseseSelectView, nil];
+        listView = [NSArray arrayWithObjects:productView,scanCodeView,registPageView,diseseSelectView,orderPicView,medicalPicView,nil];
     }
     return self;
 }
@@ -365,7 +367,7 @@
         @try
         {
             [[NSUserDefaults standardUserDefaults] setObject:arry forKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
-            [[NSUserDefaults standardUserDefaults]synchronize];
+            [[NSUserDefaults standardUserDefaults] synchronize];
         } @catch (NSException *exception) {
             NSLog(@"%@",exception);
         } @finally {

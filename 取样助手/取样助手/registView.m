@@ -59,7 +59,7 @@
 @end
 
 
-
+#define Origin_TAG 100
 @implementation registViewNew
 {
     UIDatePicker *datePicker;
@@ -69,6 +69,7 @@
     float lastScroll;
     NSArray *organization_id_Array;
     NSArray *doctor_id_Array;
+    UIComboBox *SYJGbox;
     UIComboBox *SJDWcb;
     UIComboBox *SJYScb;
 }
@@ -115,20 +116,26 @@
     [blue1 addSubview:tag1];
     [self addSubview:blue1];
     
-    //送检样本
+    //送检样本 100
     contentLable *SJYBlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:92 isLeft:YES isLable:YES] andText:@"送检样本"];
     [self addSubview:SJYBlb];
-    contentTF *SJYBtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:92 isLeft:YES isLable:NO]];
-    SJYBtf.text = _SJYB;
+    UISingleSelector *SJYBtf = [[UISingleSelector alloc] initWithFrame:[self caculateFrameY:92 isLeft:YES isLable:NO]];
+   // SJYBtf.text = _SJYB;
+    SJYBtf.itemList = @[@"血清",@"组织"];
+    SJYBtf.itemId = @[@"1",@"2"];
+    SJYBtf.switchId = _SJYB;
+    SJYBtf.tag = Origin_TAG;
     [self addSubview:SJYBtf];
-    //订单编号
+   
+    //订单编号 101
     contentLable *DDBHlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:92 isLeft:NO isLable:YES] andText:@"送检编号"];
     [self addSubview:DDBHlb];
     DDBHtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:92 isLeft:NO isLable:NO]];
     DDBHtf.text = _DDBH;
+    DDBHtf.tag = Origin_TAG +1;
     [self addSubview:DDBHtf];
     
-    //采集日期
+    //采集日期 102
     contentLable *CJRQlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:168 isLeft:YES isLable:YES] andText:@"采集日期"];
     [self addSubview:CJRQlb];
     CJRQtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:168 isLeft:YES isLable:NO]];
@@ -143,32 +150,45 @@
     [item setTintColor:[UIColor blueColor]];
     toolBar.items = @[item];
     CJRQtf.inputAccessoryView = toolBar;
+    CJRQtf.tag = Origin_TAG +2;
     [self addSubview:CJRQtf];
     
     
-    //送检单位
+    //送检单位 103
     contentLable *SJDWlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:130 isLeft:YES isLable:YES] andText:@"送检机构"];
     [self addSubview:SJDWlb];
     
     SJDWcb = [[UIComboBox alloc] initWithFrame:[self caculateFrameY:130 isLeft:YES isLable:NO]];
-    SJDWcb.tag = 100;
     SJDWcb.delegate = self;
     SJDWcb.placeColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1];
     SJDWcb.comborColor = SJDWcb.textColor = [UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1];
     SJDWcb.textFont = [UIFont fontWithName:@"STHeitiSC-Light" size:16];
+    SJDWcb.tag = Origin_TAG +3;
     [self addSubview:SJDWcb];
     
-    //送检医生
+    //送检医生 104
     contentLable *SJYSlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:130 isLeft:NO isLable:YES] andText:@"送检医生"];
     [self addSubview:SJYSlb];
     
     SJYScb = [[UIComboBox alloc]initWithFrame:[self caculateFrameY:130 isLeft:NO isLable:NO]];
-    SJYScb.tag = 101;
     SJYScb.delegate = self;
     SJYScb.placeColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1];
     SJYScb.comborColor = SJYScb.textColor = [UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1];
     SJYScb.textFont = [UIFont fontWithName:@"STHeitiSC-Light" size:16];
+    SJYScb.tag = Origin_TAG +4;
     [self addSubview:SJYScb];
+    
+    //收样机构 105
+    contentLable *SYJGlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:168 isLeft:NO isLable:YES] andText:@"收样机构"];
+    [self addSubview:SYJGlb];
+    SYJGbox = [[UIComboBox alloc] initWithFrame:[self caculateFrameY:168 isLeft:NO isLable:NO]];
+    
+    SYJGbox.delegate = self;
+    SYJGbox.placeColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1];
+    SYJGbox.comborColor = SYJGbox.textColor = [UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1];
+    SYJGbox.textFont = [UIFont fontWithName:@"STHeitiSC-Light" size:16];
+    SYJGbox.tag = Origin_TAG + 5;
+    [self addSubview:SYJGbox];
     
     //分割线------------------------------------------------------------------------------------------------------------------------
     contentLable *tag2 = [[contentLable alloc] initWithFrame:[self caculateFrameY:6 isLeft:YES isLable:YES] andText:@"受检人信息"];
@@ -178,53 +198,62 @@
     [blue2 addSubview:tag2];
     [self addSubview:blue2];
     
-    //姓名
+    //姓名 106
     contentLable *XMlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:257 isLeft:YES isLable:YES] andText:@"姓      名"];
     [self addSubview:XMlb];
     contentTF *XMtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:257 isLeft:YES isLable:NO]];
     XMtf.text = _NAME;
+    XMtf.tag = Origin_TAG + 6;
     [self addSubview:XMtf];
-    //身份证号
+    //身份证号 107
     contentLable *SFZHlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:257 isLeft:NO isLable:YES] andText:@"身份证号"];
     [self addSubview:SFZHlb];
     contentTF *SFZHtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:257 isLeft:NO isLable:NO]];
     SFZHtf.text = _SFZH;
+    SFZHtf.tag = Origin_TAG + 7;
     [self addSubview:SFZHtf];
     
     
-    //联系电话
+    //联系电话 108
     contentLable *LXDHlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:290 isLeft:YES isLable:YES] andText:@"联系电话"];
     [self addSubview:LXDHlb];
     contentTF *LXDHtf  = [[contentTF alloc] initWithFrame:[self caculateFrameY:290 isLeft:YES isLable:NO]];
     LXDHtf.text = _LXDH;
+    LXDHtf.tag = Origin_TAG + 8;
     [self addSubview:LXDHtf];
-    //报告寄送地址
+    
+    //报告寄送地址 109
     contentLable *BGJSDZlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:290 isLeft:NO isLable:YES] andText:@"寄送地址"];
     [self addSubview:BGJSDZlb];
     contentTF *BGJSDZtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:290 isLeft:NO isLable:NO]];
     BGJSDZtf.text = _JSDZ;
+    BGJSDZtf.tag = Origin_TAG + 9;
     [self addSubview:BGJSDZtf];
     
     
-    //出生日期
+    //出生日期 110
     contentLable *CSRQlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:323 isLeft:YES isLable:YES] andText:@"出生日期"];
     [self addSubview:CSRQlb];
     contentTF *CSRQtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:323 isLeft:YES isLable:NO]];
     CSRQtf.text = _CSRQ;
+    CSRQtf.tag = Origin_TAG +10;
     [self addSubview:CSRQtf];
     
     
-    //民族
+    //民族 111
     contentLable *MZlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:359 isLeft:YES isLable:YES] andText:@"民      族"];
     [self addSubview:MZlb];
     contentTF *MZtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:359 isLeft:YES isLable:NO]];
     MZtf.text = _MZ;
+    MZtf.tag = Origin_TAG + 11;
     [self addSubview:MZtf];
-    //籍贯
+    
+    //籍贯 112
     contentLable *JGlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:359 isLeft:NO isLable:YES] andText:@"籍      贯"];
     [self addSubview:JGlb];
     contentTF *JGtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:359 isLeft:NO isLable:NO]];
     JGtf.text = _JG;
+    JGtf.tag = Origin_TAG + 12;
     [self addSubview:JGtf];
     
     //性别
@@ -331,6 +360,7 @@
 - (void)didMoveToWindow
 {
     [self orgnizitionRequest];
+    [self receiveOrgRequest];
 }
 
 
@@ -468,6 +498,11 @@
 {
     if (comboBox.tag == 100) {
         [self doctorRequest:organization_id_Array[indexPath.row - 1]];
+        
+        //清空关联box
+        UIComboBox *box = (UIComboBox *)[self viewWithTag:101];
+        [box resetCombo];
+        
         NSLog(@"%@",organization_id_Array[comboBox.selectId]);
     }
     
@@ -580,9 +615,57 @@
             }
             doctor_id_Array = [id_array copy];
             SJYScb.comboList = [name_array copy];
-
         });
     });
 }
+
+- (void)receiveOrgRequest{
+    UIViewController *superController;
+    for (UIView *next = [self superview];next;next = next.superview) {
+        UIResponder *nextresponder = [next nextResponder];
+        if ([nextresponder isKindOfClass:[UIViewController class]]) {
+            superController = (UIViewController *)nextresponder;
+            break;
+        }
+    }
+    
+    NSString *urlStr = [NSString stringWithFormat:@"%@?token=%@",RecieveORG_URL,_token];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSData *responseData = sendGETRequest(urlStr, nil);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if (!responseData) {
+                alertMsgView(@"网络连接错误，无法获取医生列表，请检查网络", superController);
+            }
+            NSDictionary *retunDic = parseJsonResponse(responseData);
+            if (!retunDic) {
+                alertMsgView(@"无法获取医生列表，返回数据有误", superController);
+                return;
+            }
+            NSNumber *resault = [retunDic objectForKey:@"err"];
+            if (!resault) {
+                alertMsgView(@"无法获取医生列表，返回数据有误", superController);
+                return;
+            }
+            NSInteger errmsg = [resault integerValue];
+            if (errmsg > 0) {
+                alertMsgView([retunDic objectForKey:@"errmsg"], superController);
+                return;
+            }
+            NSArray *doctor_array = [retunDic objectForKey:@"data"];
+            NSMutableArray *id_array = [[NSMutableArray alloc] init];
+            NSMutableArray *name_array = [[NSMutableArray alloc] init];
+            for (int i=0; i<doctor_array.count; i++) {
+                NSDictionary *doc_dic = doctor_array[i];
+                [id_array addObject:[doc_dic objectForKey:@"id"]];
+                [name_array addObject:[NSString stringWithFormat:@"%@",[doc_dic objectForKey:@"name"]]];
+            }
+            SYJGbox.comboList = [name_array copy];
+        });
+    });
+}
+
+
 
 @end
