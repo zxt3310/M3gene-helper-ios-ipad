@@ -60,6 +60,10 @@
 
 
 #define Origin_TAG 100
+
+#define Offset_Y 50
+#define Offset_Last 30
+
 @implementation registViewNew
 {
     UIDatePicker *datePicker;
@@ -69,6 +73,7 @@
     float lastScroll;
     NSArray *organization_id_Array;
     NSArray *doctor_id_Array;
+    NSArray *recieve_id_array;
     UIComboBox *SYJGbox;
     UIComboBox *SJDWcb;
     UIComboBox *SJYScb;
@@ -79,7 +84,7 @@
     self = [super initWithFrame:frame];
     if(self)
     {
-        self.contentSize = CGSizeMake(frame.size.width, 1026*SCREEN_HEIGHT/768);
+        self.contentSize = CGSizeMake(frame.size.width, 1026*SCREEN_HEIGHT/768 + Offset_Y + Offset_Last);
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
         tap.numberOfTapsRequired = 1;
@@ -87,6 +92,7 @@
         tap.delegate = self;
         [self addGestureRecognizer:tap];
     }
+    _SJYB = _SEX = _AZS_SWITCH = _JZAZS_SWITCH = @"1";
     return self;
 }
 
@@ -116,7 +122,7 @@
     [blue1 addSubview:tag1];
     [self addSubview:blue1];
     
-    //送检样本 100
+    //送检样本 101
     contentLable *SJYBlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:92 isLeft:YES isLable:YES] andText:@"送检样本"];
     [self addSubview:SJYBlb];
     UISingleSelector *SJYBtf = [[UISingleSelector alloc] initWithFrame:[self caculateFrameY:92 isLeft:YES isLable:NO]];
@@ -124,37 +130,36 @@
     SJYBtf.itemList = @[@"血清",@"组织"];
     SJYBtf.itemId = @[@"1",@"2"];
     SJYBtf.switchId = _SJYB;
-    SJYBtf.tag = Origin_TAG;
+    SJYBtf.tag = Origin_TAG + 1;
     [self addSubview:SJYBtf];
    
-    //订单编号 101
-    contentLable *DDBHlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:92 isLeft:NO isLable:YES] andText:@"送检编号"];
+    //订单编号
+    contentLable *DDBHlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:92 isLeft:NO isLable:YES] andText:@"样本编号"];
     [self addSubview:DDBHlb];
     DDBHtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:92 isLeft:NO isLable:NO]];
     DDBHtf.text = _DDBH;
-    DDBHtf.tag = Origin_TAG +1;
     [self addSubview:DDBHtf];
     
     //采集日期 102
-    contentLable *CJRQlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:168 isLeft:YES isLable:YES] andText:@"采集日期"];
-    [self addSubview:CJRQlb];
-    CJRQtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:168 isLeft:YES isLable:NO]];
-    CJRQtf.text = _CJRQ;
-    datePicker = [[UIDatePicker alloc] init];
-    datePicker.datePickerMode = UIDatePickerModeDate;
-    datePicker.date = [NSDate date];
-    CJRQtf.inputView = datePicker;
-    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WEIGHT, 40)];
-    toolBar.tintColor = [UIColor whiteColor];
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"确认" style:UIBarButtonItemStylePlain target:self action:@selector(dateConfirm)];
-    [item setTintColor:[UIColor blueColor]];
-    toolBar.items = @[item];
-    CJRQtf.inputAccessoryView = toolBar;
-    CJRQtf.tag = Origin_TAG +2;
-    [self addSubview:CJRQtf];
+//    contentLable *CJRQlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:168 isLeft:YES isLable:YES] andText:@"采集日期"];
+//    [self addSubview:CJRQlb];
+//    CJRQtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:168 isLeft:YES isLable:NO]];
+//    CJRQtf.text = _CJRQ;
+//    datePicker = [[UIDatePicker alloc] init];
+//    datePicker.datePickerMode = UIDatePickerModeDate;
+//    datePicker.date = [NSDate date];
+//    CJRQtf.inputView = datePicker;
+//    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WEIGHT, 40)];
+//    toolBar.tintColor = [UIColor whiteColor];
+//    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"确认" style:UIBarButtonItemStylePlain target:self action:@selector(dateConfirm)];
+//    [item setTintColor:[UIColor blueColor]];
+//    toolBar.items = @[item];
+//    CJRQtf.inputAccessoryView = toolBar;
+//    CJRQtf.tag = Origin_TAG +2;
+//    [self addSubview:CJRQtf];
     
     
-    //送检单位 103
+    //送检机构 103
     contentLable *SJDWlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:130 isLeft:YES isLable:YES] andText:@"送检机构"];
     [self addSubview:SJDWlb];
     
@@ -179,9 +184,9 @@
     [self addSubview:SJYScb];
     
     //收样机构 105
-    contentLable *SYJGlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:168 isLeft:NO isLable:YES] andText:@"收样机构"];
+    contentLable *SYJGlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:168 + Offset_Y isLeft:YES isLable:YES] andText:@"收样机构"];
     [self addSubview:SYJGlb];
-    SYJGbox = [[UIComboBox alloc] initWithFrame:[self caculateFrameY:168 isLeft:NO isLable:NO]];
+    SYJGbox = [[UIComboBox alloc] initWithFrame:[self caculateFrameY:168+ Offset_Y isLeft:YES isLable:NO]];
     
     SYJGbox.delegate = self;
     SYJGbox.placeColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1];
@@ -190,161 +195,189 @@
     SYJGbox.tag = Origin_TAG + 5;
     [self addSubview:SYJGbox];
     
+    contentLable *tag4 = [[contentLable alloc] initWithFrame:[self caculateFrameY:6 isLeft:YES isLable:YES] andText:@"收样信息"];
+    UITextField *blue4 = [[UITextField alloc]initWithFrame:CGRectMake(0, 168, self.frame.size.width, 30 *SCREEN_HEIGHT/768)];
+    blue4.enabled = NO;
+    blue4.backgroundColor = [UIColor colorWithMyNeed:114 green:176 blue:248 alpha:1];
+    [blue4 addSubview:tag4];
+    [self addSubview:blue4];
+    
     //分割线------------------------------------------------------------------------------------------------------------------------
     contentLable *tag2 = [[contentLable alloc] initWithFrame:[self caculateFrameY:6 isLeft:YES isLable:YES] andText:@"受检人信息"];
-    UITextField *blue2 = [[UITextField alloc]initWithFrame:CGRectMake(0, 207, self.frame.size.width, 30 *SCREEN_HEIGHT/768)];
+    UITextField *blue2 = [[UITextField alloc]initWithFrame:CGRectMake(0, 207 + Offset_Y, self.frame.size.width, 30 *SCREEN_HEIGHT/768)];
     blue2.enabled = NO;
     blue2.backgroundColor = [UIColor colorWithMyNeed:114 green:176 blue:248 alpha:1];
     [blue2 addSubview:tag2];
     [self addSubview:blue2];
     
     //姓名 106
-    contentLable *XMlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:257 isLeft:YES isLable:YES] andText:@"姓      名"];
+    contentLable *XMlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:257 + Offset_Y isLeft:YES isLable:YES] andText:@"姓      名"];
     [self addSubview:XMlb];
-    contentTF *XMtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:257 isLeft:YES isLable:NO]];
+    contentTF *XMtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:257 + Offset_Y isLeft:YES isLable:NO]];
     XMtf.text = _NAME;
     XMtf.tag = Origin_TAG + 6;
     [self addSubview:XMtf];
     //身份证号 107
-    contentLable *SFZHlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:257 isLeft:NO isLable:YES] andText:@"身份证号"];
+    contentLable *SFZHlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:257 + Offset_Y isLeft:NO isLable:YES] andText:@"身份证号"];
     [self addSubview:SFZHlb];
-    contentTF *SFZHtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:257 isLeft:NO isLable:NO]];
+    contentTF *SFZHtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:257 + Offset_Y isLeft:NO isLable:NO]];
     SFZHtf.text = _SFZH;
     SFZHtf.tag = Origin_TAG + 7;
     [self addSubview:SFZHtf];
     
     
     //联系电话 108
-    contentLable *LXDHlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:290 isLeft:YES isLable:YES] andText:@"联系电话"];
+    contentLable *LXDHlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:290 + Offset_Y isLeft:YES isLable:YES] andText:@"联系电话"];
     [self addSubview:LXDHlb];
-    contentTF *LXDHtf  = [[contentTF alloc] initWithFrame:[self caculateFrameY:290 isLeft:YES isLable:NO]];
+    contentTF *LXDHtf  = [[contentTF alloc] initWithFrame:[self caculateFrameY:290 + Offset_Y isLeft:YES isLable:NO]];
     LXDHtf.text = _LXDH;
     LXDHtf.tag = Origin_TAG + 8;
     [self addSubview:LXDHtf];
     
-    //报告寄送地址 109
-    contentLable *BGJSDZlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:290 isLeft:NO isLable:YES] andText:@"寄送地址"];
-    [self addSubview:BGJSDZlb];
-    contentTF *BGJSDZtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:290 isLeft:NO isLable:NO]];
-    BGJSDZtf.text = _JSDZ;
-    BGJSDZtf.tag = Origin_TAG + 9;
-    [self addSubview:BGJSDZtf];
+    //所在地区 102
+    contentLable *SZDQlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:290 + Offset_Y isLeft:NO isLable:YES] andText:@"所在地区"];
+    [self addSubview:SZDQlb];
+    contentTF *SZDQtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:290 + Offset_Y isLeft:NO isLable:NO]];
+    SZDQtf.text = _JSDZ;
+    SZDQtf.tag = Origin_TAG + 2;
+    [self addSubview:SZDQtf];
     
     
     //出生日期 110
-    contentLable *CSRQlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:323 isLeft:YES isLable:YES] andText:@"出生日期"];
+    contentLable *CSRQlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:323 + Offset_Y isLeft:YES isLable:YES] andText:@"出生日期"];
     [self addSubview:CSRQlb];
-    contentTF *CSRQtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:323 isLeft:YES isLable:NO]];
+    contentTF *CSRQtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:323 + Offset_Y isLeft:YES isLable:NO]];
     CSRQtf.text = _CSRQ;
     CSRQtf.tag = Origin_TAG +10;
     [self addSubview:CSRQtf];
     
     
     //民族 111
-    contentLable *MZlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:359 isLeft:YES isLable:YES] andText:@"民      族"];
+    contentLable *MZlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:359 + Offset_Y isLeft:YES isLable:YES] andText:@"民      族"];
     [self addSubview:MZlb];
-    contentTF *MZtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:359 isLeft:YES isLable:NO]];
+    contentTF *MZtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:359 + Offset_Y isLeft:YES isLable:NO]];
     MZtf.text = _MZ;
     MZtf.tag = Origin_TAG + 11;
     [self addSubview:MZtf];
     
     //籍贯 112
-    contentLable *JGlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:359 isLeft:NO isLable:YES] andText:@"籍      贯"];
+    contentLable *JGlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:359 + Offset_Y isLeft:NO isLable:YES] andText:@"籍      贯"];
     [self addSubview:JGlb];
-    contentTF *JGtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:359 isLeft:NO isLable:NO]];
+    contentTF *JGtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:359 + Offset_Y isLeft:NO isLable:NO]];
     JGtf.text = _JG;
     JGtf.tag = Origin_TAG + 12;
     [self addSubview:JGtf];
     
-    //性别
-    contentLable *XBlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:323 isLeft:NO isLable:YES] andText:@"性      别"];
+    //性别 113
+    contentLable *XBlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:323 + Offset_Y isLeft:NO isLable:YES] andText:@"性      别"];
     [self addSubview:XBlb];
-    UISingleSelector *XBSst = [[UISingleSelector alloc] initWithFrame:[self caculateFrameY:323 isLeft:NO isLable:NO]];
+    UISingleSelector *XBSst = [[UISingleSelector alloc] initWithFrame:[self caculateFrameY:323 + Offset_Y isLeft:NO isLable:NO]];
     XBSst.delegate = self;
-    XBSst.tag = 100;
+    XBSst.tag = Origin_TAG + 13;
     XBSst.itemList = @[@"男",@"女"];
     XBSst.itemId = @[@"0",@"1"];
+    XBSst.switchId = _SEX;
+    
     [self addSubview:XBSst];
+    
+    //寄送地址 109
+    contentLable *BGJSDZlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:395 + Offset_Y isLeft:YES isLable:YES] andText:@"寄送地址"];
+    [self addSubview:BGJSDZlb];
+    contentTF *BGJSDZtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:395 + Offset_Y isLeft:YES isLable:NO]];
+    CGRect temp = BGJSDZtf.frame;
+    temp.size.width = 494 *SCREEN_WEIGHT/1024;
+    BGJSDZtf.frame = temp;
+    BGJSDZtf.text = _JSDZ;
+    BGJSDZtf.tag = Origin_TAG + 9;
+    [self addSubview:BGJSDZtf];
     
     //分割线------------------------------------------------------------------------------------------------------------------------
     contentLable *tag3 = [[contentLable alloc] initWithFrame:[self caculateFrameY:6 isLeft:YES isLable:YES] andText:@"健康信息"];
-    UITextField *blue3 = [[UITextField alloc]initWithFrame:CGRectMake(0, 401, self.frame.size.width, 30 *SCREEN_HEIGHT/768)];
+    UITextField *blue3 = [[UITextField alloc]initWithFrame:CGRectMake(0, 401 + Offset_Y + Offset_Last, self.frame.size.width, 30 *SCREEN_HEIGHT/768)];
     blue3.enabled = NO;
     blue3.backgroundColor = [UIColor colorWithMyNeed:114 green:176 blue:248 alpha:1];
     [blue3 addSubview:tag3];
     [self addSubview:blue3];
     
-    //癌症史
-    contentLable *AZSlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:450 isLeft:YES isLable:YES] andText:@"癌 症 史"];
+    //癌症史 114
+    contentLable *AZSlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:450 + Offset_Y + Offset_Last isLeft:YES isLable:YES] andText:@"癌 症 史"];
     [self addSubview:AZSlb];
     
-    UISingleSelector *AZSst = [[UISingleSelector alloc] initWithFrame:[self caculateFrameY:450 isLeft:YES isLable:NO]];
+    UISingleSelector *AZSst = [[UISingleSelector alloc] initWithFrame:[self caculateFrameY:450 + Offset_Y + Offset_Last isLeft:YES isLable:NO]];
     AZSst.delegate = self;
-    AZSst.tag = 101;
+    AZSst.tag = Origin_TAG + 14;
     AZSst.itemList = @[@"有",@"无"];
     AZSst.itemId = @[@"1",@"0"];
-    //AZSst.switchId = _AZS_SWITCH;
+    AZSst.switchId = _AZS_SWITCH;
     [self addSubview:AZSst];
     
-    //发病年龄
-    contentLable *FBNLlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:450 isLeft:NO isLable:YES] andText:@"发病年龄"];
+    //发病年龄 115
+    contentLable *FBNLlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:450 + Offset_Y + Offset_Last isLeft:NO isLable:YES] andText:@"发病年龄"];
     [self addSubview:FBNLlb];
-    contentTF *FBNLtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:450 isLeft:NO isLable:NO]];
+    contentTF *FBNLtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:450 + Offset_Y + Offset_Last isLeft:NO isLable:NO]];
     FBNLtf.text = _FBNL;
+    FBNLtf.tag = Origin_TAG + 15;
     [self addSubview:FBNLtf];
     
-    //临床表现
-    contentLable *LCBXlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:490 isLeft:YES isLable:YES] andText:@"临床表现及治愈情况"];
+    //临床表现 116
+    contentLable *LCBXlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:490 + Offset_Y + Offset_Last isLeft:YES isLable:YES] andText:@"临床表现及治愈情况"];
     [self addSubview:LCBXlb];
     UITextView *LCBXtf = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     LCBXtf.layer.borderWidth = 1;
-    LCBXtf.frame = CGRectMake(52*SCREEN_WEIGHT/1024,523 * SCREEN_HEIGHT/768, 588*SCREEN_WEIGHT/1024, 101*SCREEN_HEIGHT/768);
+    LCBXtf.frame = CGRectMake(52*SCREEN_WEIGHT/1024,523 * SCREEN_HEIGHT/768 + Offset_Y + Offset_Last, 588*SCREEN_WEIGHT/1024, 101*SCREEN_HEIGHT/768);
     LCBXtf.text = _LCBX;
+    LCBXtf.tag = Origin_TAG + 16;
     [self addSubview:LCBXtf];
     
-    //家族癌症史
-    contentLable *JZAZSlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:639 isLeft:YES isLable:YES] andText:@"家族癌症史"];
+    //家族癌症史 117
+    contentLable *JZAZSlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:639 + Offset_Y + Offset_Last isLeft:YES isLable:YES] andText:@"家族癌症史"];
     [self addSubview:JZAZSlb];
-    UISingleSelector *JZAZSst = [[UISingleSelector alloc] initWithFrame:[self caculateFrameY:639 isLeft:YES isLable:NO]];
+    UISingleSelector *JZAZSst = [[UISingleSelector alloc] initWithFrame:[self caculateFrameY:639 + Offset_Y + Offset_Last isLeft:YES isLable:NO]];
     JZAZSst.delegate = self;
-    JZAZSst.tag = 102;
+    JZAZSst.tag = Origin_TAG + 17;
     JZAZSst.itemList = @[@"有",@"无"];
     JZAZSst.itemId = @[@"1",@"0"];
+    JZAZSst.switchId = _JZAZS_SWITCH;
     [self addSubview:JZAZSst];
-    //关系
-    contentLable *GXlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:639 isLeft:NO isLable:YES] andText:@"关      系"];
+    
+    //关系 118
+    contentLable *GXlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:639 + Offset_Y + Offset_Last isLeft:NO isLable:YES] andText:@"关      系"];
     [self addSubview:GXlb];
-    UIComboBox *GXcb = [[UIComboBox alloc] initWithFrame:[self caculateFrameY:639 isLeft:NO isLable:NO]];
-    GXcb.tag = 102;
+    UIComboBox *GXcb = [[UIComboBox alloc] initWithFrame:[self caculateFrameY:639 + Offset_Y + Offset_Last isLeft:NO isLable:NO]];
+    GXcb.tag = Origin_TAG + 18;
     GXcb.delegate = self;
     GXcb.comboList = @[@"父母",@"子女",@"亲戚"];
     GXcb.placeColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1];
     GXcb.comborColor = GXcb.textColor = [UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1];
     GXcb.textFont = [UIFont fontWithName:@"STHeitiSC-Light" size:16];
     [self addSubview:GXcb];
+    // 119
     UITextView *JZAZStf = [[UITextView alloc] initWithFrame:CGRectZero];
     JZAZStf.layer.borderWidth = 1;
-    JZAZStf.frame = CGRectMake(52*SCREEN_WEIGHT/1024,672*SCREEN_HEIGHT/768, 588*SCREEN_WEIGHT/1024, 101*SCREEN_HEIGHT/768);
+    JZAZStf.frame = CGRectMake(52*SCREEN_WEIGHT/1024,672*SCREEN_HEIGHT/768 + Offset_Y + Offset_Last, 588*SCREEN_WEIGHT/1024, 101*SCREEN_HEIGHT/768);
     JZAZStf.text = _JZAZS;
+    JZAZStf.tag = Origin_TAG + 19;
     [self addSubview:JZAZStf];
     
-    //其他疾病
-    contentLable *QTBSlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:788 isLeft:YES isLable:YES] andText:@"其他疾病"];
+    //其他疾病 120
+    contentLable *QTBSlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:788 + Offset_Y + Offset_Last isLeft:YES isLable:YES] andText:@"其他疾病"];
     [self addSubview:QTBSlb];
-    UITextView *QTBStf = [[UITextView alloc] initWithFrame:[self caculateFrameY:821 isLeft:YES isLable:NO]];
+    UITextView *QTBStf = [[UITextView alloc] initWithFrame:[self caculateFrameY:821 + Offset_Y + Offset_Last isLeft:YES isLable:NO]];
     QTBStf.layer.borderWidth = 1;
-    QTBStf.frame = CGRectMake(52*SCREEN_WEIGHT/1024,821*SCREEN_HEIGHT/768, 588*SCREEN_WEIGHT/1024, 101*SCREEN_HEIGHT/768);
+    QTBStf.frame = CGRectMake(52*SCREEN_WEIGHT/1024,821*SCREEN_HEIGHT/768 + Offset_Y + Offset_Last, 588*SCREEN_WEIGHT/1024, 101*SCREEN_HEIGHT/768);
     QTBStf.text = _QTBS;
+    QTBStf.tag = Origin_TAG + 20;
     [self addSubview:QTBStf];
     
     //保存按钮
     UIButton *saveBt = [UIButton buttonWithType:UIButtonTypeCustom];
-    saveBt.frame = CGRectMake(287 * SCREEN_WEIGHT/1024, 945*SCREEN_HEIGHT/768, 174*SCREEN_WEIGHT/1024, 52*SCREEN_HEIGHT/768);
+    saveBt.frame = CGRectMake(287 * SCREEN_WEIGHT/1024, 945*SCREEN_HEIGHT/768 + Offset_Y + Offset_Last, 174*SCREEN_WEIGHT/1024, 52*SCREEN_HEIGHT/768);
     saveBt.backgroundColor = [UIColor colorWithMyNeed:74 green:144 blue:226 alpha:1];
     saveBt.titleLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:22];
     saveBt.layer.cornerRadius = 10;
     saveBt.showsTouchWhenHighlighted = YES;
     [saveBt setTitle:@"保存" forState:UIControlStateNormal];
+    [saveBt addTarget:self action:@selector(saveBtenClick) forControlEvents:UIControlEventTouchUpInside];
     saveBt.tintColor = [UIColor whiteColor];
     [self addSubview:saveBt];
     
@@ -353,7 +386,6 @@
     LCBXtf.delegate = JZAZStf.delegate = QTBStf.delegate = self;
     
     [self setTextFieldDelegate];
-    
 
 }
 
@@ -363,7 +395,63 @@
     [self receiveOrgRequest];
 }
 
+- (NSString *)builtToSendString{
+    NSArray *itemArray = @[@"sample_type",@"native",@"org_id",@"doctor_id",@"lab_id",@"name",@"id_card",@"phone",@"address",@"birthday",@"nation",
+                       @"region",@"gender",@"is_cancer",@"onset_age",@"condition",@"family_is_cancer",@"relation",@"family_cancer",@"other_disease",@"age",@"type",@"source"];
+    
+    NSMutableDictionary *userDic = [[NSMutableDictionary alloc] init];
+    
+    for (id obj in self.subviews) {
+        
+        NSString *unitStr;
+        NSInteger tage;
+        
+        if ([obj isKindOfClass:[UISingleSelector class]]) {
+            UISingleSelector *object = (UISingleSelector *)obj;
+            unitStr = object.switchId;
+            tage = object.tag;
+        }
+        else if ([obj isKindOfClass:[UIComboBox class]]){
+            UIComboBox *object = (UIComboBox *)obj;
+            tage = object.tag;
+            switch (tage) {
+                case 103:
+                    unitStr = organization_id_Array[object.selectId];
+                    break;
+                case 104:
+                    unitStr = doctor_id_Array[object.selectId];
+                default:
+                    unitStr = recieve_id_array[object.selectId];
+                    break;
+            }
+        }
+        else if ([obj isKindOfClass:[contentTF class]]){
+            contentTF *object = (contentTF*) obj;
+            unitStr = object.text;
+            tage = object.tag;
+        }
+        else if ([obj isKindOfClass:[UITextView class]]){
+            UITextView *object = (UITextView *)obj;
+            unitStr = object.text;
+            tage = object.tag;
+        }
+        else{
+            continue;
+        }
+        
+        if (tage > 0){
+            [userDic setObject:unitStr forKey:itemArray[tage - 101]];
+        }
 
+    }
+    
+    return [self convertToJSONData:[userDic copy]];
+}
+
+- (void)saveBtenClick{
+    NSString *Str = [self builtToSendString];
+    NSLog(@"%@",Str);
+}
 
 - (void)setTextFieldDelegate
 {
@@ -496,17 +584,17 @@
 
 - (void)UIComboBox:(UIComboBox *)comboBox didSelectRow:(NSIndexPath *)indexPath
 {
-    if (comboBox.tag == 100) {
+    if (comboBox.tag == 103) {
         [self doctorRequest:organization_id_Array[indexPath.row - 1]];
         
         //清空关联box
-        UIComboBox *box = (UIComboBox *)[self viewWithTag:101];
+        UIComboBox *box = (UIComboBox *)[self viewWithTag:104];
         [box resetCombo];
         
         NSLog(@"%@",organization_id_Array[comboBox.selectId]);
     }
     
-    if (comboBox.tag == 101) {
+    if (comboBox.tag == 104) {
         NSLog(@"%@",doctor_id_Array[comboBox.selectId]);
     }
     
@@ -662,10 +750,35 @@
                 [name_array addObject:[NSString stringWithFormat:@"%@",[doc_dic objectForKey:@"name"]]];
             }
             SYJGbox.comboList = [name_array copy];
+            recieve_id_array = [id_array copy];
         });
     });
 }
 
+
+- (NSString*)convertToJSONData:(id)infoDict
+{
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:infoDict
+                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                         error:&error];
+    
+    NSString *jsonString = @"";
+    
+    if (! jsonData)
+    {
+        NSLog(@"Got an error: %@", error);
+    }else
+    {
+        jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
+    
+    jsonString = [jsonString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];  //去除掉首尾的空白字符和换行字符
+    
+    [jsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    
+    return jsonString;
+}
 
 
 @end

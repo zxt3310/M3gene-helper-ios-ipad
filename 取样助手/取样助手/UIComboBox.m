@@ -266,6 +266,7 @@
     comboTF.text = @"";
     _selectString = nil;
     _selectId = -1;
+    currentIndex = nil;
 }
 
 - (void)didMoveToSuperview

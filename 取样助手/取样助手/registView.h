@@ -25,7 +25,7 @@
 @property NSString *JSDZ;
 @property NSString *CSRQ;
 @property NSString *SYJG;
-@property NSInteger SEX;
+@property NSString *SEX;
 @property NSString *MZ;
 @property NSString *JG;
 @property NSString *AZS_SWITCH;
