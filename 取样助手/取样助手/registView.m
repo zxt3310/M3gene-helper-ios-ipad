@@ -67,7 +67,7 @@
 @implementation registViewNew
 {
     UIDatePicker *datePicker;
-    contentTF *CJRQtf;
+    contentTF *CSRQtf;
     contentTF *DDBHtf;
     CGRect currentTf_frame;
     float lastScroll;
@@ -77,6 +77,7 @@
     UIComboBox *SYJGbox;
     UIComboBox *SJDWcb;
     UIComboBox *SJYScb;
+    NSInteger age;
 }
 @synthesize hidden = _hidden;
 - (instancetype)initWithFrame:(CGRect)frame
@@ -139,25 +140,6 @@
     DDBHtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:92 isLeft:NO isLable:NO]];
     DDBHtf.text = _DDBH;
     [self addSubview:DDBHtf];
-    
-    //采集日期 102
-//    contentLable *CJRQlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:168 isLeft:YES isLable:YES] andText:@"采集日期"];
-//    [self addSubview:CJRQlb];
-//    CJRQtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:168 isLeft:YES isLable:NO]];
-//    CJRQtf.text = _CJRQ;
-//    datePicker = [[UIDatePicker alloc] init];
-//    datePicker.datePickerMode = UIDatePickerModeDate;
-//    datePicker.date = [NSDate date];
-//    CJRQtf.inputView = datePicker;
-//    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WEIGHT, 40)];
-//    toolBar.tintColor = [UIColor whiteColor];
-//    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"确认" style:UIBarButtonItemStylePlain target:self action:@selector(dateConfirm)];
-//    [item setTintColor:[UIColor blueColor]];
-//    toolBar.items = @[item];
-//    CJRQtf.inputAccessoryView = toolBar;
-//    CJRQtf.tag = Origin_TAG +2;
-//    [self addSubview:CJRQtf];
-    
     
     //送检机构 103
     contentLable *SJDWlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:130 isLeft:YES isLable:YES] andText:@"送检机构"];
@@ -246,7 +228,17 @@
     //出生日期 110
     contentLable *CSRQlb = [[contentLable alloc] initWithFrame:[self caculateFrameY:323 + Offset_Y isLeft:YES isLable:YES] andText:@"出生日期"];
     [self addSubview:CSRQlb];
-    contentTF *CSRQtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:323 + Offset_Y isLeft:YES isLable:NO]];
+    CSRQtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:323 + Offset_Y isLeft:YES isLable:NO]];
+    datePicker = [[UIDatePicker alloc] init];
+    datePicker.datePickerMode = UIDatePickerModeDate;
+    datePicker.date = [NSDate date];
+    CSRQtf.inputView = datePicker;
+    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WEIGHT, 40)];
+    toolBar.tintColor = [UIColor whiteColor];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"确认" style:UIBarButtonItemStylePlain target:self action:@selector(dateConfirm)];
+    [item setTintColor:[UIColor blueColor]];
+    toolBar.items = @[item];
+    CSRQtf.inputAccessoryView = toolBar;
     CSRQtf.text = _CSRQ;
     CSRQtf.tag = Origin_TAG +10;
     [self addSubview:CSRQtf];
@@ -277,7 +269,6 @@
     XBSst.itemList = @[@"男",@"女"];
     XBSst.itemId = @[@"0",@"1"];
     XBSst.switchId = _SEX;
-    
     [self addSubview:XBSst];
     
     //寄送地址 109
@@ -395,9 +386,10 @@
     [self receiveOrgRequest];
 }
 
+#pragma mark 拼post josn字符串
 - (NSString *)builtToSendString{
     NSArray *itemArray = @[@"sample_type",@"native",@"org_id",@"doctor_id",@"lab_id",@"name",@"id_card",@"phone",@"address",@"birthday",@"nation",
-                       @"region",@"gender",@"is_cancer",@"onset_age",@"condition",@"family_is_cancer",@"relation",@"family_cancer",@"other_disease",@"age",@"type",@"source"];
+                           @"region",@"gender",@"is_cancer",@"onset_age",@"condition",@"family_is_cancer",@"relation",@"family_cancer",@"other_disease"];//,@"age",@"type",@"source"];
     
     NSMutableDictionary *userDic = [[NSMutableDictionary alloc] init];
     
@@ -420,6 +412,9 @@
                     break;
                 case 104:
                     unitStr = doctor_id_Array[object.selectId];
+                case 118:
+                    unitStr = object.selectString;
+                    break;
                 default:
                     unitStr = recieve_id_array[object.selectId];
                     break;
@@ -439,15 +434,22 @@
             continue;
         }
         
-        if (tage > 0){
+        if (tage > 100){
+            if (!unitStr) {
+                unitStr = @"";
+            }
+            
             [userDic setObject:unitStr forKey:itemArray[tage - 101]];
+            [userDic setObject:[NSString stringWithFormat:@"%ld",age] forKey:@"age"];
+            [userDic setObject:@"1" forKey:@"type"];
+            [userDic setObject:@"助手" forKey:@"source"];
         }
 
     }
     
     return [self convertToJSONData:[userDic copy]];
 }
-
+#pragma mark 保存按钮
 - (void)saveBtenClick{
     NSString *Str = [self builtToSendString];
     NSLog(@"%@",Str);
@@ -516,12 +518,34 @@
     }
 }
 
+- (void)cleanUpAllControl{
+    for (id obj in self.subviews) {
+        if ([obj isKindOfClass:[contentTF class]]) {
+            contentTF *object = (contentTF *)obj;
+            object.text = @"";
+        }
+        if ([obj isKindOfClass:[UITextView class]]) {
+            UITextView *object = (UITextView *)obj;
+            object.text = @"";
+        }
+        if ([obj isKindOfClass:[UIComboBox class]]) {
+            UIComboBox *object = (UIComboBox *)obj;
+            [object resetCombo];
+        }
+    }
+}
+
 - (void)dateConfirm
 {
+    NSTimeInterval end = [[NSDate date] timeIntervalSince1970];
+    NSTimeInterval start = [datePicker.date timeIntervalSince1970];
+    NSTimeInterval value = end - start;
+    age = value/(24 * 3600 * 365);
+    
     NSDateFormatter *format = [[NSDateFormatter alloc]init];
     format.dateFormat = @"yyyy-MM-dd";
-    CJRQtf.text = [format stringFromDate:datePicker.date];
-    [CJRQtf resignFirstResponder];
+    CSRQtf.text = [format stringFromDate:datePicker.date];
+    [CSRQtf resignFirstResponder];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
@@ -537,6 +561,7 @@
     DDBHtf.text = numberStr;
 }
 
+#pragma mark 键盘上浮
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     currentTf_frame = [self convertRect:textField.frame toView:self.superview.superview];
@@ -582,6 +607,7 @@
     }];
 }
 
+#pragma mark UIcomboBox代理
 - (void)UIComboBox:(UIComboBox *)comboBox didSelectRow:(NSIndexPath *)indexPath
 {
     if (comboBox.tag == 103) {
@@ -609,6 +635,7 @@
     
 }
 
+#pragma mark 下拉菜单数据请求
 - (void)orgnizitionRequest
 {
     UIViewController *superController;
@@ -755,7 +782,7 @@
     });
 }
 
-
+#pragma mark 转json字符串方法
 - (NSString*)convertToJSONData:(id)infoDict
 {
     NSError *error;
@@ -779,6 +806,5 @@
     
     return jsonString;
 }
-
 
 @end

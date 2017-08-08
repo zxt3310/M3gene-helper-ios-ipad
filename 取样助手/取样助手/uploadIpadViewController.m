@@ -105,7 +105,7 @@
     self = [super init];
     if(self)
     {
-        listItem = @[@"产品选择",@"扫描检验单条形码",@"检验单录入",@"检验单图片",@"客户病例",@"疾病选择"];
+        listItem = @[@"产品选择",@"扫描检验单条形码",@"检验单录入",@"疾病选择",@"检验单图片",@"客户病例"];
         
         CGRect frame = CGRectMake(280 *SCREEN_WEIGHT/1024,101, 744*SCREEN_WEIGHT /1024,SCREEN_HEIGHT - 101);
         productView = [[detailView alloc]initWithFrame:frame];
@@ -329,59 +329,65 @@
 - (void)cacheBtClick
 {
 
-    [html5Web evaluateJavaScript:@"app_fetch_form();" completionHandler:^(NSString *str,NSError *error){
-        
-        if(!str)
-        {
-            str = registString;
+//    [html5Web evaluateJavaScript:@"app_fetch_form();" completionHandler:^(NSString *str,NSError *error){
+//        
+//        if(!str)
+//        {
+//            str = registString;
+//        }
+    
+    //registString = str;
+    for (id obj in diseseSelectView.subviews){
+        if ([obj isKindOfClass:[registViewNew class]]) {
+            registViewNew *object = (registViewNew *)obj;
+            registString = [object builtToSendString];
         }
+    }
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    dateFormat.locale = [[NSLocale alloc]initWithLocaleIdentifier:@"zh_CN"];
+    [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *timeStr = [dateFormat stringFromDate:[NSDate date]];
+    
+    //处理图片数据
+    NSData *imgData = UIImagePNGRepresentation(upOrderImg);
+    if(!imgData)
+    {
+        imgData = [[NSData alloc]init];
+    }
+    NSArray *cacheArray = @[@"cacheType",@"operateTime",@"productName",@"productId",@"code_number",@"orderPic",@"registStr"];
+    NSArray *cacheData = @[@"CACHE_ORDER",timeStr,productTF.text,productId,numberLable.text,imgData,registString];
+    NSDictionary *cacheDic = [NSDictionary dictionaryWithObjects:cacheData forKeys:cacheArray];
+    
+    //存入数组
+    
+    NSArray *arry = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
+    NSMutableArray *operateArray = [[NSMutableArray alloc]initWithArray:arry];
+    if(isReEditOperate)
+    {
+        [operateArray removeObjectAtIndex:deleteIndex];
+    }
+    [operateArray addObject:cacheDic];
+    arry = [operateArray copy];
+    
+    @try
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:arry forKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    } @catch (NSException *exception) {
+        NSLog(@"%@",exception);
+    } @finally {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"消息" message:@"保存成功" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *ula = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
         
-        registString = str;
-        
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        dateFormat.locale = [[NSLocale alloc]initWithLocaleIdentifier:@"zh_CN"];
-        [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        NSString *timeStr = [dateFormat stringFromDate:[NSDate date]];
-        
-        //处理图片数据
-        NSData *imgData = UIImagePNGRepresentation(upOrderImg);
-        if(!imgData)
-        {
-            imgData = [[NSData alloc]init];
-        }
-        NSArray *cacheArray = @[@"cacheType",@"operateTime",@"productName",@"productId",@"code_number",@"orderPic",@"registStr"];
-        NSArray *cacheData = @[@"CACHE_ORDER",timeStr,productTF.text,productId,numberLable.text,imgData,registString];
-        NSDictionary *cacheDic = [NSDictionary dictionaryWithObjects:cacheData forKeys:cacheArray];
-        
-        //存入数组
-        
-        NSArray *arry = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
-        NSMutableArray *operateArray = [[NSMutableArray alloc]initWithArray:arry];
-        if(isReEditOperate)
-        {
-            [operateArray removeObjectAtIndex:deleteIndex];
-        }
-        [operateArray addObject:cacheDic];
-        arry = [operateArray copy];
-        
-        @try
-        {
-            [[NSUserDefaults standardUserDefaults] setObject:arry forKey:[NSString stringWithFormat:@"CACHE_%@",_userName]];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        } @catch (NSException *exception) {
-            NSLog(@"%@",exception);
-        } @finally {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"消息" message:@"保存成功" preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *ula = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-            
-            [alert addAction:ula];
-            [self presentViewController:alert animated:YES completion:^{
-                [self clearUItext];
-                [self.refreshDelegate refresh:arry];
-                [self checkUpLoad];
-            }];
-        }
-    }];
+        [alert addAction:ula];
+        [self presentViewController:alert animated:YES completion:^{
+            [self clearUItext];
+            [self.refreshDelegate refresh:arry];
+            [self checkUpLoad];
+        }];
+      }
+//    }];
 }
 #pragma mark 左侧列表
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
