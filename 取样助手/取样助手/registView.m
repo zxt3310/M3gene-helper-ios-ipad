@@ -386,7 +386,7 @@
     [self receiveOrgRequest];
 }
 
-#pragma mark 拼post josn字符串
+#pragma mark 拼post josn字符串 上传或暂存
 - (NSString *)builtToSendString{
     NSArray *itemArray = @[@"sample_type",@"native",@"org_id",@"doctor_id",@"lab_id",@"name",@"id_card",@"phone",@"address",@"birthday",@"nation",
                            @"region",@"gender",@"is_cancer",@"onset_age",@"condition",@"family_is_cancer",@"relation",@"family_cancer",@"other_disease"];//,@"age",@"type",@"source"];
@@ -444,11 +444,61 @@
             [userDic setObject:@"1" forKey:@"type"];
             [userDic setObject:@"助手" forKey:@"source"];
         }
-
     }
-    
     return [self convertToJSONData:[userDic copy]];
 }
+
+#pragma mark 填充数据
+
+- (void)fillUserData{
+    NSDictionary *dic = parseJsonString(_fillString);
+    if (!dic) {
+        return;
+    }
+    
+    NSArray *itemArray = @[@"sample_type",@"native",@"org_id",@"doctor_id",@"lab_id",@"name",@"id_card",@"phone",@"address",@"birthday",@"nation",
+                           @"region",@"gender",@"is_cancer",@"onset_age",@"condition",@"family_is_cancer",@"relation",@"family_cancer",@"other_disease"];
+    for (int i=0; i<itemArray.count; i++) {
+        for (UIView *obj in self.subviews) {
+            if (obj.tag == i+101) {
+                NSString *unitStr = [dic objectForKey:itemArray[i]];
+                
+                if ([obj isKindOfClass:[contentTF class]]) {
+                    contentTF *object = (contentTF *)obj;
+                    object.text = unitStr;
+                }
+                else if ([obj isKindOfClass:[UISingleSelector class]]){
+                    UISingleSelector *object = (UISingleSelector *)obj;
+                    object.switchId = unitStr;
+                }
+                else if ([obj isKindOfClass:[UITextView class]]){
+                    UITextView *object = (UITextView *)obj;
+                    object.text = unitStr;
+                }
+                else if ([obj isKindOfClass:[UIComboBox class]]){
+                    UIComboBox *object = (UIComboBox *)obj;
+                    switch (object.tag) {
+                        case 103:
+                            object.selectId = (int)[organization_id_Array indexOfObject:unitStr];
+                            break;
+                        case 104:
+                            object.selectId = (int)[doctor_id_Array indexOfObject:unitStr];
+                            break;
+                        case 118:{
+                            object.selectId = (int)[object.comboList indexOfObject:unitStr];
+                            NSLog(@"%ld",object.selectId);
+                        }
+                            break;
+                        default:
+                            object.selectId = [recieve_id_array indexOfObject:unitStr];
+                            break;
+                    }
+                }
+            }
+        }
+    }
+}
+
 #pragma mark 保存按钮
 - (void)saveBtenClick{
     NSString *Str = [self builtToSendString];
@@ -681,6 +731,10 @@
             }
             organization_id_Array = [id_Array copy];
             SJDWcb.comboList = [name_Array copy];
+            
+            if (_fillString) {
+                [self fillUserData];
+            }
         });
     });
 }
@@ -730,6 +784,7 @@
             }
             doctor_id_Array = [id_array copy];
             SJYScb.comboList = [name_array copy];
+            
         });
     });
 }

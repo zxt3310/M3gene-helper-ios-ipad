@@ -729,7 +729,11 @@
     [registview show];
     [diseseSelectView addSubview:registview];
     
+    if (registString != NULL && registString.length > 0) {
+        registview.fillString = registString;
+    }
     [self.view addSubview:diseseSelectView];
+    
     
 }
 

@@ -39,8 +39,11 @@
 @property NSString *token;
 @property NSInteger productId;
 
+@property NSString *fillString;
+
 @property (nonatomic)BOOL hidden;
 - (void)show;
 - (void)resignFirstResponderNow;
 - (NSString *)builtToSendString;
+- (void)fillUserData;
 @end
