@@ -78,8 +78,10 @@
     UIComboBox *SJDWcb;
     UIComboBox *SJYScb;
     NSInteger age;
+    NSString *selectedDor;
 }
 @synthesize hidden = _hidden;
+@synthesize DDBH = _DDBH;
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -139,6 +141,7 @@
     [self addSubview:DDBHlb];
     DDBHtf = [[contentTF alloc] initWithFrame:[self caculateFrameY:92 isLeft:NO isLable:NO]];
     DDBHtf.text = _DDBH;
+    DDBHtf.enabled = NO;
     [self addSubview:DDBHtf];
     
     //送检机构 103
@@ -380,6 +383,14 @@
 
 }
 
+- (NSString *)DDBH{
+    return _DDBH;
+}
+- (void)setDDBH:(NSString *)DDBH{
+    _DDBH = DDBH;
+    DDBHtf.text = DDBH;
+}
+
 - (void)didMoveToWindow
 {
     [self orgnizitionRequest];
@@ -412,6 +423,7 @@
                     break;
                 case 104:
                     unitStr = doctor_id_Array[object.selectId];
+                    break;
                 case 118:
                     unitStr = object.selectString;
                     break;
@@ -482,7 +494,7 @@
                             object.selectId = (int)[organization_id_Array indexOfObject:unitStr];
                             break;
                         case 104:
-                            object.selectId = (int)[doctor_id_Array indexOfObject:unitStr];
+                            selectedDor = unitStr;
                             break;
                         case 118:{
                             object.selectId = (int)[object.comboList indexOfObject:unitStr];
@@ -521,8 +533,8 @@
     CGRect currentFrame;
     CGRect lbLeftFrame = CGRectMake(50*SCREEN_WEIGHT/1024, (y)*SCREEN_HEIGHT/768, 90, 20);
     CGRect lbRightFrame = CGRectMake(357*SCREEN_WEIGHT/1024, (y)*SCREEN_HEIGHT/768,90 ,20);
-    CGRect tfLeftFrame = CGRectMake(146*SCREEN_WEIGHT/1024, y*SCREEN_HEIGHT/768, 188, 22);
-    CGRect tfRightFrame = CGRectMake(452*SCREEN_WEIGHT/1024, y*SCREEN_HEIGHT/768, 188, 22);
+    CGRect tfLeftFrame = CGRectMake(146*SCREEN_WEIGHT/1024, (y)*SCREEN_HEIGHT/768, 188, 22);
+    CGRect tfRightFrame = CGRectMake(452*SCREEN_WEIGHT/1024, (y)*SCREEN_HEIGHT/768, 188, 22);
     if(isLeft)
     {
         if(isLable)
@@ -785,6 +797,8 @@
             doctor_id_Array = [id_array copy];
             SJYScb.comboList = [name_array copy];
             
+            UIComboBox *doctorBox = (UIComboBox *)[self viewWithTag:104];
+            doctorBox.selectId = (int)[doctor_id_Array indexOfObject:selectedDor];
         });
     });
 }

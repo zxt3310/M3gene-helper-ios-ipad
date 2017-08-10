@@ -60,7 +60,7 @@
     detailView *registPageView;
     detailView *medicalPicView;
     detailView *diseseSelectView;
-    registViewNew *registNewView;
+    registViewNew *registview;
 
     
     NSArray *listView;
@@ -105,7 +105,7 @@
     self = [super init];
     if(self)
     {
-        listItem = @[@"产品选择",@"扫描检验单条形码",@"检验单录入",@"疾病选择",@"检验单图片",@"客户病例"];
+        listItem = @[@"产品选择",@"扫描检验单条形码",@"检验单录入"/*,@"疾病选择"*/,@"检验单图片",@"客户病例"];
         
         CGRect frame = CGRectMake(280 *SCREEN_WEIGHT/1024,101, 744*SCREEN_WEIGHT /1024,SCREEN_HEIGHT - 101);
         productView = [[detailView alloc]initWithFrame:frame];
@@ -133,7 +133,7 @@
         imageViewCount = 10;
         isTakeMedicalPhoto = NO;
 
-        listView = [NSArray arrayWithObjects:productView,scanCodeView,registPageView,diseseSelectView,orderPicView,medicalPicView,nil];
+        listView = [NSArray arrayWithObjects:productView,scanCodeView,/*registPageView,*/diseseSelectView,orderPicView,medicalPicView,nil];
     }
     return self;
 }
@@ -165,7 +165,7 @@
     [self setProductView];
     [self setScanView];
     [self setOrderPicView];
-    [self setRegistView];
+    //[self setRegistView];
     [self setMedicalPicView];
     [self setDiseseSelectView];
     //默认选中第一行并实现第一行点击效果
@@ -436,19 +436,19 @@
                     return;
                 }
                 else{
-                    //判断完善页面是否需要从草稿箱中取出上次录入未保存的内容，如果需要research=1页面不从数据库中加载。反之为0；
-                    NSString *isblank;
-                    if(registString.length == 0)
-                    {
-                        isblank = @"1";
-                    }
-                    else
-                    {
-                        isblank = @"0";
-                    }
-                        NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@?token=%@&search=%@",orderComplate_URL,numberLable.text,productId,_token,isblank];
-                        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-                        [html5Web loadRequest:request];
+                        //判断完善页面是否需要从草稿箱中取出上次录入未保存的内容，如果需要research=1页面不从数据库中加载。反之为0；
+                        NSString *isblank;
+                        if(registString.length == 0)
+                        {
+                            isblank = @"1";
+                        }
+                        else
+                        {
+                            isblank = @"0";
+                        }
+    //                        NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@?token=%@&search=%@",orderComplate_URL,numberLable.text,productId,_token,isblank];
+    //                        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    //                        [html5Web loadRequest:request];
                     }
             }
             view.hidden = NO;
@@ -582,6 +582,7 @@
     numberLable.font = [UIFont fontWithName:@"Arial-BoldMT" size:22];
     numberLable.text = number;
     numberLable.layer.borderWidth = 1;
+    numberLable.delegate = self;
     [scanCodeView addSubview:numberLable];
   
     [self.view addSubview:scanCodeView];
@@ -597,7 +598,7 @@
 //代理刷新
 - (void) refreshCellNumber:(NSString *)code
 {
-    numberLable.text = code;
+    numberLable.text = registview.DDBH = code;
     
     self.registString = @"";
     
@@ -722,10 +723,12 @@
 //    [diseseSelectView addSubview:diseseTF];
 //    [self.view addSubview:diseseSelectView];
     
-    registViewNew *registview = [[registViewNew alloc] initWithFrame:CGRectMake(0, 0, diseseSelectView.frame.size.width, diseseSelectView.frame.size.height)];
+    registview = [[registViewNew alloc] initWithFrame:CGRectMake(0, 0, diseseSelectView.frame.size.width, diseseSelectView.frame.size.height)];
     registview.delegate = self;
     registview.token = self.token;
     registview.productId = 1;
+    //草稿箱编辑
+    registview.DDBH = number;
     [registview show];
     [diseseSelectView addSubview:registview];
     
@@ -1277,5 +1280,9 @@
     return  YES;
 }
 
+- (bool)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    registview.DDBH = textField.text;
+    return YES;
+}
 
 @end

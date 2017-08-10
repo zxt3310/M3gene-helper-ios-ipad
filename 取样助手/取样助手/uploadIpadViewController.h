@@ -17,7 +17,7 @@
 #import "registView.h"
 
 
-@interface uploadIpadViewController : UIViewController <WKUIDelegate,WKNavigationDelegate,UIScrollViewDelegate>
+@interface uploadIpadViewController : UIViewController <WKUIDelegate,WKNavigationDelegate,UIScrollViewDelegate,UITextFieldDelegate>
 @property NSArray *productList;
 @property NSString *token;
 @property NSString *userName;
