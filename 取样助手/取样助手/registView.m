@@ -78,7 +78,9 @@
     UIComboBox *SJDWcb;
     UIComboBox *SJYScb;
     NSInteger age;
+    NSString *selectedSendOrg;
     NSString *selectedDor;
+    NSString *selectedRecieveOrg;
 }
 @synthesize hidden = _hidden;
 @synthesize DDBH = _DDBH;
@@ -380,7 +382,11 @@
     LCBXtf.delegate = JZAZStf.delegate = QTBStf.delegate = self;
     
     [self setTextFieldDelegate];
-
+    
+    if (!_fillString) {
+        [self orgnizitionRequest];
+        [self receiveOrgRequest];
+    }
 }
 
 - (NSString *)DDBH{
@@ -391,11 +397,11 @@
     DDBHtf.text = DDBH;
 }
 
-- (void)didMoveToWindow
-{
-    [self orgnizitionRequest];
-    [self receiveOrgRequest];
-}
+//- (void)didMoveToSuperview{
+//    
+//    [self orgnizitionRequest];
+//    [self receiveOrgRequest];
+//}
 
 #pragma mark 拼post josn字符串 上传或暂存
 - (NSString *)builtToSendString{
@@ -497,11 +503,15 @@
                 else if ([obj isKindOfClass:[UIComboBox class]]){
                     UIComboBox *object = (UIComboBox *)obj;
                     switch (object.tag) {
-                        case 103:
-                            object.selectId = (int)[organization_id_Array indexOfObject:unitStr];
+                        case 103:{
+                            //object.selectId = (int)[organization_id_Array indexOfObject:unitStr];
+                            selectedSendOrg = unitStr;
+                            [self orgnizitionRequest];
+                        }
                             break;
                         case 104:
                             selectedDor = unitStr;
+                            
                             break;
                         case 118:{
                             object.selectId = (int)[object.comboList indexOfObject:unitStr];
@@ -509,7 +519,9 @@
                         }
                             break;
                         default:
-                            object.selectId = [recieve_id_array indexOfObject:unitStr];
+                            //object.selectId = [recieve_id_array indexOfObject:unitStr];
+                            selectedRecieveOrg = unitStr;
+                            [self receiveOrgRequest];
                             break;
                     }
                 }
@@ -545,7 +557,7 @@
     
     NSString *urlStr = [NSString stringWithFormat:@"%@?token=%@&order_code=%@",SaveUser_URL,_token,DDBHtf.text];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
     
         NSData *response = sendFullRequest(urlStr, [[postStr copy] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], nil, nil, NO);
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -764,7 +776,7 @@
         }
     }
     
-    NSString *urlStr = [NSString stringWithFormat:@"%@?token=%@&product=%ld",ORGANIZATION_URL,_token,(long)_productId];
+    NSString *urlStr = [NSString stringWithFormat:@"%@?token=%@&product=1",ORGANIZATION_URL,_token];//,(long)_productId];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     
         NSData *responseData = sendGETRequest(urlStr, nil);
@@ -799,9 +811,11 @@
             organization_id_Array = [id_Array copy];
             SJDWcb.comboList = [name_Array copy];
             
-            if (_fillString) {
-                [self fillUserData];
-            }
+//            if (_fillString) {
+//                [self fillUserData];
+//            }
+            UIComboBox *orgBox = (UIComboBox *)[self viewWithTag:103];
+            orgBox.selectId = (int)[organization_id_Array indexOfObject:selectedSendOrg];
         });
     });
 }
@@ -902,6 +916,9 @@
             }
             SYJGbox.comboList = [name_array copy];
             recieve_id_array = [id_array copy];
+            
+            UIComboBox *recieveOrg = (UIComboBox *)[self viewWithTag:105];
+            recieveOrg.selectId = (int)[recieve_id_array indexOfObject:selectedRecieveOrg];
         });
     });
 }

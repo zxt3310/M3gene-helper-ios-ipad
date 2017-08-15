@@ -299,6 +299,6 @@
         
     } while ([superView.superview isKindOfClass:[UIView class]]);
     
-    //tableview.frame = [self.superview convertRect:tableview.frame toView:superView];
+    tableview.frame = [self.superview convertRect:tableview.frame toView:superView];
 }
 @end

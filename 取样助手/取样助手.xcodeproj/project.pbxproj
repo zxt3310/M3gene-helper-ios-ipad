@@ -867,7 +867,7 @@
 					5889D8BB1DC091620052C6D7 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = S2B89SD35E;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1220,11 +1220,11 @@
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
-				DEVELOPMENT_TEAM = S2B89SD35E;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "取样助手/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "m3gene-helper-ipad.ranknow.cn";
+				PRODUCT_BUNDLE_IDENTIFIER = "m3gene-helper-HD.lhgene.cn";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1238,17 +1238,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Life Healthcare(Beijing) Co.,Ltd. (S2B89SD35E)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COMPRESS_PNG_FILES = NO;
 				DEVELOPMENT_TEAM = S2B89SD35E;
 				INFOPLIST_FILE = "取样助手/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "m3gene-helper-ipad.ranknow.cn";
+				PRODUCT_BUNDLE_IDENTIFIER = "m3gene-helper-HD.lhgene.cn";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "3948c5bb-d228-4bac-9658-9ddeef06591f";
+				PROVISIONING_PROFILE_SPECIFIER = m3genehelperHD;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

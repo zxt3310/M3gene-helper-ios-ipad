@@ -737,6 +737,7 @@
     
     if (registString != NULL && registString.length > 0) {
         registview.fillString = registString;
+        [registview fillUserData];
     }
     [self.view addSubview:diseseSelectView];
     
@@ -1064,7 +1065,8 @@
     //要上传的图片
     UIImage *image=[params objectForKey:@"pic"];
     //得到图片的data
-    NSData* data = UIImagePNGRepresentation(image);
+    //NSData* data = UIImagePNGRepresentation(image);
+    NSData *data = UIImageJPEGRepresentation(image, 1.0);
     //http body的字符串
     NSMutableString *body=[[NSMutableString alloc]init];
     //参数的集合的所有key的集合
@@ -1283,9 +1285,8 @@
     return  YES;
 }
 
-- (bool)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+- (void)textFieldDidEndEditing:(UITextField *)textField{
     registview.DDBH = textField.text;
-    return YES;
 }
 
 - (void)searchExistOrder{
