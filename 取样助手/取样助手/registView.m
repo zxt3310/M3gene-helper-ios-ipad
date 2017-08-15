@@ -417,19 +417,24 @@
         else if ([obj isKindOfClass:[UIComboBox class]]){
             UIComboBox *object = (UIComboBox *)obj;
             tage = object.tag;
-            switch (tage) {
-                case 103:
-                    unitStr = organization_id_Array[object.selectId];
-                    break;
-                case 104:
-                    unitStr = doctor_id_Array[object.selectId];
-                    break;
-                case 118:
-                    unitStr = object.selectString;
-                    break;
-                default:
-                    unitStr = recieve_id_array[object.selectId];
-                    break;
+            if (object.selectId != -1) {
+                switch (tage) {
+                    case 103:
+                        unitStr = organization_id_Array[object.selectId];
+                        break;
+                    case 104:
+                        unitStr = doctor_id_Array[object.selectId];
+                        break;
+                    case 118:
+                        unitStr = object.selectString;
+                        break;
+                    default:
+                        unitStr = recieve_id_array[object.selectId];
+                        break;
+                }
+            }
+            else{
+                unitStr = @"";
             }
         }
         else if ([obj isKindOfClass:[contentTF class]]){
@@ -455,6 +460,8 @@
             [userDic setObject:[NSString stringWithFormat:@"%ld",age] forKey:@"age"];
             [userDic setObject:@"1" forKey:@"type"];
             [userDic setObject:@"助手" forKey:@"source"];
+            [userDic setObject:@" " forKey:@"email"];
+            [userDic setObject:@" " forKey:@"cancer"];
         }
     }
     return [self convertToJSONData:[userDic copy]];
@@ -514,6 +521,54 @@
 #pragma mark 保存按钮
 - (void)saveBtenClick{
     NSString *Str = [self builtToSendString];
+    NSDictionary *postDic = parseJsonString(Str);
+    
+    if (!postDic) {
+        return;
+    }
+    
+    UIViewController *superController;
+    for (UIView *next = self.superview;next != nil;next = next.superview) {
+        UIResponder *nextresponder = [next nextResponder];
+        if ([nextresponder isKindOfClass:[UIViewController class]]) {
+            superController = (UIViewController *)nextresponder;
+            break;
+        }
+    }
+    
+    NSMutableString *postStr = [[NSMutableString alloc] init];
+    
+    for (NSString *key in postDic) {
+        [postStr appendString:[NSString stringWithFormat:@"&%@=%@",key,[postDic objectForKey:key]]];
+    }
+    [postStr replaceCharactersInRange:NSMakeRange(0, 1) withString:@""];
+    
+    NSString *urlStr = [NSString stringWithFormat:@"%@?token=%@&order_code=%@",SaveUser_URL,_token,DDBHtf.text];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    
+        NSData *response = sendFullRequest(urlStr, [[postStr copy] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], nil, nil, NO);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!response) {
+                alertMsgView(@"网络连接错误，请检查网络",superController);
+                return ;
+            }
+            
+            NSDictionary *returnDic = parseJsonResponse(response);
+            if (!returnDic) {
+                alertMsgView(@"返回数据错误，请重试", superController);
+                return;
+            }
+            NSNumber *result = [returnDic objectForKey:@"err"];
+            if ([result integerValue] !=0) {
+                alertMsgView(@"保存失败，请重试", superController);
+                return;
+            }
+            
+            alertMsgView(@"保存成功", superController);
+        });
+    });
+    
     NSLog(@"%@",Str);
 }
 

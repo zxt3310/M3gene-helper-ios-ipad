@@ -440,7 +440,8 @@
                         NSString *isblank;
                         if(registString.length == 0)
                         {
-                            isblank = @"1";
+                            //isblank = @"1";
+                            [self searchExistOrder];
                         }
                         else
                         {
@@ -515,6 +516,8 @@
             NSDictionary *productDic = _productList[row - 1];
             productName = [productDic objectForKey:@"name"];
             productId = [productDic objectForKey:@"id"];
+            registview.productId = [productId integerValue];
+            [registview orgnizitionRequest];
             productTF.text = productName;
             [self checkUpLoad];
             [productTF resignFirstResponder];
@@ -726,7 +729,7 @@
     registview = [[registViewNew alloc] initWithFrame:CGRectMake(0, 0, diseseSelectView.frame.size.width, diseseSelectView.frame.size.height)];
     registview.delegate = self;
     registview.token = self.token;
-    registview.productId = 1;
+    registview.productId = [productId integerValue];
     //草稿箱编辑
     registview.DDBH = number;
     [registview show];
@@ -1283,6 +1286,46 @@
 - (bool)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     registview.DDBH = textField.text;
     return YES;
+}
+
+- (void)searchExistOrder{
+    NSString *urlStr = [NSString stringWithFormat:@"%@/order_code/%@?token=%@",Search_existorder_URL,numberLable.text,_token];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *response = sendGETRequest(urlStr, nil);
+        dispatch_async(dispatch_get_main_queue(), ^{
+        
+            if (!response) {
+                alertMsgView(@"网络连接错误", self);
+                return;
+            }
+            
+            NSDictionary *returnDic = parseJsonResponse(response);
+            if (!returnDic) {
+                alertMsgView(@"返回数据错误", self);
+                return;
+            }
+            
+            NSNumber *result = [returnDic objectForKey:@"err"];
+            if (!result) {
+                alertMsgView(@"返回数据错误", self);
+                return;
+            }
+            
+            if ([result integerValue] !=0) {
+                alertMsgView([returnDic objectForKey:@"errmsg"], self);
+                return;
+            }
+            
+            NSArray *examineeAry = [returnDic objectForKey:@"examinee_data"];
+            if (examineeAry.count == 0) {
+                return;
+            }
+            NSDictionary *dic = examineeAry[0];
+            registview.fillString = [registview convertToJSONData:dic];
+            [registview fillUserData];
+        });
+    });
 }
 
 @end

@@ -46,4 +46,6 @@
 - (void)resignFirstResponderNow;
 - (NSString *)builtToSendString;
 - (void)fillUserData;
+- (void)orgnizitionRequest;
+- (NSString*)convertToJSONData:(id)infoDict;
 @end

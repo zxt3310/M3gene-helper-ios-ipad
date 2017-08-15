@@ -197,18 +197,6 @@
     //重算列表宽度
     tableView.frame = (tableTemp.size.width > tableView.frame.size.width)?tableTemp:tableView.frame;
     
-    //根据宽度重新计算列表位移
-    //如果菜单右边缘超出屏幕则向左平移
-     CGRect temp = tableView.frame;
-    if (tableView.frame.origin.x + tableView.frame.size.width > superView.frame.size.width) {
-        temp.origin.x = superView.frame.size.width - tableView.frame.size.width - 3;
-    }
-    //如果菜单下边缘超出屏幕则平移至上方
-    if (tableView.frame.origin.y + tableView.frame.size.height > superView.frame.size.height) {
-        temp.origin.y = temp.origin.y - temp.size.height - self.frame.size.height - 6;
-    }
-    tableView.frame = temp;
-    
     return cell;
 }
 
@@ -216,7 +204,7 @@
 {
     if(!(indexPath.row == 0))
     {
-        _selectString = comboTF.text = _comboList[indexPath.row - 1];
+        _selectString = comboTF.text = (_comboList == nil?@"":_comboList[indexPath.row - 1]);
         _selectId = indexPath.row - 1;
 
         currentIndex = indexPath;
@@ -237,6 +225,39 @@
             tableview.alpha = 1;
             //tableview.transform = CGAffineTransformMakeScale(1, 1); //由于需要频繁计算table的frame，此段代码会造成frame变动
         }];
+        
+        orignFrame = tableview.frame;
+        
+        //根据宽度重新计算列表位移
+        if ([superView isKindOfClass:[UIScrollView class]]) {
+            UIScrollView *superScorllView = (UIScrollView *) superView;
+            CGRect temp = tableview.frame;
+            
+            //如果菜单右边缘超出屏幕则向左平移
+            if (orignFrame.origin.x + orignFrame.size.width > superScorllView.contentSize.width) {
+                temp.origin.x = superScorllView.contentSize.width - orignFrame.size.width - 3;
+            }
+            //如果菜单下边缘超出屏幕则平移至上方
+            CGFloat a = superScorllView.contentOffset.y;
+            
+            if (orignFrame.origin.y + orignFrame.size.height > superView.frame.size.height + a) {
+                temp.origin.y = temp.origin.y - temp.size.height - self.frame.size.height - 6;
+            }
+            tableview.frame = temp;
+        }
+        else{
+            CGRect temp = orignFrame;
+            
+            //如果菜单右边缘超出屏幕则向左平移
+            if (orignFrame.origin.x + orignFrame.size.width > superView.frame.size.width) {
+                temp.origin.x = superView.frame.size.width - orignFrame.size.width - 3;
+            }
+            //如果菜单下边缘超出屏幕则平移至上方
+            if (orignFrame.origin.y + orignFrame.size.height > superView.frame.size.height) {
+                temp.origin.y = temp.origin.y - temp.size.height - self.frame.size.height - 6;
+            }
+            tableview.frame = temp;
+        }
 
         [superView addSubview:tableview];
         
@@ -255,6 +276,7 @@
             if (finished) {
                 [tableview removeFromSuperview];
                 [tableview reloadData];
+                tableview.frame = orignFrame;
                 isShow = NO;
             }
         }];
@@ -277,6 +299,6 @@
         
     } while ([superView.superview isKindOfClass:[UIView class]]);
     
-    tableview.frame = [self.superview convertRect:tableview.frame toView:superView];
+    //tableview.frame = [self.superview convertRect:tableview.frame toView:superView];
 }
 @end
