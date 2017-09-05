@@ -755,8 +755,6 @@
     
     NSLog(@"%@",comboBox.selectString);
     NSLog(@"%ld",(long)comboBox.selectId);
-    
-    
 }
 
 - (void)singleSelecotr:(UISingleSelector *)singleSelector DidSelectAtSelectList:(NSString *)selectString
@@ -820,7 +818,7 @@
     });
 }
 
-- (void)doctorRequest:(NSString *)doctor_id
+- (void)doctorRequest:(NSString *)org_id
 {
     UIViewController *superController;
     for (UIView *next = [self superview];next;next = next.superview) {
@@ -831,7 +829,7 @@
         }
     }
     
-    NSString *urlStr = [NSString stringWithFormat:@"%@/%@?token=%@&product=%ld",ORGANIZATION_URL,doctor_id,_token,(long)_productId];
+    NSString *urlStr = [NSString stringWithFormat:@"%@/%@?token=%@&product=1",ORGANIZATION_URL,org_id,_token];//,(long)_productId];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         NSData *responseData = sendGETRequest(urlStr, nil);

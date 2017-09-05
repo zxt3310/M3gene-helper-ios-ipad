@@ -180,7 +180,6 @@
             }
         }
     }
-
 }
 
 - (UIColor *)selectorOutBorderColor
@@ -235,7 +234,6 @@
             } @finally {
                 
             }
-            
         }
     }
     

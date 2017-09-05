@@ -115,6 +115,13 @@
 		58C25FE91DE5632500B8D88D /* UIViewController+UFanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58C25FE61DE5632500B8D88D /* UIViewController+UFanViewController.m */; };
 		58C25FEE1DE5635900B8D88D /* leftDrawerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58C25FEA1DE5635900B8D88D /* leftDrawerViewController.m */; };
 		58C25FEF1DE5635900B8D88D /* firstItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58C25FEC1DE5635900B8D88D /* firstItemViewController.m */; };
+		58CE62F21F5E444300E0B3FC /* yangbencaijibiaozhu.png in Resources */ = {isa = PBXBuildFile; fileRef = 58CE62EF1F5E444300E0B3FC /* yangbencaijibiaozhu.png */; };
+		58CE62F31F5E444300E0B3FC /* yangbencaijibiaozhu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58CE62F01F5E444300E0B3FC /* yangbencaijibiaozhu@2x.png */; };
+		58CE62F41F5E444300E0B3FC /* yangbencaijibiaozhu@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58CE62F11F5E444300E0B3FC /* yangbencaijibiaozhu@3x.png */; };
+		58CE62F71F5E583900E0B3FC /* SampleStandardViewController-ipad.m in Sources */ = {isa = PBXBuildFile; fileRef = 58CE62F61F5E583900E0B3FC /* SampleStandardViewController-ipad.m */; };
+		58CE62FC1F5E7E9B00E0B3FC /* adder.png in Resources */ = {isa = PBXBuildFile; fileRef = 58CE62F91F5E7E9B00E0B3FC /* adder.png */; };
+		58CE62FD1F5E7E9B00E0B3FC /* adder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58CE62FA1F5E7E9B00E0B3FC /* adder@2x.png */; };
+		58CE62FE1F5E7E9B00E0B3FC /* adder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58CE62FB1F5E7E9B00E0B3FC /* adder@3x.png */; };
 		58E50CD91E0A0C98002B6AA3 /* 订单.png in Resources */ = {isa = PBXBuildFile; fileRef = 58E50CD61E0A0C98002B6AA3 /* 订单.png */; };
 		58E50CDA1E0A0C98002B6AA3 /* 订单@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58E50CD71E0A0C98002B6AA3 /* 订单@2x.png */; };
 		58E50CDB1E0A0C98002B6AA3 /* 订单@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58E50CD81E0A0C98002B6AA3 /* 订单@3x.png */; };
@@ -322,6 +329,14 @@
 		58C25FEB1DE5635900B8D88D /* firstItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = firstItemViewController.h; sourceTree = "<group>"; };
 		58C25FEC1DE5635900B8D88D /* firstItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = firstItemViewController.m; sourceTree = "<group>"; };
 		58C25FED1DE5635900B8D88D /* leftDrawerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = leftDrawerViewController.h; sourceTree = "<group>"; };
+		58CE62EF1F5E444300E0B3FC /* yangbencaijibiaozhu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yangbencaijibiaozhu.png; sourceTree = "<group>"; };
+		58CE62F01F5E444300E0B3FC /* yangbencaijibiaozhu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yangbencaijibiaozhu@2x.png"; sourceTree = "<group>"; };
+		58CE62F11F5E444300E0B3FC /* yangbencaijibiaozhu@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yangbencaijibiaozhu@3x.png"; sourceTree = "<group>"; };
+		58CE62F51F5E583900E0B3FC /* SampleStandardViewController-ipad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SampleStandardViewController-ipad.h"; sourceTree = "<group>"; };
+		58CE62F61F5E583900E0B3FC /* SampleStandardViewController-ipad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SampleStandardViewController-ipad.m"; sourceTree = "<group>"; };
+		58CE62F91F5E7E9B00E0B3FC /* adder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = adder.png; path = image/adder.png; sourceTree = "<group>"; };
+		58CE62FA1F5E7E9B00E0B3FC /* adder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "adder@2x.png"; path = "image/adder@2x.png"; sourceTree = "<group>"; };
+		58CE62FB1F5E7E9B00E0B3FC /* adder@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "adder@3x.png"; path = "image/adder@3x.png"; sourceTree = "<group>"; };
 		58E50CD61E0A0C98002B6AA3 /* 订单.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "订单.png"; sourceTree = "<group>"; };
 		58E50CD71E0A0C98002B6AA3 /* 订单@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "订单@2x.png"; sourceTree = "<group>"; };
 		58E50CD81E0A0C98002B6AA3 /* 订单@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "订单@3x.png"; sourceTree = "<group>"; };
@@ -522,6 +537,7 @@
 			children = (
 				5895405B1DC1F76800DDA5F8 /* 样本寄送 */,
 				5884D7BF1E5185A400398C4F /* 主页 */,
+				58CE62F81F5E587100E0B3FC /* 样本标准 */,
 				5884D7BC1E51853100398C4F /* 上传订单 */,
 				581B24621E0B756700FEFBEE /* 侧边栏页 */,
 			);
@@ -671,6 +687,9 @@
 		589540681DC1FDF000DDA5F8 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				58CE62F91F5E7E9B00E0B3FC /* adder.png */,
+				58CE62FA1F5E7E9B00E0B3FC /* adder@2x.png */,
+				58CE62FB1F5E7E9B00E0B3FC /* adder@3x.png */,
 				5819DDCB1E0D2E9E0010C88B /* pdf.png */,
 				5819DDCC1E0D2E9E0010C88B /* pdf@2x.png */,
 				5819DDCD1E0D2E9E0010C88B /* pdf@3x.png */,
@@ -755,9 +774,21 @@
 			path = Drawer;
 			sourceTree = "<group>";
 		};
+		58CE62F81F5E587100E0B3FC /* 样本标准 */ = {
+			isa = PBXGroup;
+			children = (
+				58CE62F51F5E583900E0B3FC /* SampleStandardViewController-ipad.h */,
+				58CE62F61F5E583900E0B3FC /* SampleStandardViewController-ipad.m */,
+			);
+			name = "样本标准";
+			sourceTree = "<group>";
+		};
 		58E50CD51E0A0C98002B6AA3 /* 首页 */ = {
 			isa = PBXGroup;
 			children = (
+				58CE62EF1F5E444300E0B3FC /* yangbencaijibiaozhu.png */,
+				58CE62F01F5E444300E0B3FC /* yangbencaijibiaozhu@2x.png */,
+				58CE62F11F5E444300E0B3FC /* yangbencaijibiaozhu@3x.png */,
 				5895437F1E5C3C1B003DDD5D /* 发票-2.png */,
 				589543801E5C3C1B003DDD5D /* 发票-2@2x.png */,
 				589543811E5C3C1B003DDD5D /* 发票-2@3x.png */,
@@ -867,7 +898,7 @@
 					5889D8BB1DC091620052C6D7 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = S2B89SD35E;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -919,6 +950,7 @@
 				706B00D01DCB2D5D003953DD /* 密码@3x.png in Resources */,
 				58E50CDA1E0A0C98002B6AA3 /* 订单@2x.png in Resources */,
 				703C292A1DCA41D2004FA090 /* operate.png in Resources */,
+				58CE62FD1F5E7E9B00E0B3FC /* adder@2x.png in Resources */,
 				700A3E0F1DD0748000D507F1 /* 莲和logo 58.png in Resources */,
 				5837EC2B1DE6D81E009921E8 /* 投标纪录@3x.png in Resources */,
 				58E50CE71E0A1EBF002B6AA3 /* iconBack@3x.png in Resources */,
@@ -930,11 +962,14 @@
 				58B488F11E2338BE00757B7A /* guibinka.png in Resources */,
 				58E50CE51E0A1EBF002B6AA3 /* iconBack.png in Resources */,
 				583F1E461E5E8C17005AA677 /* gg.png in Resources */,
+				58CE62F21F5E444300E0B3FC /* yangbencaijibiaozhu.png in Resources */,
 				703C29141DCA286A004FA090 /* jisongyangben@3x.png in Resources */,
 				703C292D1DCA41D2004FA090 /* unoperate.png in Resources */,
 				706B00D71DCB2DB9003953DD /* 用户名.png in Resources */,
+				58CE62FE1F5E7E9B00E0B3FC /* adder@3x.png in Resources */,
 				58E50CD91E0A0C98002B6AA3 /* 订单.png in Resources */,
 				58427ABD1E0A8B2100118F7D /* ziliao copy 2@3x.png in Resources */,
+				58CE62F31F5E444300E0B3FC /* yangbencaijibiaozhu@2x.png in Resources */,
 				589543821E5C3C1B003DDD5D /* 发票-2.png in Resources */,
 				5837EC301DE6D81E009921E8 /* 草稿箱@2x.png in Resources */,
 				58B0991F1DEE74B600B87A4E /* nv@3x.png in Resources */,
@@ -961,6 +996,7 @@
 				703C29241DCA41D2004FA090 /* copy.png in Resources */,
 				58B488EB1E2338BE00757B7A /* yanbben.png in Resources */,
 				7024D4B51DCDCFDA00671EAD /* line.png in Resources */,
+				58CE62FC1F5E7E9B00E0B3FC /* adder.png in Resources */,
 				5835B8401E27303E006C00AE /* 贵宾厅.png in Resources */,
 				5880BEC01E5443FE0077033C /* 用户名ip@2x.png in Resources */,
 				5835B83A1E27303E006C00AE /* 进度中心.png in Resources */,
@@ -974,6 +1010,7 @@
 				5835B84D1E273F9D006C00AE /* iphone03@2x.png in Resources */,
 				5837EC341DE6D81E009921E8 /* 订单查看订单@3x.png in Resources */,
 				5837EC3A1DE6DFC0009921E8 /* touxiang@3x.png in Resources */,
+				58CE62F41F5E444300E0B3FC /* yangbencaijibiaozhu@3x.png in Resources */,
 				5837EC311DE6D81E009921E8 /* 草稿箱@3x.png in Resources */,
 				58E50CE61E0A1EBF002B6AA3 /* iconBack@2x.png in Resources */,
 				5887AD3A1DE59AB900FA00B1 /* 喇叭@3x.png in Resources */,
@@ -1078,6 +1115,7 @@
 				5895404F1DC1A6AF00DDA5F8 /* scanViewController.m in Sources */,
 				5884D7B41E517DF600398C4F /* uploadIphoneViewController.m in Sources */,
 				581B24601E0B753400FEFBEE /* Reachability.m in Sources */,
+				58CE62F71F5E583900E0B3FC /* SampleStandardViewController-ipad.m in Sources */,
 				5889D8C41DC091620052C6D7 /* AppDelegate-ipad.m in Sources */,
 				58C25FE71DE5632500B8D88D /* UFanBasicViewController.m in Sources */,
 				58480C4D1E557CDC007A0973 /* passwdChangeViewController.m in Sources */,
@@ -1220,7 +1258,7 @@
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = S2B89SD35E;
 				INFOPLIST_FILE = "取样助手/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1238,7 +1276,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Life Healthcare(Beijing) Co.,Ltd. (S2B89SD35E)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				DEVELOPMENT_TEAM = S2B89SD35E;
 				INFOPLIST_FILE = "取样助手/Info.plist";
@@ -1247,8 +1285,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "m3gene-helper-HD.lhgene.cn";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3948c5bb-d228-4bac-9658-9ddeef06591f";
-				PROVISIONING_PROFILE_SPECIFIER = m3genehelperHD;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

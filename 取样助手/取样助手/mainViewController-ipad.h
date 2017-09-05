@@ -20,6 +20,7 @@
 #import "DataCenterWebViewController.h"
 #import "dataCenterViewController.h"
 #import "VIPCardViewController-ipad.h"
+#import "SampleStandardViewController-ipad.h"
 
 @interface mainViewControllerIpad :UFanBasicViewController  <loginUpdateToken>
 

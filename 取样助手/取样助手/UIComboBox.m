@@ -36,7 +36,10 @@
         self.selectId = -1;
         _introductStr = @"-请选择-";
         
-        comboTF = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width - self.frame.size.height, self.frame.size.height)];
+        comboTF = [[UITextField alloc] initWithFrame:CGRectMake(0,
+                                                                0,
+                                                                self.frame.size.width - self.frame.size.height,
+                                                                self.frame.size.height)];
         comboTF.layer.borderWidth = 1;
         comboTF.enabled = NO;
         comboTF.leftView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 10, 1)];
@@ -44,7 +47,10 @@
         [self addSubview:comboTF];
         
         comboLb = [UIButton buttonWithType:UIButtonTypeSystem];
-        comboLb.frame = CGRectMake(comboTF.frame.size.width, 0, self.frame.size.height, self.frame.size.height);
+        comboLb.frame = CGRectMake(comboTF.frame.size.width,
+                                   0,
+                                   self.frame.size.height,
+                                   self.frame.size.height);
         comboLb.layer.borderWidth = 1;
         [comboLb setTitle:@"▼" forState:UIControlStateNormal];
         comboLb.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -52,7 +58,10 @@
         comboLb.titleLabel.font = [UIFont systemFontOfSize:self.frame.size.height * 0.77];
         [self addSubview:comboLb];
         
-        tableview = [[UITableView alloc]initWithFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height + 3,self.frame.size.width,40)];
+        tableview = [[UITableView alloc]initWithFrame:CGRectMake(self.frame.origin.x,
+                                                                 self.frame.origin.y + self.frame.size.height + 3,
+                                                                 self.frame.size.width,
+                                                                 40)];
         tableview.delegate = self;
         tableview.dataSource = self;
         tableview.layer.borderWidth = 1;
@@ -193,7 +202,8 @@
         }
     }
     //计算文字长度
-    tableTemp.size.width = cell.textLabel.text.length * cell.textLabel.font.pointSize + 50;
+    //CGSize size = [cell.textLabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:cell.font,NSFontAttributeName, nil]];
+    tableTemp.size.width = cell.textLabel.text.length * cell.textLabel.font.pointSize+ 20;
     //重算列表宽度
     tableView.frame = (tableTemp.size.width > tableView.frame.size.width)?tableTemp:tableView.frame;
     
@@ -270,7 +280,6 @@
     if(isShow)
     {
         [UIView animateWithDuration:.15 animations:^{
-            //tableview.transform = CGAffineTransformMakeScale(1.3, 1.3);
             tableview.alpha = 0.0;
         } completion:^(BOOL finished) {
             if (finished) {
