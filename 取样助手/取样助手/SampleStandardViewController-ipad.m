@@ -12,7 +12,7 @@
 {
     NSArray *productNameAry;
     NSArray *productIdAry;
-    int productNo;
+    NSInteger productNo;
 }
 @end
 
@@ -49,8 +49,11 @@
                                                                         277*SCREEN_HEIGHT/768,
                                                                         316*SCREEN_WEIGHT/1024,
                                                                         50)];
+    productCb.placeColor = [UIColor colorWithMyNeed:155 green:155 blue:155 alpha:1];
+    productCb.textColor = [UIColor blackColor];
     productCb.tag = oringTag;
     [self.view addSubview:productCb];
+    
     
     UIButton *addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     addBtn.frame = CGRectMake(666*SCREEN_WEIGHT/1024,
@@ -73,6 +76,7 @@
     nextBtn.titleLabel.textColor = [UIColor whiteColor];
     [nextBtn setBackgroundColor:[UIColor colorWithMyNeed:74 green:144 blue:226 alpha:1]];
     nextBtn.layer.cornerRadius = 10;
+    [nextBtn addTarget:self action:@selector(nextBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:nextBtn];
     
     [self setNewBar];
@@ -147,14 +151,26 @@
 }
 
 - (void)addProductBtn:(UIButton *)sender{
+    if (productNo > 1){
+        alertMsgView(@"产品个数已达上限", self);
+        return;
+    }
     UIComboBox *productCb = [[UIComboBox alloc] initWithFrame:CGRectMake(298*SCREEN_WEIGHT/1024,
                                                                          357*SCREEN_HEIGHT/768 + productNo * (50 + 25*SCREEN_HEIGHT/768),
                                                                          316*SCREEN_WEIGHT/1024,
                                                                          50)];
+    productCb.placeColor = [UIColor colorWithMyNeed:155 green:155 blue:155 alpha:1];
+    productCb.textColor = [UIColor blackColor];
     productCb.comboList = productNameAry;
     [self.view addSubview:productCb];
     productNo++;
-    productCb.tag = oringTag + productNo;
+    productCb.tag = productNo+oringTag;
+    NSLog(@"%ld",productCb.tag);
+}
+
+- (void)nextBtn:(UIButton *)sender{
+    SampleStandardChooseViewController_ipad *SSCVC = [[SampleStandardChooseViewController_ipad alloc] init];
+    [self.navigationController pushViewController:SSCVC animated:YES];
 }
 
 @end

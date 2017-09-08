@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "publicMethod.h"
 #import "UIComboBox.h"
+#import "SampleStandardChooseViewController-ipad.h"
 
 @interface SampleStandardViewController_ipad : UIViewController
 

@@ -87,6 +87,7 @@
 		589543821E5C3C1B003DDD5D /* 发票-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5895437F1E5C3C1B003DDD5D /* 发票-2.png */; };
 		589543831E5C3C1B003DDD5D /* 发票-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 589543801E5C3C1B003DDD5D /* 发票-2@2x.png */; };
 		589543841E5C3C1B003DDD5D /* 发票-2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 589543811E5C3C1B003DDD5D /* 发票-2@3x.png */; };
+		589F00D91F62654500454DAB /* SampleStandardChooseViewController-ipad.m in Sources */ = {isa = PBXBuildFile; fileRef = 589F00D81F62654500454DAB /* SampleStandardChooseViewController-ipad.m */; };
 		58B06DCC1DE6D01700F19DA0 /* dingdanluruCopy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B06DC91DE6D01700F19DA0 /* dingdanluruCopy@2x.png */; };
 		58B06DCD1DE6D01800F19DA0 /* dingdanluruCopy.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B06DCA1DE6D01700F19DA0 /* dingdanluruCopy.png */; };
 		58B06DCE1DE6D01800F19DA0 /* dingdanluruCopy@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B06DCB1DE6D01700F19DA0 /* dingdanluruCopy@3x.png */; };
@@ -294,6 +295,8 @@
 		5895437F1E5C3C1B003DDD5D /* 发票-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发票-2.png"; sourceTree = "<group>"; };
 		589543801E5C3C1B003DDD5D /* 发票-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发票-2@2x.png"; sourceTree = "<group>"; };
 		589543811E5C3C1B003DDD5D /* 发票-2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发票-2@3x.png"; sourceTree = "<group>"; };
+		589F00D71F62654500454DAB /* SampleStandardChooseViewController-ipad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SampleStandardChooseViewController-ipad.h"; sourceTree = "<group>"; };
+		589F00D81F62654500454DAB /* SampleStandardChooseViewController-ipad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SampleStandardChooseViewController-ipad.m"; sourceTree = "<group>"; };
 		58B06DC91DE6D01700F19DA0 /* dingdanluruCopy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dingdanluruCopy@2x.png"; path = "image/dingdanluruCopy@2x.png"; sourceTree = "<group>"; };
 		58B06DCA1DE6D01700F19DA0 /* dingdanluruCopy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dingdanluruCopy.png; path = image/dingdanluruCopy.png; sourceTree = "<group>"; };
 		58B06DCB1DE6D01700F19DA0 /* dingdanluruCopy@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dingdanluruCopy@3x.png"; path = "image/dingdanluruCopy@3x.png"; sourceTree = "<group>"; };
@@ -779,6 +782,8 @@
 			children = (
 				58CE62F51F5E583900E0B3FC /* SampleStandardViewController-ipad.h */,
 				58CE62F61F5E583900E0B3FC /* SampleStandardViewController-ipad.m */,
+				589F00D71F62654500454DAB /* SampleStandardChooseViewController-ipad.h */,
+				589F00D81F62654500454DAB /* SampleStandardChooseViewController-ipad.m */,
 			);
 			name = "样本标准";
 			sourceTree = "<group>";
@@ -1107,6 +1112,7 @@
 				5828E4C81DFFA53E0040E2A2 /* UIComboBox.m in Sources */,
 				708FDEC91DC875080069E6C2 /* NetUtils.m in Sources */,
 				5884D7B11E51649200398C4F /* mainViewController-iphone.m in Sources */,
+				589F00D91F62654500454DAB /* SampleStandardChooseViewController-ipad.m in Sources */,
 				581B24651E0B7F4900FEFBEE /* DataCenterWebViewController.m in Sources */,
 				5858F9921E28871B003C3B49 /* passWordEditView.m in Sources */,
 				5889D8C71DC091630052C6D7 /* mainViewController-ipad.m in Sources */,
