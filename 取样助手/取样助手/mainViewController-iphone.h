@@ -21,6 +21,7 @@
 #import "dataCenterViewController.h"
 #import "VIPCardViewController-iphone.h"
 #import "memberCenterViewController.h"
+#import "SampleStandardViewController-iphone.h"
 
 @interface mainViewControllerIphone :UFanBasicViewController  <loginUpdateToken>
 

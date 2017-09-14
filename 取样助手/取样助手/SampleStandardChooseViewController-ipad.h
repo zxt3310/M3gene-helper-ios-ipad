@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "publicMethod.h"
+#import "SampleStandardRequirementViewController.h"
 
 @interface SampleStandardChooseViewController_ipad : UIViewController
 
-@property NSArray *tissueAry;
-@property NSArray *bloodAry;
+@property NSArray *tissueNameArray;
+@property NSArray *bloodNameArray;
+@property NSArray *tissueIdArray;
+@property NSArray *bloodIdArray;
+@property NSString *productStr;
+@property NSString *productNameStr;
 
 @end

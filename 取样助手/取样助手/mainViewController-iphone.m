@@ -138,41 +138,6 @@
     }
 }
 
-//- (void)setNewBar
-//{
-//    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WEIGHT, 44)];
-//    UIImageView *backimg = [[UIImageView alloc]initWithFrame:header.frame];
-//    backimg.backgroundColor = [UIColor whiteColor];
-//    header.layer.borderColor = [UIColor colorWithRed:200.0/255 green:200.0/255 blue:200.0/255 alpha:0.5].CGColor;
-//    header.layer.borderWidth = 0;
-//    [self.view addSubview:header];
-//    [header addSubview:backimg];
-//    
-//    backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [backBtn setTitle:@"" forState:UIControlStateNormal];
-//    [backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-//    [backBtn setImage:[UIImage imageNamed:@"2"] forState:UIControlStateNormal];
-//    [backBtn setImage:[UIImage imageNamed:@"2"] forState:UIControlStateHighlighted];
-//    [backBtn setImageEdgeInsets:UIEdgeInsetsMake(7, 0, 7, 8)];
-//    [backBtn addTarget:self action:@selector(leftAction) forControlEvents:UIControlEventTouchUpInside];
-//    [backBtn sizeToFit];
-//    CGRect rect = backBtn.frame;
-//    rect.origin.x = 30;
-//    rect.origin.y = 25;
-//    rect.size.height = 65;
-//    rect.size.width = 60;
-//    backBtn.frame = rect;
-//    [header addSubview:backBtn];
-//    
-//    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(rect.size.width + 16, 32, SCREEN_WEIGHT - (rect.size.width+8) * 2, 44)];
-//    titleLabel.text = @"莲和运营后台";
-//    titleLabel.textColor = [UIColor blackColor];
-//    titleLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:18];
-//    titleLabel.textAlignment = NSTextAlignmentCenter;
-//    [header addSubview:titleLabel];
-//}
-
 - (void)leftAction{
     [self.UF_ViewController triggerLeftDrawer];
 }
@@ -240,18 +205,16 @@
          [cell.contentView addSubview:reportImgView];
          [cell.contentView addGestureRecognizer:tap];*/
         
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(ImgtapAction:)];
-        
-        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(ImgtapAction:)];       
         
         
         
         UIImage *gbkImage = [UIImage imageNamed:@"guibinka"];
-        UIImageView *gbkImageView = [[UIImageView alloc] initWithFrame:CGRectMake(301 *iphone_size_W, 65*iphone_size_H, 54*iphone_size_W, 54*iphone_size_H)];
+        UIImageView *gbkImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT*7/10 - 27*iphone_size_W, 65*iphone_size_H, 54*iphone_size_W, 54*iphone_size_H)];
         gbkImageView.image = gbkImage;
         [cell.contentView addSubview:gbkImageView]; //
         
-        UILabel *gbkLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT*3/4, 127*iphone_size_H, SCREEN_WEIGHT/4, 16)];
+        UILabel *gbkLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT*3/5, 127*iphone_size_H, SCREEN_WEIGHT/5, 16)];
         gbkLabel.text = @"贵宾卡录入";
         gbkLabel.textColor = [UIColor colorWithRed:74.0/255 green:74.0/255 blue:74.0/255 alpha:1.0];
         gbkLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
@@ -260,14 +223,12 @@
         
         
         
-        
-        
         UIImage *ddImage = [UIImage imageNamed:@"dingdan"];
-        UIImageView *ddImageView = [[UIImageView alloc] initWithFrame:CGRectMake(17*iphone_size_W,65*iphone_size_H, 54*iphone_size_W, 54*iphone_size_H)];
+        UIImageView *ddImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/10 - 27*iphone_size_W,65*iphone_size_H, 54*iphone_size_W, 54*iphone_size_H)];
         ddImageView.image = ddImage;
         [cell.contentView addSubview:ddImageView];
         
-        UILabel *ddLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 127*iphone_size_H, SCREEN_WEIGHT/4, 16)];
+        UILabel *ddLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 127*iphone_size_H, SCREEN_WEIGHT/5, 16)];
         ddLabel.text = @"订单录入";
         ddLabel.textColor = [UIColor colorWithRed:74.0/255 green:74.0/255 blue:74.0/255 alpha:1.0];
         ddLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
@@ -276,14 +237,12 @@
         
         
         
-        
-        
         UIImage *ybImage = [UIImage imageNamed:@"yanbben"];
-        UIImageView *ybImageView = [[UIImageView alloc] initWithFrame:CGRectMake(114*iphone_size_W,65*iphone_size_H, 54*iphone_size_W, 54*iphone_size_H)];
+        UIImageView *ybImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT*3/10 - 27*iphone_size_W,65*iphone_size_H, 54*iphone_size_W, 54*iphone_size_H)];
         ybImageView.image = ybImage;
         [cell.contentView addSubview:ybImageView];
         
-        UILabel *ybLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/4, 127*iphone_size_H, SCREEN_WEIGHT/4, 16)];
+        UILabel *ybLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/5, 127*iphone_size_H, SCREEN_WEIGHT/5, 16)];
         ybLabel.text = @"样本寄送";
         ybLabel.textColor = [UIColor colorWithRed:74.0/255 green:74.0/255 blue:74.0/255 alpha:1.0];
         ybLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
@@ -292,19 +251,36 @@
         
         
         
-        
-        
         UIImage *bgImage = [UIImage imageNamed:@"jisong"];
-        UIImageView *bgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(208 *iphone_size_W, 65*iphone_size_H, 54*iphone_size_W, 54*iphone_size_H)];
+        UIImageView *bgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT/2 - 27*iphone_size_W, 65*iphone_size_H, 54*iphone_size_W, 54*iphone_size_H)];
         bgImageView.image = bgImage;
         [cell.contentView addSubview:bgImageView];
         
-        UILabel *bgLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT*2/4, 127*iphone_size_H, SCREEN_WEIGHT/4, 16)];
+        UILabel *bgLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT*2/5, 127*iphone_size_H, SCREEN_WEIGHT/5, 16)];
         bgLabel.text = @"报告寄送";
         bgLabel.textColor = [UIColor colorWithRed:74.0/255 green:74.0/255 blue:74.0/255 alpha:1.0];
         bgLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
         bgLabel.textAlignment = NSTextAlignmentCenter;
         [cell.contentView addSubview:bgLabel];
+        
+        UIImage *cjImage = [UIImage imageNamed:@"yangbencaijibiaozhu"];
+        UIImageView *cjImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT*9/10-(54*SCREEN_HEIGHT/667)/2,
+                                                                                 65*SCREEN_HEIGHT/667,
+                                                                                 54*SCREEN_HEIGHT/667,
+                                                                                 54*SCREEN_HEIGHT/667)];
+        cjImageView.image = cjImage;
+        [cell.contentView addSubview:cjImageView];
+        
+        UILabel *cjLable = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WEIGHT*4/5,
+                                                                     127*SCREEN_HEIGHT/667,
+                                                                     SCREEN_WEIGHT/5,
+                                                                     16)];
+        cjLable.text = @"样本标准";
+        cjLable.textColor = [UIColor colorWithRed:74.0/255 green:74.0/255 blue:74.0/255 alpha:1.0];
+        cjLable.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
+        cjLable.textAlignment = NSTextAlignmentCenter;
+        [cell.contentView addSubview:cjLable];
+
         
         [cell.contentView addGestureRecognizer:tap];
         
@@ -493,7 +469,7 @@
 - (void)ImgtapAction:(UITapGestureRecognizer *)sender
 {
     CGPoint point = [sender locationInView:self.view];
-    if(point.x <= sender.view.frame.size.width/4)
+    if(point.x <= sender.view.frame.size.width/5)
     {
         if(allowRegist)
         {
@@ -510,7 +486,7 @@
         }
         
     }
-    else if(point.x <= sender.view.frame.size.width*2/4)
+    else if(point.x <= sender.view.frame.size.width*2/5)
     {
         if(allowSendEx)
             
@@ -528,23 +504,7 @@
         }
         
     }
-    else if(point.x > sender.view.frame.size.width*3/4)
-    {
-        if(allowInputGBK)
-        {
-            VIPCardViewControllerIphone *vip = [[VIPCardViewControllerIphone alloc] init];
-            vip.token = token;
-            vip.userName = userName;
-            [self.navigationController pushViewController:vip animated:YES];
-        }
-        else
-        {
-            alertMsgView(@"没有相关权限请联系管理员", self);
-            return;
-        }
-        
-    }
-    else
+    else if (point.x <= sender.view.frame.size.width*3/5)
     {
         if(allowSendReport)
         {
@@ -552,6 +512,28 @@
             _svc.title = @"报告寄送";
             _svc.isSendExpress = NO;
             [self.navigationController pushViewController:_svc animated:YES];
+        }
+        else
+        {
+            alertMsgView(@"没有相关权限请联系管理员", self);
+            return;
+        }
+    }
+    else if(point.x > sender.view.frame.size.width*4/5)
+    {
+        SampleStandardViewController_iphone *ssvc = [[SampleStandardViewController_iphone alloc] init];
+        ssvc.productAry = productList;
+        [self.navigationController pushViewController:ssvc animated:YES];
+
+    }
+    else
+    {
+        if(allowInputGBK)
+        {
+            VIPCardViewControllerIphone *vip = [[VIPCardViewControllerIphone alloc] init];
+            vip.token = token;
+            vip.userName = userName;
+            [self.navigationController pushViewController:vip animated:YES];
         }
         else
         {

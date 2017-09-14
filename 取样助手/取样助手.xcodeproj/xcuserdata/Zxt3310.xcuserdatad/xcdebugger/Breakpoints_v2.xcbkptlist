@@ -3769,13 +3769,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/mainViewController-iphone.m"
-            timestampString = "509511548.667862"
+            timestampString = "526891920.183098"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "884"
-            endingLineNumber = "884"
-            landmarkName = "-userBtnAction"
-            landmarkType = "7">
+            startingLineNumber = "901"
+            endingLineNumber = "901">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4137,13 +4135,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/mainViewController-iphone.m"
-            timestampString = "509527123.508523"
+            timestampString = "526891920.183098"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "886"
-            endingLineNumber = "886"
-            landmarkName = "-userBtnAction"
-            landmarkType = "7">
+            startingLineNumber = "903"
+            endingLineNumber = "903">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4153,11 +4149,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/mainViewController-iphone.m"
-            timestampString = "509595833.655174"
+            timestampString = "526891920.183098"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "815"
-            endingLineNumber = "815"
+            startingLineNumber = "832"
+            endingLineNumber = "832"
             landmarkName = "-checkUpdata"
             landmarkType = "7">
          </BreakpointContent>
@@ -4895,6 +4891,198 @@
             startingLineNumber = "205"
             endingLineNumber = "205"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/SampleStandardViewController-ipad.m"
+            timestampString = "527075071.574227"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
+            landmarkName = "-nextBtn:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/NetUtils.m"
+            timestampString = "526904007.716138"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "334"
+            endingLineNumber = "334"
+            landmarkName = "parseJsonResponse()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/SampleStandardViewController-ipad.m"
+            timestampString = "527075071.574227"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "197"
+            endingLineNumber = "197"
+            landmarkName = "-nextBtn:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/SampleStandardViewController-ipad.m"
+            timestampString = "527075071.574227"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "196"
+            endingLineNumber = "196"
+            landmarkName = "-nextBtn:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[SampleStandardViewController_ipad nextBtn:]"
+                  moduleName = "&#x53d6;&#x6837;&#x52a9;&#x624b;"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/damon/Documents/%E6%AD%A3%E5%BC%8F%E5%B7%A5%E7%A8%8B/M3gene-helper-ios-ipad.git/%E5%8F%96%E6%A0%B7%E5%8A%A9%E6%89%8B/%E5%8F%96%E6%A0%B7%E5%8A%A9%E6%89%8B/SampleStandardViewController-ipad.m"
+                  timestampString = "526981370.169978"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "186"
+                  endingLineNumber = "186"
+                  offsetFromSymbolStart = "1012">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__45-[SampleStandardViewController_ipad nextBtn:]_block_invoke"
+                  moduleName = "&#x53d6;&#x6837;&#x52a9;&#x624b;"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/damon/Documents/%E6%AD%A3%E5%BC%8F%E5%B7%A5%E7%A8%8B/M3gene-helper-ios-ipad.git/%E5%8F%96%E6%A0%B7%E5%8A%A9%E6%89%8B/%E5%8F%96%E6%A0%B7%E5%8A%A9%E6%89%8B/SampleStandardViewController-ipad.m"
+                  timestampString = "526981370.173111"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "186"
+                  endingLineNumber = "186"
+                  offsetFromSymbolStart = "20">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/SampleStandardViewController-ipad.m"
+            timestampString = "527075071.574227"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
+            landmarkName = "-nextBtn:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/SampleStandardChooseViewController-ipad.m"
+            timestampString = "526985470.752901"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/SampleStandardViewController-ipad.m"
+            timestampString = "527075071.574227"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "231"
+            endingLineNumber = "231"
+            landmarkName = "-nextBtn:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/SampleStandardRequirementViewController.m"
+            timestampString = "527070378.741581"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/SampleStandardViewController-ipad.m"
+            timestampString = "527074794.718811"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
+            landmarkName = "-nextBtn:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/SampleStandardViewController-ipad.m"
+            timestampString = "527074983.378236"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "-nextBtn:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

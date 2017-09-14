@@ -79,7 +79,7 @@
                                                                  131*SCREEN_HEIGHT/768,
                                                                  SCREEN_WEIGHT,
                                                                  22)];
-    titleLb.text = @"";
+    titleLb.text = _productNameStr;
     titleLb.font = [UIFont fontWithName:@"STHeitiSC-Medium" size:22];
     titleLb.textAlignment = NSTextAlignmentCenter;
     titleLb.textColor = [UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1];
@@ -91,7 +91,8 @@
                                                                 18)];
     noteLb.textAlignment = NSTextAlignmentCenter;
     noteLb.font = [UIFont fontWithName:@"STHeitiSC-Light" size:18];
-    noteLb.text = @"共有11种样本类型采集方式，请选择患者能提供的任意一种样本类型查看采集标准";
+    NSUInteger number = _tissueIdArray.count + _bloodIdArray.count;
+    noteLb.text = [NSString stringWithFormat:@"共有%ld种样本类型采集方式，请选择患者能提供的任意一种样本类型查看采集标准",number];
     noteLb.textColor = [UIColor colorWithMyNeed:118 green:118 blue:118 alpha:1];
     [self.view addSubview:noteLb];
     
@@ -128,25 +129,37 @@
     [nextBtn addTarget:self action:@selector(nextBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:nextBtn];
     
-    for (int i=0; i<_tissueAry.count; i++) {
+    for (int i=0; i<_tissueNameArray.count; i++) {
         UIButton *tissueBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        tissueBtn.frame = CGRectMake(73*SCREEN_WEIGHT/1024 + x%4 * 238*SCREEN_WEIGHT/1024,
-                                     278*SCREEN_HEIGHT/768 + y/4 * 55 *SCREEN_HEIGHT/768,
+        tissueBtn.frame = CGRectMake(73*SCREEN_WEIGHT/1024 + i%4 * 238*SCREEN_WEIGHT/1024,
+                                     278*SCREEN_HEIGHT/768 + i/4 * 55 *SCREEN_HEIGHT/768,
                                      160*SCREEN_WEIGHT/1024,
                                      45);
-        [tissueBtn setTitle:_tissueAry[i] forState:UIControlStateNormal];
-        [tissueBtn setBackgroundColor:[UIColor whiteColor]];
-        
+        [tissueBtn setTitle:_tissueNameArray[i] forState:UIControlStateNormal];
+        [tissueBtn setTitleColor:[UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1] forState:UIControlStateNormal];
+        [tissueBtn addTarget:self action:@selector(selectSampleAction:) forControlEvents:UIControlEventTouchUpInside];
+        tissueBtn.layer.borderWidth = 1;
+        tissueBtn.layer.borderColor = [UIColor colorWithMyNeed:171 green:171 blue:171 alpha:1].CGColor;
+        tissueBtn.tag = [_tissueIdArray[i] integerValue] + 100;
         [self.view addSubview: tissueBtn];
         
-        x++;
-        y++;
-    }
-
-}
-
-- (void)tissuBtn:(UIButton *)sender{
+        }
     
+    for (int i=0; i<_bloodNameArray.count; i++) {
+        UIButton *bloodBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        bloodBtn.frame = CGRectMake(73*SCREEN_WEIGHT/1024 + i%4 * 238*SCREEN_WEIGHT/1024,
+                                     595*SCREEN_HEIGHT/768 + i/4 * 55 *SCREEN_HEIGHT/768,
+                                     160*SCREEN_WEIGHT/1024,
+                                     45);
+        [bloodBtn setTitle:_bloodNameArray[i] forState:UIControlStateNormal];
+        [bloodBtn setTitleColor:[UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1] forState:UIControlStateNormal];
+        [bloodBtn addTarget:self action:@selector(selectSampleAction:) forControlEvents:UIControlEventTouchUpInside];
+        bloodBtn.layer.borderWidth = 1;
+        bloodBtn.layer.borderColor = [UIColor colorWithMyNeed:171 green:171 blue:171 alpha:1].CGColor;
+        bloodBtn.tag = [_bloodIdArray[i] integerValue] + 200;
+        [self.view addSubview: bloodBtn];
+        
+    }
 }
 
 - (void)setNewBar
@@ -193,8 +206,64 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)selectSampleAction:(UIButton *)sender{
+    sender.selected = !sender.selected;
+    if (sender.selected == YES) {
+        sender.backgroundColor = [UIColor colorWithMyNeed:114 green:176 blue:248 alpha:1];
+    }else{
+        sender.backgroundColor = [UIColor whiteColor];
+    }
+}
+
 - (void)nextBtn:(UIButton *)sender{
+    NSMutableString *sampleStr = [[NSMutableString alloc] init];
+    for (id obj in self.view.subviews) {
+        if ([obj isKindOfClass:[UIButton class]]) {
+            UIButton *object = (UIButton *)obj;
+            if (object.selected == NO) {
+                continue;
+            }
+            if (object.tag >= 100 && object.tag<200) {
+                [sampleStr appendFormat:@",%ld",object.tag-100];
+                continue;
+            }
+            
+            if (object.tag >=200) {
+                [sampleStr appendFormat:@",%ld",object.tag-200];
+            }
+        }
+    }
+    if (sampleStr.length>0) {
+        [sampleStr replaceCharactersInRange:NSMakeRange(0, 1) withString:@""];
+    }
     
+    NSLog(@"%@",[sampleStr copy]);
+    
+    NSString *urlStr = [NSString stringWithFormat:@"%@?product_ids=%@&sample_type_id=%@",SampleTrasport,_productStr,sampleStr];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *response = sendGETRequest(urlStr, nil);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!response) {
+                alertMsgView(@"网络错误", self);
+                return ;
+            }
+            NSDictionary *returnDic = parseJsonResponse(response);
+            if (!returnDic) {
+                alertMsgView(@"返回数据错误", self);
+                return;
+            }
+            NSNumber *reslut = [returnDic objectForKey:@"err"];
+            if ([reslut integerValue] != 0) {
+                alertMsgView([returnDic objectForKey:@"errmsg"], self);
+                return;
+            }
+            NSArray *dataArray = [returnDic objectForKey:@"data"];
+            SampleStandardRequirementViewController *SSRVC = [[SampleStandardRequirementViewController alloc] init];
+            SSRVC.reuqirementArray = dataArray;
+            SSRVC.productNameStr = _productNameStr;
+            [self.navigationController pushViewController:SSRVC animated:YES];
+        });
+    });
 }
 
 - (void)viewWillAppear:(BOOL)animated{
