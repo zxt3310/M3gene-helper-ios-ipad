@@ -209,9 +209,11 @@
 - (void)selectSampleAction:(UIButton *)sender{
     sender.selected = !sender.selected;
     if (sender.selected == YES) {
-        sender.backgroundColor = [UIColor colorWithMyNeed:114 green:176 blue:248 alpha:1];
+        sender.backgroundColor = [UIColor colorWithMyNeed:218 green:236 blue:255 alpha:1];
+        sender.layer.borderColor = [UIColor colorWithMyNeed:114 green:176 blue:248 alpha:1].CGColor;
     }else{
         sender.backgroundColor = [UIColor whiteColor];
+        sender.layer.borderColor = [UIColor colorWithMyNeed:171 green:171 blue:171 alpha:1].CGColor;
     }
 }
 

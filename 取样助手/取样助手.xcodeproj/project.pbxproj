@@ -100,6 +100,11 @@
 		58B099201DEE74B600B87A4E /* oval107.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B0991A1DEE74B600B87A4E /* oval107.png */; };
 		58B099211DEE74B600B87A4E /* oval107@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B0991B1DEE74B600B87A4E /* oval107@2x.png */; };
 		58B099221DEE74B600B87A4E /* oval107@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B0991C1DEE74B600B87A4E /* oval107@3x.png */; };
+		58B46C4B1F6BA74900CC414D /* SampleBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58B46C4A1F6BA74900CC414D /* SampleBaseView.m */; };
+		58B46C4E1F6BAECB00CC414D /* SampleStandardRequirementViewController-iphone.m in Sources */ = {isa = PBXBuildFile; fileRef = 58B46C4D1F6BAECB00CC414D /* SampleStandardRequirementViewController-iphone.m */; };
+		58B46C521F6BB10500CC414D /* 加号@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B46C4F1F6BB10500CC414D /* 加号@3x.png */; };
+		58B46C531F6BB10500CC414D /* 加号@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B46C501F6BB10500CC414D /* 加号@2x.png */; };
+		58B46C541F6BB10500CC414D /* 加号.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B46C511F6BB10500CC414D /* 加号.png */; };
 		58B488E71E2338BE00757B7A /* jisong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B488DB1E2338BE00757B7A /* jisong@2x.png */; };
 		58B488E81E2338BE00757B7A /* jisong@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B488DC1E2338BE00757B7A /* jisong@3x.png */; };
 		58B488E91E2338BE00757B7A /* jisong.png in Resources */ = {isa = PBXBuildFile; fileRef = 58B488DD1E2338BE00757B7A /* jisong.png */; };
@@ -315,6 +320,13 @@
 		58B0991A1DEE74B600B87A4E /* oval107.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = oval107.png; sourceTree = "<group>"; };
 		58B0991B1DEE74B600B87A4E /* oval107@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oval107@2x.png"; sourceTree = "<group>"; };
 		58B0991C1DEE74B600B87A4E /* oval107@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oval107@3x.png"; sourceTree = "<group>"; };
+		58B46C491F6BA74900CC414D /* SampleBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleBaseView.h; sourceTree = "<group>"; };
+		58B46C4A1F6BA74900CC414D /* SampleBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleBaseView.m; sourceTree = "<group>"; };
+		58B46C4C1F6BAECB00CC414D /* SampleStandardRequirementViewController-iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SampleStandardRequirementViewController-iphone.h"; sourceTree = "<group>"; };
+		58B46C4D1F6BAECB00CC414D /* SampleStandardRequirementViewController-iphone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SampleStandardRequirementViewController-iphone.m"; sourceTree = "<group>"; };
+		58B46C4F1F6BB10500CC414D /* 加号@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "加号@3x.png"; path = "../../../../../Desktop/加号@3x.png"; sourceTree = "<group>"; };
+		58B46C501F6BB10500CC414D /* 加号@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "加号@2x.png"; path = "../../../../../Desktop/加号@2x.png"; sourceTree = "<group>"; };
+		58B46C511F6BB10500CC414D /* 加号.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "加号.png"; path = "../../../../../Desktop/加号.png"; sourceTree = "<group>"; };
 		58B488DB1E2338BE00757B7A /* jisong@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jisong@2x.png"; sourceTree = "<group>"; };
 		58B488DC1E2338BE00757B7A /* jisong@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jisong@3x.png"; sourceTree = "<group>"; };
 		58B488DD1E2338BE00757B7A /* jisong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jisong.png; sourceTree = "<group>"; };
@@ -521,10 +533,14 @@
 		585364591F665CDD00B56A79 /* 样本标准 */ = {
 			isa = PBXGroup;
 			children = (
+				58B46C491F6BA74900CC414D /* SampleBaseView.h */,
+				58B46C4A1F6BA74900CC414D /* SampleBaseView.m */,
 				5853645A1F665D3900B56A79 /* SampleStandardViewController-iphone.h */,
 				5853645B1F665D3900B56A79 /* SampleStandardViewController-iphone.m */,
 				5853645D1F665D5C00B56A79 /* SampleStandardChooseViewController-iphone.h */,
 				5853645E1F665D5C00B56A79 /* SampleStandardChooseViewController-iphone.m */,
+				58B46C4C1F6BAECB00CC414D /* SampleStandardRequirementViewController-iphone.h */,
+				58B46C4D1F6BAECB00CC414D /* SampleStandardRequirementViewController-iphone.m */,
 			);
 			name = "样本标准";
 			sourceTree = "<group>";
@@ -714,6 +730,9 @@
 				58CE62F91F5E7E9B00E0B3FC /* adder.png */,
 				58CE62FA1F5E7E9B00E0B3FC /* adder@2x.png */,
 				58CE62FB1F5E7E9B00E0B3FC /* adder@3x.png */,
+				58B46C4F1F6BB10500CC414D /* 加号@3x.png */,
+				58B46C501F6BB10500CC414D /* 加号@2x.png */,
+				58B46C511F6BB10500CC414D /* 加号.png */,
 				5819DDCB1E0D2E9E0010C88B /* pdf.png */,
 				5819DDCC1E0D2E9E0010C88B /* pdf@2x.png */,
 				5819DDCD1E0D2E9E0010C88B /* pdf@3x.png */,
@@ -1029,6 +1048,7 @@
 				5880BEC01E5443FE0077033C /* 用户名ip@2x.png in Resources */,
 				5835B83A1E27303E006C00AE /* 进度中心.png in Resources */,
 				703C29131DCA286A004FA090 /* jisongyangben@2x.png in Resources */,
+				58B46C521F6BB10500CC414D /* 加号@3x.png in Resources */,
 				5837EC2D1DE6D81E009921E8 /* 消息@2x.png in Resources */,
 				58B488E71E2338BE00757B7A /* jisong@2x.png in Resources */,
 				58B06DCE1DE6D01800F19DA0 /* dingdanluruCopy@3x.png in Resources */,
@@ -1052,6 +1072,7 @@
 				5835B84C1E273F9D006C00AE /* iphone03.png in Resources */,
 				58B488EE1E2338BE00757B7A /* dingdan.png in Resources */,
 				703C29101DCA286A004FA090 /* dingdanluru@2x.png in Resources */,
+				58B46C541F6BB10500CC414D /* 加号.png in Resources */,
 				5887AD381DE59AB900FA00B1 /* 喇叭@2x.png in Resources */,
 				5837EC381DE6DFC0009921E8 /* touxiang@2x.png in Resources */,
 				5837EC331DE6D81E009921E8 /* 订单查看订单@2x.png in Resources */,
@@ -1071,6 +1092,7 @@
 				5887AD3F1DE5A2A800FA00B1 /* 2.png in Resources */,
 				5837EC2C1DE6D81E009921E8 /* 消息.png in Resources */,
 				5835B84E1E273F9D006C00AE /* iphone03@3x.png in Resources */,
+				58B46C531F6BB10500CC414D /* 加号@2x.png in Resources */,
 				58B0991D1DEE74B600B87A4E /* nv.png in Resources */,
 				706B00DF1DCB34A7003953DD /* jisongbaogao@3x.png in Resources */,
 				5837EC2F1DE6D81E009921E8 /* 草稿箱.png in Resources */,
@@ -1153,8 +1175,10 @@
 				58480C4D1E557CDC007A0973 /* passwdChangeViewController.m in Sources */,
 				581D069D1DC0A2330050DFA0 /* oprateRecordVC.m in Sources */,
 				581BF5C71DF90C6200C24ADD /* UISingleSelector.m in Sources */,
+				58B46C4B1F6BA74900CC414D /* SampleBaseView.m in Sources */,
 				5889D8C11DC091620052C6D7 /* main.m in Sources */,
 				5884D7AE1E51620F00398C4F /* AppDelegate-iphone.m in Sources */,
+				58B46C4E1F6BAECB00CC414D /* SampleStandardRequirementViewController-iphone.m in Sources */,
 				581B24611E0B753400FEFBEE /* Util.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

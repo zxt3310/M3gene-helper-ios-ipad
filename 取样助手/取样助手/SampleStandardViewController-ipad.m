@@ -192,6 +192,19 @@
         return;
     }
     
+    NSArray *checkArray = [productStr componentsSeparatedByString:@","];
+    for (int j=0;j<checkArray.count;j++) {
+        for (int i=0; i<checkArray.count; i++) {
+            if ([checkArray[j] isEqual:checkArray[i]]) {
+                if (i!=j) {
+                    alertMsgView(@"请勿选择相同产品", self);
+                    return;
+                }
+            }
+        }
+    }
+    
+    
     NSString *urlStr = [NSString stringWithFormat:@"%@?product_ids=%@",SearchAllSample,[productStr copy]];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *response = sendGETRequest(urlStr, nil);

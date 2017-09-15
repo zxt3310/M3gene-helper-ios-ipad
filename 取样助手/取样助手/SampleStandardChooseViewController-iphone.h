@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SampleStandardRequirementViewController-iphone.h"
 
 @interface SampleStandardChooseViewController_iphone : UIViewController
 
-@property NSArray *tissueAry;
-@property NSArray *bloodAry;
+@property NSArray *tissueNameArray;
+@property NSArray *bloodNameArray;
+@property NSArray *tissueIdArray;
+@property NSArray *bloodIdArray;
+@property NSString *productStr;
+@property NSString *productNameStr;
 
 @end
