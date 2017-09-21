@@ -154,7 +154,6 @@
         bloodBtn.tag = [_bloodIdArray[i] integerValue] + 200;
         bloodBtn.titleLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
         [self.view addSubview: bloodBtn];
-        
     }
 }
 
@@ -164,6 +163,41 @@
 
 - (void)selectSampleAction:(UIButton *)sender{
     sender.selected = !sender.selected;
+    for (id obj in self.view.subviews) {
+        if ([obj isKindOfClass:[UIButton class]]) {
+            UIButton *object = (UIButton *) obj;
+            if (object.tag && object.tag != sender.tag) {
+                object.selected = NO;
+                
+                object.backgroundColor = [UIColor whiteColor];
+                object.layer.borderColor = [UIColor colorWithMyNeed:171 green:171 blue:171 alpha:1].CGColor;
+                
+            }
+        }
+    }
+    
+    if (_connectDic.count>0) {
+        NSInteger sample_id;
+        if (sender.tag>200) {
+            sample_id = sender.tag - 200;
+        }
+        else{
+            sample_id = sender.tag - 100;
+        }
+        for (NSString *key in _connectDic.allKeys) {
+            NSArray *ary = [_connectDic objectForKey:key];
+            for (NSString *ID in ary) {
+                if ([key integerValue] == sample_id) {
+                    NSInteger btnId = [ID integerValue];
+                    UIButton *button = (UIButton *)[self.view viewWithTag:btnId + 200];
+                    button.selected = YES;
+                    button.backgroundColor = [UIColor colorWithMyNeed:218 green:236 blue:255 alpha:1];
+                    button.layer.borderColor = [UIColor colorWithMyNeed:114 green:176 blue:248 alpha:1].CGColor;
+                }
+            }
+        }
+    }
+
     if (sender.selected == YES) {
         sender.backgroundColor = [UIColor colorWithMyNeed:218 green:236 blue:255 alpha:1];
         sender.layer.borderColor = [UIColor colorWithMyNeed:114 green:176 blue:248 alpha:1].CGColor;

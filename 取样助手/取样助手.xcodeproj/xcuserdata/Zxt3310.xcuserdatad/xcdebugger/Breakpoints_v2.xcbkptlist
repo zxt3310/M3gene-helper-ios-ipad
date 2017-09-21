@@ -4901,11 +4901,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/SampleStandardViewController-ipad.m"
-            timestampString = "527156484.961913"
+            timestampString = "527665222.39787"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "218"
-            endingLineNumber = "218"
+            startingLineNumber = "268"
+            endingLineNumber = "268"
             landmarkName = "-nextBtn:"
             landmarkType = "7">
          </BreakpointContent>
@@ -4933,11 +4933,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/SampleStandardViewController-ipad.m"
-            timestampString = "527156484.961913"
+            timestampString = "527665222.39787"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "210"
-            endingLineNumber = "210"
+            startingLineNumber = "260"
+            endingLineNumber = "260"
             landmarkName = "-nextBtn:"
             landmarkType = "7">
          </BreakpointContent>
@@ -4949,11 +4949,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/SampleStandardViewController-ipad.m"
-            timestampString = "527156484.961913"
+            timestampString = "527665222.39787"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "209"
-            endingLineNumber = "209"
+            startingLineNumber = "259"
+            endingLineNumber = "259"
             landmarkName = "-nextBtn:"
             landmarkType = "7">
             <Locations>
@@ -4997,11 +4997,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/SampleStandardViewController-ipad.m"
-            timestampString = "527156484.961913"
+            timestampString = "527665222.39787"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
+            startingLineNumber = "288"
+            endingLineNumber = "288"
             landmarkName = "-nextBtn:"
             landmarkType = "7">
          </BreakpointContent>
@@ -5029,11 +5029,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/SampleStandardViewController-ipad.m"
-            timestampString = "527156484.961913"
+            timestampString = "527665222.39787"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
+            startingLineNumber = "294"
+            endingLineNumber = "294"
             landmarkName = "-nextBtn:"
             landmarkType = "7">
          </BreakpointContent>
@@ -5061,11 +5061,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/SampleStandardViewController-ipad.m"
-            timestampString = "527074794.718811"
+            timestampString = "527665222.39787"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
+            startingLineNumber = "224"
+            endingLineNumber = "224"
             landmarkName = "-nextBtn:"
             landmarkType = "7">
          </BreakpointContent>
@@ -5077,12 +5077,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/SampleStandardViewController-ipad.m"
-            timestampString = "527074983.378236"
+            timestampString = "527665222.39787"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
             landmarkName = "-nextBtn:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/SampleStandardViewController-ipad.m"
+            timestampString = "527665222.39787"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "317"
+            endingLineNumber = "317"
+            landmarkName = "-nextBtn:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/SampleStandardChooseViewController-ipad.m"
+            timestampString = "527505192.24884"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
+            landmarkName = "-selectSampleAction:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x53d6;&#x6837;&#x52a9;&#x624b;/SampleStandardChooseViewController-ipad.m"
+            timestampString = "527505192.24884"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "228"
+            endingLineNumber = "228"
+            landmarkName = "-selectSampleAction:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

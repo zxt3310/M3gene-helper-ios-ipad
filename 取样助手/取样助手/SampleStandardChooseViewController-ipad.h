@@ -18,5 +18,6 @@
 @property NSArray *bloodIdArray;
 @property NSString *productStr;
 @property NSString *productNameStr;
+@property NSDictionary *connectDic;
 
 @end

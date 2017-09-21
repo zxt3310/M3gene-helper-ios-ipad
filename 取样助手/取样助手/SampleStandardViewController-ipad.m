@@ -13,6 +13,9 @@
     NSArray *productNameAry;
     NSArray *productIdAry;
     NSInteger productNo;
+    UIButton *sigleBtn;
+    UIButton *tribleBtn;
+
 }
 @end
 
@@ -45,8 +48,33 @@
     noteLb.textColor = [UIColor colorWithMyNeed:118 green:118 blue:118 alpha:1];
     [self.view addSubview:noteLb];
     
+    sigleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    sigleBtn.frame = CGRectMake(300*SCREEN_WEIGHT/1024,
+                                280*SCREEN_HEIGHT/768,
+                                200*SCREEN_WEIGHT/1024, 40);
+    sigleBtn.layer.borderWidth = 1;
+    sigleBtn.layer.borderColor = [UIColor greenColor].CGColor;
+    [sigleBtn setTitle:@"单检测产品" forState:UIControlStateNormal];
+    [sigleBtn setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+    sigleBtn.layer.cornerRadius = 20;
+    [sigleBtn addTarget:self action:@selector(singleBtnEvent:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:sigleBtn];
+    
+    tribleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    tribleBtn.frame = CGRectMake(510*SCREEN_WEIGHT/1024,
+                                 280*SCREEN_HEIGHT/768,
+                                 200*SCREEN_WEIGHT/1024, 40);
+    tribleBtn.layer.borderColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1].CGColor;
+    tribleBtn.layer.borderWidth = 1;
+    tribleBtn.layer.cornerRadius = 20;
+    [tribleBtn setTitleColor:[UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1] forState:UIControlStateNormal];
+    [tribleBtn setTitle:@"组合检测产品" forState:UIControlStateNormal];
+    [tribleBtn addTarget:self action:@selector(tribleBtnEvent:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:tribleBtn];
+    tribleBtn.titleLabel.font = sigleBtn.titleLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
+    
     UIComboBox *productCb = [[UIComboBox alloc] initWithFrame:CGRectMake(298*SCREEN_WEIGHT/1024,
-                                                                        277*SCREEN_HEIGHT/768,
+                                                                        377*SCREEN_HEIGHT/768,
                                                                         316*SCREEN_WEIGHT/1024,
                                                                         50)];
     productCb.placeColor = [UIColor colorWithMyNeed:155 green:155 blue:155 alpha:1];
@@ -95,6 +123,8 @@
         productNameAry = [namelistAry copy];
         productCb.comboList = productNameAry;
     }
+    
+    addBtn.hidden = YES;
 }
 - (void)setNewBar
 {
@@ -136,6 +166,26 @@
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [header addSubview:titleLabel];
 }
+
+- (void)singleBtnEvent:(UIButton *) sender{
+    sender.layer.borderColor = [UIColor greenColor].CGColor;
+    [sender setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+    
+    tribleBtn.layer.borderColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1].CGColor;
+    [tribleBtn setTitleColor:[UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1] forState:UIControlStateNormal];
+}
+
+- (void)tribleBtnEvent:(UIButton *) sender{
+    alertMsgView(@"功能尚未开放，敬请期待", self);
+    return;
+    
+    sender.layer.borderColor = [UIColor greenColor].CGColor;
+    [sender setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+    
+    sigleBtn.layer.borderColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1].CGColor;
+    [sigleBtn setTitleColor:[UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1] forState:UIControlStateNormal];
+}
+
 
 - (void)backAction{
     [self.navigationController popViewControllerAnimated:YES];
@@ -262,6 +312,7 @@
             SSCVC.bloodIdArray = [bloodIdArray copy];
             SSCVC.productStr = [productStr copy];
             SSCVC.productNameStr = [productNameStr copy];
+            SSCVC.connectDic = [returnDic objectForKey:@"sample_alsoids_map"];
             
             [self.navigationController pushViewController:SSCVC animated:YES];
         });

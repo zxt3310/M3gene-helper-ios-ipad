@@ -37,8 +37,8 @@
     [self.view addSubview:titleLb];
     
     UILabel *ditailLb = [[UILabel alloc] initWithFrame:CGRectMake(127*SCREEN_WEIGHT/1024, 267*SCREEN_HEIGHT/768, 257*SCREEN_WEIGHT/1024, 58)];
-    UILabel *requireLable = [[UILabel alloc] initWithFrame:CGRectMake(383*SCREEN_WEIGHT/1024, 267*SCREEN_HEIGHT/768, 257*SCREEN_WEIGHT/1024, 58)];
-    UILabel *trasportLble = [[UILabel alloc] initWithFrame:CGRectMake(639*SCREEN_WEIGHT/1024, 267*SCREEN_HEIGHT/768, 257*SCREEN_WEIGHT/1024, 58)];
+    UILabel *requireLable = [[UILabel alloc] initWithFrame:CGRectMake(127*SCREEN_WEIGHT/1024, 267*SCREEN_HEIGHT/768, 385*SCREEN_WEIGHT/1024, 58)];
+    UILabel *trasportLble = [[UILabel alloc] initWithFrame:CGRectMake(511*SCREEN_WEIGHT/1024, 267*SCREEN_HEIGHT/768, 385*SCREEN_WEIGHT/1024, 58)];
     requireLable.text = @"采样标准";
     trasportLble.text = @"运输标准";
     ditailLb.text = @"样本名称";
@@ -50,13 +50,13 @@
     trasportLble.textAlignment = requireLable.textAlignment = ditailLb.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:requireLable];
     [self.view addSubview:trasportLble];
-    [self.view addSubview:ditailLb];
+    //[self.view addSubview:ditailLb];
     
     
     for (int i=0; i<_reuqirementArray.count; i++) {
         UILabel *ditailLable = [[UILabel alloc] initWithFrame:CGRectMake(127*SCREEN_WEIGHT/1024, 324*SCREEN_HEIGHT/768 + i*99,257*SCREEN_WEIGHT/1024 ,100)];
-        UILabel *requirementLb = [[UILabel alloc] initWithFrame:CGRectMake(639*SCREEN_WEIGHT/1024, 324*SCREEN_HEIGHT/768 + i*99, 257*SCREEN_WEIGHT/1024, 100)];
-        UILabel *transportLb = [[UILabel alloc] initWithFrame:CGRectMake(383*SCREEN_WEIGHT/1024, 324*SCREEN_HEIGHT/768 + i*99, 257*SCREEN_WEIGHT/1024, 100)];
+        UILabel *requirementLb = [[UILabel alloc] initWithFrame:CGRectMake(127*SCREEN_WEIGHT/1024, 324*SCREEN_HEIGHT/768 + i*99, 385*SCREEN_WEIGHT/1024, 100)];
+        UILabel *transportLb = [[UILabel alloc] initWithFrame:CGRectMake(511*SCREEN_WEIGHT/1024, 324*SCREEN_HEIGHT/768 + i*99, 385*SCREEN_WEIGHT/1024, 100)];
         requirementLb.font = transportLb.font = ditailLable.font = [UIFont fontWithName:@"STHeitiSC-Light" size:16];
         requirementLb.textColor = transportLb.textColor = ditailLable.textColor = [UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1];
         requirementLb.layer.borderWidth = transportLb.layer.borderWidth = ditailLable.layer.borderWidth = 1;
@@ -67,7 +67,7 @@
         transportLb.text = [_reuqirementArray[i] objectForKey:@"transports_str"];
         [self.view addSubview:requirementLb];
         [self.view addSubview:transportLb];
-        [self.view addSubview:ditailLable];
+        //[self.view addSubview:ditailLable];
     }
     
     UIButton *doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -79,7 +79,7 @@
     doneBtn.backgroundColor = reChosseBtn.backgroundColor = [UIColor colorWithMyNeed:74 green:144 blue:226 alpha:1];
     doneBtn.tintColor = reChosseBtn.tintColor = [UIColor whiteColor];
     doneBtn.layer.cornerRadius = reChosseBtn.layer.cornerRadius = 10;
-    doneBtn.titleLabel.font = reChosseBtn.titleLabel.font = [UIFont fontWithName:@"STHeitiSC-Medium" size:24];
+    //doneBtn.titleLabel.font = reChosseBtn.titleLabel.font = [UIFont fontWithName:@"STHeitiSC-Medium" size:24];
     [doneBtn setTitle:@"好的，我明白了" forState:UIControlStateNormal];
     [reChosseBtn setTitle:@"重新选择" forState:UIControlStateNormal];
     [doneBtn addTarget:self action:@selector(popBtnEvent:) forControlEvents:UIControlEventTouchUpInside];
