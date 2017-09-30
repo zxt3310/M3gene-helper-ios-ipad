@@ -10,8 +10,10 @@
 #import "publicMethod.h"
 #import "UIComboBox.h"
 #import "SampleStandardChooseViewController-iphone.h"
+#import "SampleStandardCompositeProductViewController-iphone.h"
 
 @interface SampleStandardViewController_iphone : UIViewController
 
 @property NSArray *productAry;
+@property NSArray *composite_prouductList;
 @end

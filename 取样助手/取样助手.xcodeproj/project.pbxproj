@@ -17,6 +17,7 @@
 		581B24651E0B7F4900FEFBEE /* DataCenterWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 581B24641E0B7F4900FEFBEE /* DataCenterWebViewController.m */; };
 		581BF5C71DF90C6200C24ADD /* UISingleSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 581BF5C61DF90C6200C24ADD /* UISingleSelector.m */; };
 		581D069D1DC0A2330050DFA0 /* oprateRecordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 581D069C1DC0A2330050DFA0 /* oprateRecordVC.m */; };
+		581F67BF1F7F6F96000E6CDA /* SampleStandardCompositeProductViewController-ipad.m in Sources */ = {isa = PBXBuildFile; fileRef = 581F67BE1F7F6F96000E6CDA /* SampleStandardCompositeProductViewController-ipad.m */; };
 		5828E4C81DFFA53E0040E2A2 /* UIComboBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 5828E4C71DFFA53E0040E2A2 /* UIComboBox.m */; };
 		5828E4CA1DFFD2400040E2A2 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5828E4C91DFFD2400040E2A2 /* Launch Screen.storyboard */; };
 		5835B83A1E27303E006C00AE /* 进度中心.png in Resources */ = {isa = PBXBuildFile; fileRef = 5835B8311E27303E006C00AE /* 进度中心.png */; };
@@ -130,6 +131,7 @@
 		58CE62FC1F5E7E9B00E0B3FC /* adder.png in Resources */ = {isa = PBXBuildFile; fileRef = 58CE62F91F5E7E9B00E0B3FC /* adder.png */; };
 		58CE62FD1F5E7E9B00E0B3FC /* adder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58CE62FA1F5E7E9B00E0B3FC /* adder@2x.png */; };
 		58CE62FE1F5E7E9B00E0B3FC /* adder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58CE62FB1F5E7E9B00E0B3FC /* adder@3x.png */; };
+		58DA71AD1F7CCA9A00347D4B /* SampleStandardCompositeProductViewController-iphone.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DA71AC1F7CCA9A00347D4B /* SampleStandardCompositeProductViewController-iphone.m */; };
 		58E50CD91E0A0C98002B6AA3 /* 订单.png in Resources */ = {isa = PBXBuildFile; fileRef = 58E50CD61E0A0C98002B6AA3 /* 订单.png */; };
 		58E50CDA1E0A0C98002B6AA3 /* 订单@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58E50CD71E0A0C98002B6AA3 /* 订单@2x.png */; };
 		58E50CDB1E0A0C98002B6AA3 /* 订单@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58E50CD81E0A0C98002B6AA3 /* 订单@3x.png */; };
@@ -210,6 +212,8 @@
 		581BF5C61DF90C6200C24ADD /* UISingleSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISingleSelector.m; path = "取样助手/UISingleSelector.m"; sourceTree = "<group>"; };
 		581D069B1DC0A2330050DFA0 /* oprateRecordVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oprateRecordVC.h; sourceTree = "<group>"; };
 		581D069C1DC0A2330050DFA0 /* oprateRecordVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = oprateRecordVC.m; sourceTree = "<group>"; };
+		581F67BD1F7F6F96000E6CDA /* SampleStandardCompositeProductViewController-ipad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SampleStandardCompositeProductViewController-ipad.h"; sourceTree = "<group>"; };
+		581F67BE1F7F6F96000E6CDA /* SampleStandardCompositeProductViewController-ipad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SampleStandardCompositeProductViewController-ipad.m"; sourceTree = "<group>"; };
 		5828E4C61DFFA53E0040E2A2 /* UIComboBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIComboBox.h; path = "取样助手/UIComboBox.h"; sourceTree = "<group>"; };
 		5828E4C71DFFA53E0040E2A2 /* UIComboBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIComboBox.m; path = "取样助手/UIComboBox.m"; sourceTree = "<group>"; };
 		5828E4C91DFFD2400040E2A2 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
@@ -359,6 +363,8 @@
 		58CE62F91F5E7E9B00E0B3FC /* adder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = adder.png; path = image/adder.png; sourceTree = "<group>"; };
 		58CE62FA1F5E7E9B00E0B3FC /* adder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "adder@2x.png"; path = "image/adder@2x.png"; sourceTree = "<group>"; };
 		58CE62FB1F5E7E9B00E0B3FC /* adder@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "adder@3x.png"; path = "image/adder@3x.png"; sourceTree = "<group>"; };
+		58DA71AB1F7CCA9A00347D4B /* SampleStandardCompositeProductViewController-iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SampleStandardCompositeProductViewController-iphone.h"; sourceTree = "<group>"; };
+		58DA71AC1F7CCA9A00347D4B /* SampleStandardCompositeProductViewController-iphone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SampleStandardCompositeProductViewController-iphone.m"; sourceTree = "<group>"; };
 		58E50CD61E0A0C98002B6AA3 /* 订单.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "订单.png"; sourceTree = "<group>"; };
 		58E50CD71E0A0C98002B6AA3 /* 订单@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "订单@2x.png"; sourceTree = "<group>"; };
 		58E50CD81E0A0C98002B6AA3 /* 订单@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "订单@3x.png"; sourceTree = "<group>"; };
@@ -541,6 +547,8 @@
 				5853645E1F665D5C00B56A79 /* SampleStandardChooseViewController-iphone.m */,
 				58B46C4C1F6BAECB00CC414D /* SampleStandardRequirementViewController-iphone.h */,
 				58B46C4D1F6BAECB00CC414D /* SampleStandardRequirementViewController-iphone.m */,
+				58DA71AB1F7CCA9A00347D4B /* SampleStandardCompositeProductViewController-iphone.h */,
+				58DA71AC1F7CCA9A00347D4B /* SampleStandardCompositeProductViewController-iphone.m */,
 			);
 			name = "样本标准";
 			sourceTree = "<group>";
@@ -826,6 +834,8 @@
 				589F00D81F62654500454DAB /* SampleStandardChooseViewController-ipad.m */,
 				58E82F291F6939770050EAA0 /* SampleStandardRequirementViewController.h */,
 				58E82F2A1F6939770050EAA0 /* SampleStandardRequirementViewController.m */,
+				581F67BD1F7F6F96000E6CDA /* SampleStandardCompositeProductViewController-ipad.h */,
+				581F67BE1F7F6F96000E6CDA /* SampleStandardCompositeProductViewController-ipad.m */,
 			);
 			name = "样本标准";
 			sourceTree = "<group>";
@@ -1155,6 +1165,7 @@
 				58E54C551E16366900A32CDA /* VIPCardViewController-ipad.m in Sources */,
 				58C25FEE1DE5635900B8D88D /* leftDrawerViewController.m in Sources */,
 				58E741001DEFC8DE00D2927B /* POPViewController.m in Sources */,
+				58DA71AD1F7CCA9A00347D4B /* SampleStandardCompositeProductViewController-iphone.m in Sources */,
 				5828E4C81DFFA53E0040E2A2 /* UIComboBox.m in Sources */,
 				708FDEC91DC875080069E6C2 /* NetUtils.m in Sources */,
 				58E82F2B1F6939770050EAA0 /* SampleStandardRequirementViewController.m in Sources */,
@@ -1176,6 +1187,7 @@
 				581D069D1DC0A2330050DFA0 /* oprateRecordVC.m in Sources */,
 				581BF5C71DF90C6200C24ADD /* UISingleSelector.m in Sources */,
 				58B46C4B1F6BA74900CC414D /* SampleBaseView.m in Sources */,
+				581F67BF1F7F6F96000E6CDA /* SampleStandardCompositeProductViewController-ipad.m in Sources */,
 				5889D8C11DC091620052C6D7 /* main.m in Sources */,
 				5884D7AE1E51620F00398C4F /* AppDelegate-iphone.m in Sources */,
 				58B46C4E1F6BAECB00CC414D /* SampleStandardRequirementViewController-iphone.m in Sources */,
@@ -1314,7 +1326,7 @@
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
-				DEVELOPMENT_TEAM = S2B89SD35E;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "取样助手/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1334,7 +1346,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Life Healthcare(Beijing) Co.,Ltd. (S2B89SD35E)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
-				DEVELOPMENT_TEAM = S2B89SD35E;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "取样助手/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

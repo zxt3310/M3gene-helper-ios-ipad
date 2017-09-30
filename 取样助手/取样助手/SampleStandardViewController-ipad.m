@@ -15,6 +15,10 @@
     NSInteger productNo;
     UIButton *sigleBtn;
     UIButton *tribleBtn;
+    UIView *compositeView;
+    UIComboBox *productCb;
+    NSInteger currentId;
+    NSString *currentProduct;
 
 }
 @end
@@ -53,10 +57,11 @@
                                 280*SCREEN_HEIGHT/768,
                                 200*SCREEN_WEIGHT/1024, 40);
     sigleBtn.layer.borderWidth = 1;
-    sigleBtn.layer.borderColor = [UIColor greenColor].CGColor;
+    sigleBtn.layer.borderColor = [UIColor colorWithMyNeed:0 green:102 blue:51 alpha:1].CGColor;
     [sigleBtn setTitle:@"单检测产品" forState:UIControlStateNormal];
-    [sigleBtn setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+    [sigleBtn setTitleColor:[UIColor colorWithMyNeed:0 green:102 blue:51 alpha:1] forState:UIControlStateNormal];
     sigleBtn.layer.cornerRadius = 20;
+    sigleBtn.selected = YES;
     [sigleBtn addTarget:self action:@selector(singleBtnEvent:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:sigleBtn];
     
@@ -73,7 +78,7 @@
     [self.view addSubview:tribleBtn];
     tribleBtn.titleLabel.font = sigleBtn.titleLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
     
-    UIComboBox *productCb = [[UIComboBox alloc] initWithFrame:CGRectMake(298*SCREEN_WEIGHT/1024,
+    productCb = [[UIComboBox alloc] initWithFrame:CGRectMake(338*SCREEN_WEIGHT/1024,
                                                                         377*SCREEN_HEIGHT/768,
                                                                         316*SCREEN_WEIGHT/1024,
                                                                         50)];
@@ -125,6 +130,25 @@
     }
     
     addBtn.hidden = YES;
+    
+    compositeView = [[UIView alloc] initWithFrame:CGRectMake(0, 300*SCREEN_HEIGHT/667, SCREEN_WEIGHT, 200*SCREEN_HEIGHT/667)];
+    for (int i=0; i<_composite_prouductList.count; i++) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.frame = CGRectMake(70*SCREEN_HEIGHT/375 + i%2*142*SCREEN_WEIGHT/375,1+i/2*100*SCREEN_HEIGHT/667, 122*SCREEN_WEIGHT/375, 80*SCREEN_HEIGHT/667);
+        NSInteger tagId = [[_composite_prouductList[i] objectForKey:@"id"] integerValue];
+        button.tag = tagId + 100;
+        button.layer.borderWidth = 1;
+        button.layer.borderColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1].CGColor;
+        NSString *titleStr = [_composite_prouductList[i] objectForKey:@"name"];
+        [button setTitle:titleStr forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(composite_btn_click:) forControlEvents:UIControlEventTouchUpInside];
+        button.titleLabel.numberOfLines = 0;
+        [compositeView addSubview:button];
+    }
+    compositeView.hidden = YES;
+    [self.view addSubview:compositeView];
+
 }
 - (void)setNewBar
 {
@@ -167,23 +191,49 @@
     [header addSubview:titleLabel];
 }
 
+- (void)composite_btn_click:(UIButton *)sender{
+    sender.selected = YES;
+    sender.layer.borderColor = [UIColor colorWithMyNeed:0 green:102 blue:51 alpha:1].CGColor;
+    [sender setTitleColor:[UIColor colorWithMyNeed:0 green:102 blue:51 alpha:1] forState:UIControlStateNormal];
+    for (id obj in compositeView.subviews) {
+        if ([obj isKindOfClass:[UIButton class]]) {
+            UIButton *object = (UIButton *) obj;
+            if (object.tag != sender.tag) {
+                object.layer.borderColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1].CGColor;
+                [object setTitleColor:[UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1] forState:UIControlStateNormal];
+            }
+        }
+    }
+    currentId = sender.tag - 100;
+    currentProduct = sender.titleLabel.text;
+}
+
 - (void)singleBtnEvent:(UIButton *) sender{
-    sender.layer.borderColor = [UIColor greenColor].CGColor;
-    [sender setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+    sender.selected = YES;
+    tribleBtn.selected = NO;
+    
+    sender.layer.borderColor = [UIColor colorWithMyNeed:0 green:102 blue:51 alpha:1].CGColor;
+    [sender setTitleColor:[UIColor colorWithMyNeed:0 green:102 blue:51 alpha:1] forState:UIControlStateNormal];
     
     tribleBtn.layer.borderColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1].CGColor;
     [tribleBtn setTitleColor:[UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1] forState:UIControlStateNormal];
+    compositeView.hidden = YES;
+    productCb.hidden = NO;
+    [productCb dismissTable];
 }
 
 - (void)tribleBtnEvent:(UIButton *) sender{
-    alertMsgView(@"功能尚未开放，敬请期待", self);
-    return;
+    sender.selected = YES;
+    sigleBtn.selected = NO;
     
-    sender.layer.borderColor = [UIColor greenColor].CGColor;
-    [sender setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+    sender.layer.borderColor = [UIColor colorWithMyNeed:0 green:102 blue:51 alpha:1].CGColor;
+    [sender setTitleColor:[UIColor colorWithMyNeed:0 green:102 blue:51 alpha:1] forState:UIControlStateNormal];
     
     sigleBtn.layer.borderColor = [UIColor colorWithMyNeed:151 green:151 blue:151 alpha:1].CGColor;
     [sigleBtn setTitleColor:[UIColor colorWithMyNeed:74 green:74 blue:74 alpha:1] forState:UIControlStateNormal];
+    productCb.hidden = YES;
+    compositeView.hidden = NO;
+    [productCb dismissTable];
 }
 
 
@@ -205,118 +255,155 @@
         alertMsgView(@"产品个数已达上限", self);
         return;
     }
-    UIComboBox *productCb = [[UIComboBox alloc] initWithFrame:CGRectMake(298*SCREEN_WEIGHT/1024,
+    UIComboBox *productCbox = [[UIComboBox alloc] initWithFrame:CGRectMake(298*SCREEN_WEIGHT/1024,
                                                                          357*SCREEN_HEIGHT/768 + productNo * (50 + 25*SCREEN_HEIGHT/768),
                                                                          316*SCREEN_WEIGHT/1024,
                                                                          50)];
-    productCb.placeColor = [UIColor colorWithMyNeed:155 green:155 blue:155 alpha:1];
-    productCb.textColor = [UIColor blackColor];
-    productCb.comboList = productNameAry;
-    [self.view addSubview:productCb];
+    productCbox.placeColor = [UIColor colorWithMyNeed:155 green:155 blue:155 alpha:1];
+    productCbox.textColor = [UIColor blackColor];
+    productCbox.comboList = productNameAry;
+    [self.view addSubview:productCbox];
     productNo++;
     productCb.tag = productNo+oringTag;
     NSLog(@"%ld",productCb.tag);
 }
 
 - (void)nextBtn:(UIButton *)sender{
-    
-    NSMutableString *productStr = [[NSMutableString alloc] init];
-    NSMutableString *productNameStr = [[NSMutableString alloc] init];
-    for (id obj in self.view.subviews) {
-        if ([obj isKindOfClass:[UIComboBox class]]) {
-            UIComboBox *object = (UIComboBox *)obj;
-            NSInteger selectNo = object.selectId;
-            if (selectNo<0) {
-                continue;
-            }
-            [productStr appendFormat:@",%@", productIdAry[selectNo]];
-            [productNameStr appendFormat:@",%@",productNameAry[selectNo]];
-        }
-    }
-    if (productStr.length >0) {
-        [productStr replaceCharactersInRange:NSMakeRange(0, 1) withString:@""];
-        [productNameStr replaceCharactersInRange:NSMakeRange(0, 1) withString:@""];
-    }
-    else{
-        alertMsgView(@"请至少选择一个产品", self);
-        return;
-    }
-    
-    NSArray *checkArray = [productStr componentsSeparatedByString:@","];
-    for (int j=0;j<checkArray.count;j++) {
-        for (int i=0; i<checkArray.count; i++) {
-            if ([checkArray[j] isEqual:checkArray[i]]) {
-                if (i!=j) {
-                    alertMsgView(@"请勿选择相同产品", self);
-                    return;
-                }
-            }
-        }
-    }
-    
-    
-    NSString *urlStr = [NSString stringWithFormat:@"%@?product_ids=%@",SearchAllSample,[productStr copy]];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *response = sendGETRequest(urlStr, nil);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (!response) {
-                alertMsgView(@"网络错误", self);
-                NSLog(@"network was faild");
-                return ;
-            }
-            
-            NSDictionary *returnDic = parseJsonResponse(response);
-            if (!returnDic) {
-                alertMsgView(@"返回数据错误", self);
-                NSLog(@"converse to NSDictionary faild, data error");
-                return;
-            }
-            
-            NSNumber *result = [returnDic objectForKey:@"err"];
-            if (!result) {
-                alertMsgView(@"返回数据错误", self);
-                NSLog(@"result is NULL");
-                return;
-            }
-            
-            if ([result integerValue] != 0) {
-                alertMsgView([returnDic objectForKey:@"errmsg"], self);
-                NSLog(@"result error!");
-                return;
-            }
-            
-            NSArray *dataArray = [returnDic objectForKey:@"data"];
-            NSMutableArray *tissueNameArray = [[NSMutableArray alloc] init];
-            NSMutableArray *tissueIdArray = [[NSMutableArray alloc] init];
-            NSMutableArray *bloodNameArray = [[NSMutableArray alloc] init];
-            NSMutableArray *bloodIdArray = [[NSMutableArray alloc] init];
-            
-            for (int i=0; i<dataArray.count; i++) {
-                NSDictionary *dic = (NSDictionary *)dataArray[i];
-                NSString *idStr = [dic objectForKey:@"id"];
-                NSString *nameStr = [dic objectForKey:@"name"];
-                NSNumber *type = [dic objectForKey:@"type"];
-                if ([type integerValue] == 1) {
-                    [tissueNameArray addObject:nameStr];
-                    [tissueIdArray addObject:idStr];
+    if (sigleBtn.selected == YES) {
+        NSMutableString *productStr = [[NSMutableString alloc] init];
+        NSMutableString *productNameStr = [[NSMutableString alloc] init];
+        for (id obj in self.view.subviews) {
+            if ([obj isKindOfClass:[UIComboBox class]]) {
+                UIComboBox *object = (UIComboBox *)obj;
+                NSInteger selectNo = object.selectId;
+                if (selectNo<0) {
                     continue;
                 }
-                [bloodNameArray addObject:nameStr];
-                [bloodIdArray addObject:idStr];
+                [productStr appendFormat:@",%@", productIdAry[selectNo]];
+                [productNameStr appendFormat:@",%@",productNameAry[selectNo]];
             }
-            
-            SampleStandardChooseViewController_ipad *SSCVC = [[SampleStandardChooseViewController_ipad alloc] init];
-            SSCVC.tissueNameArray = [tissueNameArray copy];
-            SSCVC.bloodNameArray = [bloodNameArray copy];
-            SSCVC.tissueIdArray = [tissueIdArray copy];
-            SSCVC.bloodIdArray = [bloodIdArray copy];
-            SSCVC.productStr = [productStr copy];
-            SSCVC.productNameStr = [productNameStr copy];
-            SSCVC.connectDic = [returnDic objectForKey:@"sample_alsoids_map"];
-            
-            [self.navigationController pushViewController:SSCVC animated:YES];
+        }
+        if (productStr.length >0) {
+            [productStr replaceCharactersInRange:NSMakeRange(0, 1) withString:@""];
+            [productNameStr replaceCharactersInRange:NSMakeRange(0, 1) withString:@""];
+        }
+        else{
+            alertMsgView(@"请至少选择一个产品", self);
+            return;
+        }
+        
+        NSArray *checkArray = [productStr componentsSeparatedByString:@","];
+        for (int j=0;j<checkArray.count;j++) {
+            for (int i=0; i<checkArray.count; i++) {
+                if ([checkArray[j] isEqual:checkArray[i]]) {
+                    if (i!=j) {
+                        alertMsgView(@"请勿选择相同产品", self);
+                        return;
+                    }
+                }
+            }
+        }
+        
+        NSString *urlStr = [NSString stringWithFormat:@"%@?product_ids=%@",SearchAllSample,[productStr copy]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSData *response = sendGETRequest(urlStr, nil);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (!response) {
+                    alertMsgView(@"网络错误", self);
+                    NSLog(@"network was faild");
+                    return ;
+                }
+                
+                NSDictionary *returnDic = parseJsonResponse(response);
+                if (!returnDic) {
+                    alertMsgView(@"返回数据错误", self);
+                    NSLog(@"converse to NSDictionary faild, data error");
+                    return;
+                }
+                
+                NSNumber *result = [returnDic objectForKey:@"err"];
+                if (!result) {
+                    alertMsgView(@"返回数据错误", self);
+                    NSLog(@"result is NULL");
+                    return;
+                }
+                
+                if ([result integerValue] != 0) {
+                    alertMsgView([returnDic objectForKey:@"errmsg"], self);
+                    NSLog(@"result error!");
+                    return;
+                }
+                
+                NSArray *dataArray = [returnDic objectForKey:@"data"];
+                NSMutableArray *tissueNameArray = [[NSMutableArray alloc] init];
+                NSMutableArray *tissueIdArray = [[NSMutableArray alloc] init];
+                NSMutableArray *bloodNameArray = [[NSMutableArray alloc] init];
+                NSMutableArray *bloodIdArray = [[NSMutableArray alloc] init];
+                
+                for (int i=0; i<dataArray.count; i++) {
+                    NSDictionary *dic = (NSDictionary *)dataArray[i];
+                    NSString *idStr = [dic objectForKey:@"id"];
+                    NSString *nameStr = [dic objectForKey:@"name"];
+                    NSNumber *type = [dic objectForKey:@"type"];
+                    if ([type integerValue] == 1) {
+                        [tissueNameArray addObject:nameStr];
+                        [tissueIdArray addObject:idStr];
+                        continue;
+                    }
+                    [bloodNameArray addObject:nameStr];
+                    [bloodIdArray addObject:idStr];
+                }
+                
+                SampleStandardChooseViewController_ipad *SSCVC = [[SampleStandardChooseViewController_ipad alloc] init];
+                SSCVC.tissueNameArray = [tissueNameArray copy];
+                SSCVC.bloodNameArray = [bloodNameArray copy];
+                SSCVC.tissueIdArray = [tissueIdArray copy];
+                SSCVC.bloodIdArray = [bloodIdArray copy];
+                SSCVC.productStr = [productStr copy];
+                SSCVC.productNameStr = [productNameStr copy];
+                SSCVC.connectDic = [returnDic objectForKey:@"sample_alsoids_map"];
+                
+                [self.navigationController pushViewController:SSCVC animated:YES];
+            });
         });
-    });
+    }
+    else{
+        NSString *urlStr = [NSString stringWithFormat:@"%@/info?composite_product_id=%ld",Compoite_product,currentId];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSData *response = sendGETRequest(urlStr, nil);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (!response) {
+                    alertMsgView(@"网络错误", self);
+                    NSLog(@"network was faild");
+                    return ;
+                }
+                
+                NSDictionary *returnDic = parseJsonResponse(response);
+                if (!returnDic) {
+                    alertMsgView(@"返回数据错误", self);
+                    NSLog(@"converse to NSDictionary faild, data error");
+                    return;
+                }
+                
+                NSNumber *result = [returnDic objectForKey:@"err"];
+                if (!result) {
+                    alertMsgView(@"返回数据错误", self);
+                    NSLog(@"result is NULL");
+                    return;
+                }
+                
+                if ([result integerValue] != 0) {
+                    alertMsgView([returnDic objectForKey:@"errmsg"], self);
+                    NSLog(@"result error!");
+                    return;
+                }
+                SampleStandardCompositeProductViewController_ipad *SCPVC = [[SampleStandardCompositeProductViewController_ipad alloc] init];
+                SCPVC.composite_productArray = [returnDic objectForKey:@"pst_cpsrt_list"];
+                SCPVC.product_name = currentProduct;
+                [self.navigationController pushViewController:SCPVC animated:YES];
+            });
+        });
+    }
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{

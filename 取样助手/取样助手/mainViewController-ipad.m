@@ -28,6 +28,7 @@
     NSArray *dataList;
     //NSString *cookie;
     LoadingView *loadingView;
+    NSArray *composite_productList;
 }
 
 @end
@@ -601,6 +602,7 @@
     else if (point.x > sender.view.frame.size.width*4/5){
         SampleStandardViewController_ipad *ssvc = [[SampleStandardViewController_ipad alloc] init];
         ssvc.productAry = productList;
+        ssvc.composite_prouductList = composite_productList;
         [self.navigationController pushViewController:ssvc animated:YES];
     }
     else
@@ -648,6 +650,31 @@
                 return;
             }
             productList = JsonValue([responseData objectForKey:@"data"], @"NSArray");
+        });
+    });
+    strUrl = [NSString stringWithFormat:Compoite_product];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *response = sendGETRequest(strUrl, nil);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!response) {
+                NSLog(@"response is null check");
+                return ;
+            }
+            NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",strResp);
+            
+            NSDictionary *responseData = parseJsonResponse(response);
+            NSNumber *resault = JsonValue([responseData objectForKey:@"err"], @"NSNumber");
+            if (resault == nil) {
+                alertMsgView(@"数据异常，稍后再试", self);
+                return;
+            }
+            NSInteger err = [resault integerValue];
+            if(err > 0)
+            {
+                return;
+            }
+            composite_productList = JsonValue([responseData objectForKey:@"composite_product_list"], @"NSArray");
         });
     });
 }

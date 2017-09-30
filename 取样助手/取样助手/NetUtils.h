@@ -46,6 +46,7 @@
 #define Search_existorder_URL   @"http://dev.mapi.lhgene.cn:8088/mobi-cms/examinee/search"
 #define SearchAllSample         @"http://dev.mapi.lhgene.cn/mobi-cms/pst/sample"
 #define SampleTrasport          @"http://dev.mapi.lhgene.cn/mobi-cms/pst/info"
+#define Compoite_product        @"http://dev.mapi.lhgene.cn/mobi-cms/pst/composite_product"
 
 //正式环境
 //#define longin_URL              @"http://mapi.lhgene.cn:8088/mobi-cms/login"
@@ -83,6 +84,7 @@
 //#define Search_existorder_URL   @"http://mapi.lhgene.cn:8088/mobi-cms/examinee/search"
 //#define SearchAllSample         @"http://mapi.lhgene.cn/mobi-cms/pst/sample"
 //#define SampleTrasport          @"http://mapi.lhgene.cn/mobi-cms/pst/info"
+//#define Compoite_product        @"http://mapi.lhgene.cn/mobi-cms/pst/composite_product"
 //获取store最新版本
 #define appStore_Version_POST_URL @"http://itunes.apple.com/cn/lookup"
 //苹果提供的应用唯一id（检测更新用）
